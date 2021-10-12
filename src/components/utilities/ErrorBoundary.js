@@ -7,7 +7,7 @@ class ErrorBoundary extends Component {
     this.state = { hasError: false };
   }
 
-  static getDerivedStateFromError(error) {
+  static getDerivedStateFromError() {
     // Update state so the next render will show the fallback UI.
     return { hasError: true };
   }
@@ -20,11 +20,9 @@ class ErrorBoundary extends Component {
   render() {
     if (this.state.hasError) {
       // You can render any custom fallback UI
-      return <Text
-        text="Something went wrong."
-        anchor={0.5}
-        x={150}
-        y={150}></Text>;
+      return (
+        <Text text="Something went wrong." anchor={0.5} x={150} y={150}></Text>
+      );
     }
 
     return this.props.children;

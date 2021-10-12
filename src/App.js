@@ -3,7 +3,6 @@ import { render } from "react-dom";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Loader from "./components/utilities/Loader.js";
 
-
 const Story = lazy(() => import("./Story"));
 
 const App = () => {

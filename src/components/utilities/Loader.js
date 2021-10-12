@@ -1,4 +1,3 @@
-import { Fragment } from "react";
 import "./Loader.css";
 
 const Loader = () => {
