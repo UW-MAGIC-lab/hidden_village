@@ -77,7 +77,9 @@ const Story = () => {
       ) : (
           <Stage height={height} width={width} options={{ antialias: true, autoDensity: true, backgroundColor: 0xEDE4D9 }}>
             <Container position={[width * 0.75, height * 0.5]} options={{ antialias: true, autoDensity: true, backgroundColor: 0xffd900 }}>
-
+              <ErrorBoundary>
+                <Pose poseData={poseData} width={width} height={height}/>
+              </ErrorBoundary>
             </Container>
         </Stage>
       )}
