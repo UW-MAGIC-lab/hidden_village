@@ -12,3 +12,14 @@ There are few prerequisite pieces of software you will need to get started:
  - [installation of NVM](https://github.com/nvm-sh/nvm#installing-and-updating)
  - [installation of node](https://github.com/nvm-sh/nvm#usage)
  - [yarn](https://yarnpkg.com/getting-started/install)
+
+After you installed yarn, you `cd` into the hidden_village directory (if you're not already there) and run:
+```
+yarn set version berry
+yarn install
+```
+
+This should set your yarn version and then install all the dependencies for the project in order to proceed.
+
+### Run a dev server
+To serve the app locally, run `yarn run dev` and visit localhost:1234
