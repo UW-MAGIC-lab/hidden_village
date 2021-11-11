@@ -3,19 +3,20 @@ import { useSetState } from "react-use";
 import { Camera } from "@mediapipe/camera_utils";
 import { Holistic, POSE_LANDMARKS } from "@mediapipe/holistic/holistic";
 import Loader from "./utilities/Loader.js";
-import ErrorBoundary from "./utilities/ErrorBoundary.js";
-import { Stage, Container } from "@inlet/react-pixi";
-import Pose from "./Pose.js";
+import Game from "./Game.js";
+import Home from "./Home.js";
+import { useMachine } from "@xstate/react";
+import { GameMachine } from "../machines/gameMachine.js";
 
 POSE_LANDMARKS.PELVIS = 34;
 POSE_LANDMARKS.SOLAR_PLEXIS = 33;
 
 const Story = () => {
   let holistic;
-  const [loading, setLoading] = useState(true);
   const [poseData, setPoseData] = useSetState({});
   const [height, setHeight] = useState(window.innerHeight);
   const [width, setWidth] = useState(window.innerWidth);
+  const [state, send] = useMachine(GameMachine);
 
   useEffect(() => {
     window.addEventListener("resize", () => {
@@ -37,8 +38,8 @@ const Story = () => {
     });
     async function poseDetectionFrame() {
       await holistic.send({ image: videoElement });
-      if (loading) {
-        setLoading(false);
+      if (state.value === "loading") {
+        send("TOGGLE");
       }
     }
 
@@ -82,34 +83,24 @@ const Story = () => {
     holistic.onResults(updatePoseResults);
   }, []);
 
+  const display = (state) => {
+    switch (state.value) {
+      case "loading":
+        return <Loader />;
+      case "ready":
+        return <Home />;
+      case "playing":
+        return <Game poseData={poseData} width={width} height={height} />;
+      default:
+        return <div>Error</div>;
+    }
+  };
+
   return (
     <Fragment>
-      {loading ? (
-        <Loader />
-      ) : (
-        <Stage
-          height={height}
-          width={width}
-          options={{
-            antialias: true,
-            autoDensity: true,
-            backgroundColor: 0xede4d9,
-          }}
-        >
-          <Container
-            position={[width * 0.75, height * 0.5]}
-            options={{
-              antialias: true,
-              autoDensity: true,
-              backgroundColor: 0xffd900,
-            }}
-          >
-            <ErrorBoundary>
-              <Pose poseData={poseData} width={width} height={height} />
-            </ErrorBoundary>
-          </Container>
-        </Stage>
-      )}
+      {state.value === "loading" && <Loader />}
+      {state.value === "ready" && <Home />}
+      {state.value === "playing" && <Home />}
     </Fragment>
   );
 };
