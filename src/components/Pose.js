@@ -244,13 +244,17 @@ const Pose = (props) => {
   const draw = useCallback(
     (g) => {
       g.clear();
-      setArmWidth(calculateArmWidth(props.poseData));
-      // NOTE: Order of drawing body section matters, do not reorder
-      drawFace(props.poseData, g);
-      drawTorso(props.poseData, g);
-      drawAbdomen(props.poseData, g);
-      drawBiceps(props.poseData, g);
-      drawForearms(props.poseData, g);
+      if (props.poseData.faceLandmarks) {
+        drawFace(props.poseData, g);
+      }
+      if (props.poseData.poseLandmarks) {
+        setArmWidth(calculateArmWidth(props.poseData));
+        // NOTE: Order of drawing body section matters, do not reorder
+        drawTorso(props.poseData, g);
+        drawAbdomen(props.poseData, g);
+        drawBiceps(props.poseData, g);
+        drawForearms(props.poseData, g);
+      }
       drawHands(props.poseData, g);
     },
     [props.poseData]
