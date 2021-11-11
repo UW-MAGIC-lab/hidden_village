@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Loader from "./components/utilities/Loader.js";
 import Settings from "./components/Settings.js";
 
-const Story = lazy(() => import("./Story"));
+const Story = lazy(() => import("./components/Story"));
 
 const App = () => {
   return (

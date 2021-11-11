@@ -2,10 +2,10 @@ import { useEffect, useState, Fragment } from "react";
 import { useSetState } from "react-use";
 import { Camera } from "@mediapipe/camera_utils";
 import { Holistic, POSE_LANDMARKS } from "@mediapipe/holistic/holistic";
-import Loader from "./components/utilities/Loader.js";
-import ErrorBoundary from "./components/utilities/ErrorBoundary.js";
+import Loader from "./utilities/Loader.js";
+import ErrorBoundary from "./utilities/ErrorBoundary.js";
 import { Stage, Container } from "@inlet/react-pixi";
-import Pose from "./components/Pose.js";
+import Pose from "./Pose.js";
 
 POSE_LANDMARKS.PELVIS = 34;
 POSE_LANDMARKS.SOLAR_PLEXIS = 33;
