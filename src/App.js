@@ -3,7 +3,8 @@ import { render } from "react-dom";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Loader from "./components/utilities/Loader.js";
 import Settings from "./components/Settings.js";
-
+import * as PIXI from "pixi.js";
+window.PIXI = PIXI;
 const Story = lazy(() => import("./components/Story"));
 
 const App = () => {
