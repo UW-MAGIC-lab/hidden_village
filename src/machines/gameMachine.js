@@ -1,14 +1,11 @@
 import { createMachine, assign } from "xstate";
 
 export const GameMachine = createMachine({
-  initial: "loading",
-  context: {},
+  initial: "ready",
+  context: {
+    holistic: undefined,
+  },
   states: {
-    loading: {
-      on: {
-        TOGGLE: "ready",
-      },
-    },
     ready: {
       on: {
         TOGGLE: "playing",

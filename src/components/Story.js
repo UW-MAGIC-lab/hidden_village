@@ -7,12 +7,14 @@ import Game from "./Game.js";
 import Home from "./Home.js";
 import { useMachine } from "@xstate/react";
 import { GameMachine } from "../machines/gameMachine.js";
+import { Stage } from "@inlet/react-pixi";
 
 POSE_LANDMARKS.PELVIS = 34;
 POSE_LANDMARKS.SOLAR_PLEXIS = 33;
 
 const Story = () => {
   let holistic;
+  const [loading, setLoading] = useState(true);
   const [poseData, setPoseData] = useSetState({});
   const [height, setHeight] = useState(window.innerHeight);
   const [width, setWidth] = useState(window.innerWidth);
@@ -38,8 +40,8 @@ const Story = () => {
     });
     async function poseDetectionFrame() {
       await holistic.send({ image: videoElement });
-      if (state.value === "loading") {
-        send("TOGGLE");
+      if (loading) {
+        setLoading(false);
       }
     }
 
@@ -83,24 +85,23 @@ const Story = () => {
     holistic.onResults(updatePoseResults);
   }, []);
 
-  const display = (state) => {
-    switch (state.value) {
-      case "loading":
-        return <Loader />;
-      case "ready":
-        return <Home />;
-      case "playing":
-        return <Game poseData={poseData} width={width} height={height} />;
-      default:
-        return <div>Error</div>;
-    }
-  };
-
   return (
     <Fragment>
-      {state.value === "loading" && <Loader />}
-      {state.value === "ready" && <Home />}
-      {state.value === "playing" && <Home />}
+      {loading && <Loader />}
+      <Stage
+        height={height}
+        width={width}
+        options={{
+          antialias: true,
+          autoDensity: true,
+          backgroundColor: 0xfacf5a,
+        }}
+      >
+        {state.value === "ready" && <Home width={width} height={height} />}
+        {state.value === "playing" && (
+          <Game poseData={poseData} width={width} height={height} />
+        )}
+      </Stage>
     </Fragment>
   );
 };
