@@ -4,7 +4,9 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Loader from "./components/utilities/Loader.js";
 import Settings from "./components/Settings.js";
 import * as PIXI from "pixi.js";
+// This global declaration is necessary to make the chrome PIXI devtools work
 window.PIXI = PIXI;
+import Sandbox from "./components/Sandbox";
 const Story = lazy(() => import("./components/Story"));
 
 const App = () => {
@@ -12,11 +14,11 @@ const App = () => {
     <Suspense fallback={<Loader />}>
       <Router>
         <Switch>
+          <Route path="/sandbox">
+            <Sandbox />
+          </Route>
           <Route path="/settings">
             <Settings />
-          </Route>
-          <Route path="/admin">
-            <Story />
           </Route>
           <Route path="/">
             <Story />
