@@ -14,6 +14,8 @@ POSE_LANDMARKS.SOLAR_PLEXIS = 33;
 
 const Story = () => {
   let holistic;
+  // HACK: I should figure out a way to use xstate to migrate from loading to ready
+  //  but b/c the async/await nature of the callbacks with Holistic, I'm leaving this hack in for now.
   const [loading, setLoading] = useState(true);
   const [poseData, setPoseData] = useSetState({});
   const [height, setHeight] = useState(window.innerHeight);
@@ -97,7 +99,13 @@ const Story = () => {
           backgroundColor: 0xfacf5a,
         }}
       >
-        {state.value === "ready" && <Home width={width} height={height} />}
+        {state.value === "ready" && (
+          <Home
+            width={width}
+            height={height}
+            startCallback={() => send("TOGGLE")}
+          />
+        )}
         {state.value === "playing" && (
           <Game poseData={poseData} width={width} height={height} />
         )}

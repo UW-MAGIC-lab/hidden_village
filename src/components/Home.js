@@ -4,7 +4,7 @@ import { Text } from "@inlet/react-pixi";
 import { TextStyle } from "@pixi/text";
 
 const Home = (props) => {
-  const { height, width } = props;
+  const { height, width, startCallback } = props;
   return (
     <>
       <Background height={height} width={width} />
@@ -18,6 +18,7 @@ const Home = (props) => {
         fontColor={0xfacf5a}
         text={"Start"}
         fontWeight={800}
+        callback={startCallback}
       />
       <Text
         text={"Hidden Village"}
