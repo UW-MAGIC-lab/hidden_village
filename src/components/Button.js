@@ -4,7 +4,17 @@ import { useCallback } from "react";
 
 const Button = (props) => {
   // return the NineSlicePlane and Text
-  const { width, x, y, text, color, fontSize, fontColor, fontWeight } = props;
+  const {
+    width,
+    x,
+    y,
+    text,
+    color,
+    fontSize,
+    fontColor,
+    fontWeight,
+    callback,
+  } = props;
   const draw = useCallback(
     (g) => {
       g.clear();
@@ -14,14 +24,9 @@ const Button = (props) => {
     },
     [width]
   );
-  const style = new TextStyle({
-    fontFamily: "Futura",
-    fontSize: fontSize,
-    fill: fontColor,
-  });
   return (
     <>
-      <Graphics draw={draw} />
+      <Graphics draw={draw} interactive={true} pointerdown={callback} />
       <Text
         text={text}
         style={
@@ -30,12 +35,12 @@ const Button = (props) => {
             fontFamily: "Futura",
             fontSize: fontSize,
             fontWeight: fontWeight,
-            fill: [fontColor], // gradient
-            // letterSpacing: 20,
+            fill: [fontColor],
             wordWrap: true,
-            // wordWrapWidth: 440,
           })
         }
+        interactive={true}
+        pointerdown={callback}
         x={x}
         y={y}
         anchor={0.5}
