@@ -1,4 +1,4 @@
-import { useEffect, useState, Fragment } from "react";
+import { useEffect, useState } from "react";
 import { useSetState } from "react-use";
 import { Camera } from "@mediapipe/camera_utils";
 import { Holistic, POSE_LANDMARKS } from "@mediapipe/holistic/holistic";
@@ -88,7 +88,7 @@ const Story = () => {
   }, []);
 
   return (
-    <Fragment>
+    <>
       {loading && <Loader />}
       <Stage
         height={height}
@@ -110,7 +110,7 @@ const Story = () => {
           <Game poseData={poseData} width={width} height={height} />
         )}
       </Stage>
-    </Fragment>
+    </>
   );
 };
 
