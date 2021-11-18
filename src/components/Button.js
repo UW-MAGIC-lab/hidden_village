@@ -3,7 +3,6 @@ import { TextStyle } from "@pixi/text";
 import { useCallback } from "react";
 
 const Button = (props) => {
-  // return the NineSlicePlane and Text
   const {
     width,
     x,

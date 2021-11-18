@@ -1,6 +1,6 @@
 import { Container, Graphics } from "@inlet/react-pixi";
 import { useCallback } from "react";
-import { yellow, blue } from "../utils/colors";
+import { blue } from "../utils/colors";
 
 const Background = (props) => {
   // props.height expects the full height of the stage
