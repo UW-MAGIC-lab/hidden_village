@@ -24,7 +24,7 @@ const Story = () => {
   // HACK: I should figure out a way to use xstate to migrate from loading to ready
   //  but b/c the async/await nature of the callbacks with Holistic, I'm leaving this hack in for now.
   const [loading, setLoading] = useState(true);
-  const [poseData, setPoseData] = useState({});
+  const [poseData, setPoseData] = useState({}); // doesn't momeize
   const [height, setHeight] = useState(window.innerHeight);
   const [width, setWidth] = useState(window.innerWidth);
   const [state, send] = useMachine(GameMachine);
@@ -84,7 +84,33 @@ const Story = () => {
     });
     camera.start();
     const updatePoseResults = (newResults) => {
-      setPoseData(enrichLandmarks(newResults));
+      const abdomenLandmarks = (({ RIGHT_HIP, LEFT_HIP, RIGHT_SHOULDER }) => ({
+        RIGHT_HIP,
+        LEFT_HIP,
+        RIGHT_SHOULDER,
+      }))(POSE_LANDMARKS);
+      let solarPlexis = {};
+      let pelvis = {};
+      if (newResults.poseLandmarks) {
+        pelvis.x =
+          (newResults.poseLandmarks[abdomenLandmarks.RIGHT_HIP].x +
+            newResults.poseLandmarks[abdomenLandmarks.LEFT_HIP].x) /
+          2;
+        pelvis.y =
+          (newResults.poseLandmarks[abdomenLandmarks.RIGHT_HIP].y +
+            newResults.poseLandmarks[abdomenLandmarks.LEFT_HIP].y) /
+          2;
+        solarPlexis.x = pelvis.x;
+        solarPlexis.y =
+          (newResults.poseLandmarks[abdomenLandmarks.RIGHT_SHOULDER].y +
+            newResults.poseLandmarks[abdomenLandmarks.RIGHT_HIP].y) *
+          0.6;
+        newResults.poseLandmarks[POSE_LANDMARKS.PELVIS] = pelvis;
+        newResults.poseLandmarks[POSE_LANDMARKS.SOLAR_PLEXIS] = solarPlexis;
+      }
+      setPoseData((prevState) => {
+        return { ...newResults }; // { ...prevState, ...newResults }: merge values
+      });
     };
     holistic.onResults(updatePoseResults);
   }, []);
