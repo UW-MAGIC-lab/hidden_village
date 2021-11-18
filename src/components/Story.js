@@ -8,6 +8,7 @@ import Home from "./Home.js";
 import { useMachine } from "@xstate/react";
 import { GameMachine } from "../machines/gameMachine.js";
 import { Stage } from "@inlet/react-pixi";
+import { yellow } from "../utils/colors";
 
 POSE_LANDMARKS.PELVIS = 34;
 POSE_LANDMARKS.SOLAR_PLEXIS = 33;
@@ -96,7 +97,7 @@ const Story = () => {
         options={{
           antialias: true,
           autoDensity: true,
-          backgroundColor: 0xfacf5a,
+          backgroundColor: yellow,
         }}
       >
         {state.value === "ready" && (

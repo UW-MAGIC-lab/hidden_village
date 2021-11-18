@@ -5,7 +5,7 @@ import Pose from "./Pose.js";
 const Game = (props) => {
   return (
     <Container
-      position={[props.width * 0.75, props.height * 0.5]}
+      position={[props.width, props.height * 0.75]}
       options={{
         antialias: true,
         autoDensity: true,

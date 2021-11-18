@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Loader from "./components/utilities/Loader.js";
 import Settings from "./components/Settings.js";
 import * as PIXI from "pixi.js";
-import 'regenerator-runtime/runtime'
+import "regenerator-runtime/runtime";
 
 // This global declaration is necessary to make the chrome PIXI devtools work
 window.PIXI = PIXI;
