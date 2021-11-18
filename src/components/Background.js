@@ -1,5 +1,6 @@
 import { Container, Graphics } from "@inlet/react-pixi";
 import { useCallback } from "react";
+import { yellow, blue } from "../utils/colors";
 
 const Background = (props) => {
   // props.height expects the full height of the stage
@@ -8,7 +9,7 @@ const Background = (props) => {
   const draw = useCallback(
     (g) => {
       g.clear();
-      g.lineStyle(4, 0x2080d5, 1);
+      g.lineStyle(4, blue, 1);
       // horizontal lines
       const horizontalLineOffsets = [0, 0.025, 0.05, 0.1, 0.2, 0.35, 0.6];
       horizontalLineOffsets.forEach((offset) => {

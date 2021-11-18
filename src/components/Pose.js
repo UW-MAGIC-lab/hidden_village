@@ -4,6 +4,7 @@ import {
   FACEMESH_FACE_OVAL,
   POSE_LANDMARKS,
 } from "@mediapipe/holistic/holistic";
+import { blue, yellow } from "../utils/colors";
 
 POSE_LANDMARKS.SOLAR_PLEXIS = 33;
 POSE_LANDMARKS.PELVIS = 34;
@@ -43,8 +44,8 @@ const magnitude = (point1, point2) => {
   return Math.sqrt((point1.x - point2.x) ** 2 + (point1.y - point2.y) ** 2);
 };
 
-const FILL_COLOR = 0xfa655a;
-const STROKE_COLOR = 0x2080d5;
+const FILL_COLOR = yellow;
+const STROKE_COLOR = blue;
 
 // ****************************************************************
 // Component Logic

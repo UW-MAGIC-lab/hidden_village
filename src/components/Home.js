@@ -2,6 +2,7 @@ import Background from "./Background";
 import Button from "./Button";
 import { Text } from "@inlet/react-pixi";
 import { TextStyle } from "@pixi/text";
+import { yellow, blue } from "../utils/colors";
 
 const Home = (props) => {
   const { height, width, startCallback } = props;
@@ -13,9 +14,9 @@ const Home = (props) => {
         width={width * 0.33}
         x={width * 0.5}
         y={height * 0.7}
-        color={0x2080d5}
+        color={blue}
         fontSize={120}
-        fontColor={0xfacf5a}
+        fontColor={yellow}
         text={"Start"}
         fontWeight={800}
         callback={startCallback}
@@ -30,7 +31,7 @@ const Home = (props) => {
             fontFamily: "Futura",
             fontSize: 146,
             fontWeight: 800,
-            fill: [0x2080d5],
+            fill: [blue],
             letterSpacing: -5,
           })
         }
