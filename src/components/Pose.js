@@ -194,6 +194,86 @@ const Pose = (props) => {
     connectLandmarks(faceOvalCoords, g);
   };
 
+  // create a drawThighs function that mimics the drawBiceps function
+  // but uses the LEFT_HIP and RIGHT_HIP landmarks instead of the
+  // RIGHT_SHOULDER and LEFT_SHOULDER landmarks
+  // and the LEFT_KNEE and RIGHT_KNEE landmarks instead of the
+  // LEFT_ELBOW and RIGHT_ELBOW landmarks
+  const drawThighs = (poseData, g) => {
+    const thighLandmarks = (({
+      LEFT_HIP,
+      RIGHT_HIP,
+      LEFT_KNEE,
+      RIGHT_KNEE,
+      PELVIS,
+    }) => ({
+      LEFT_HIP,
+      RIGHT_HIP,
+      LEFT_KNEE,
+      RIGHT_KNEE,
+      PELVIS,
+    }))(POSE_LANDMARKS);
+    const generalCoords = objMap(
+      thighLandmarks,
+      landmarkToCoordinates(poseData.poseLandmarks)
+    );
+    // Add magnitude to y coordinate to get a shorter distance b/c 0,0 is top left
+    if (generalCoords.RIGHT_KNEE.visibility > 0.6) {
+      const rightHipY =
+        generalCoords.RIGHT_HIP.y +
+        magnitude(generalCoords.PELVIS, generalCoords.RIGHT_HIP);
+      const rightKneeY =
+        generalCoords.RIGHT_KNEE.y -
+        magnitude(generalCoords.PELVIS, generalCoords.RIGHT_HIP);
+      const rightThighCoords = [
+        {
+          x: generalCoords.RIGHT_KNEE.x + armWidth,
+          y: rightKneeY + armWidth,
+        },
+        {
+          x: generalCoords.RIGHT_HIP.x + armWidth,
+          y: rightHipY + armWidth,
+        },
+        {
+          x: generalCoords.RIGHT_HIP.x - armWidth,
+          y: rightHipY - armWidth,
+        },
+        {
+          x: generalCoords.RIGHT_KNEE.x - armWidth,
+          y: rightKneeY - armWidth,
+        },
+      ];
+      connectLandmarks(rightThighCoords, g);
+    }
+    if (generalCoords.LEFT_KNEE.visibility > 0.6) {
+      const leftHipY =
+        generalCoords.LEFT_HIP.y +
+        magnitude(generalCoords.PELVIS, generalCoords.LEFT_HIP);
+      const leftKneeY =
+        generalCoords.LEFT_KNEE.y -
+        magnitude(generalCoords.PELVIS, generalCoords.LEFT_HIP);
+      const leftThighCoords = [
+        {
+          x: generalCoords.LEFT_KNEE.x + armWidth,
+          y: leftKneeY + armWidth,
+        },
+        {
+          x: generalCoords.LEFT_HIP.x + armWidth,
+          y: leftHipY + armWidth,
+        },
+        {
+          x: generalCoords.LEFT_HIP.x - armWidth,
+          y: leftHipY - armWidth,
+        },
+        {
+          x: generalCoords.LEFT_KNEE.x - armWidth,
+          y: leftKneeY - armWidth,
+        },
+      ];
+      connectLandmarks(leftThighCoords, g);
+    }
+  };
+
   const drawTorso = (poseData, g) => {
     const torsoLandmarks = (({
       RIGHT_SHOULDER,
@@ -332,6 +412,7 @@ const Pose = (props) => {
         drawAbdomen(props.poseData, g);
         drawBiceps(props.poseData, g);
         drawForearms(props.poseData, g);
+        drawThighs(props.poseData, g);
       }
       drawHands(props.poseData, g);
     },
