@@ -59,12 +59,23 @@ const Pose = (props) => {
   const connectLandmarks = (landmarks, g) => {
     const coord = landmarks.shift();
     g.beginFill(FILL_COLOR);
-    g.lineStyle(1, STROKE_COLOR, 1);
+    g.lineStyle(4, STROKE_COLOR, 1);
     g.moveTo(coord.x, coord.y);
     landmarks.forEach((coordinate) => {
       g.lineTo(coordinate.x, coordinate.y);
     });
     g.lineTo(coord.x, coord.y);
+    g.endFill();
+  };
+
+  const connectFinger = (landmarks, g) => {
+    g.beginFill(FILL_COLOR);
+    g.lineStyle(4, STROKE_COLOR, 1);
+    const coord = landmarks.shift();
+    g.moveTo(coord.x, coord.y);
+    landmarks.forEach((coordinate) => {
+      g.lineTo(coordinate.x, coordinate.y);
+    });
     g.endFill();
   };
 
@@ -226,12 +237,71 @@ const Pose = (props) => {
       RING_FINGER_MCP,
       PINKY_MCP,
     }))(HAND_LANDMARKS);
+    const thumbLandmarks = (({
+      THUMB_CMC,
+      THUMB_MCP,
+      THUMB_IP,
+      THUMB_TIP,
+    }) => ({ THUMB_CMC, THUMB_MCP, THUMB_IP, THUMB_TIP }))(HAND_LANDMARKS);
+    const indexFingerLandmarks = (({
+      INDEX_FINGER_MCP,
+      INDEX_FINGER_PIP,
+      INDEX_FINGER_DIP,
+      INDEX_FINGER_TIP,
+    }) => ({
+      INDEX_FINGER_MCP,
+      INDEX_FINGER_PIP,
+      INDEX_FINGER_DIP,
+      INDEX_FINGER_TIP,
+    }))(HAND_LANDMARKS);
+    const middleFingerLandmarks = (({
+      MIDDLE_FINGER_MCP,
+      MIDDLE_FINGER_PIP,
+      MIDDLE_FINGER_DIP,
+      MIDDLE_FINGER_TIP,
+    }) => ({
+      MIDDLE_FINGER_MCP,
+      MIDDLE_FINGER_PIP,
+      MIDDLE_FINGER_DIP,
+      MIDDLE_FINGER_TIP,
+    }))(HAND_LANDMARKS);
+    const ringFingerLandmarks = (({
+      RING_FINGER_MCP,
+      RING_FINGER_PIP,
+      RING_FINGER_DIP,
+      RING_FINGER_TIP,
+    }) => ({
+      RING_FINGER_MCP,
+      RING_FINGER_PIP,
+      RING_FINGER_DIP,
+      RING_FINGER_TIP,
+    }))(HAND_LANDMARKS);
+    const pinkyLandmarks = (({
+      PINKY_MCP,
+      PINKY_PIP,
+      PINKY_DIP,
+      PINKY_TIP,
+    }) => ({ PINKY_MCP, PINKY_PIP, PINKY_DIP, PINKY_TIP }))(HAND_LANDMARKS);
+    const fingerLandmarks = [
+      thumbLandmarks,
+      indexFingerLandmarks,
+      middleFingerLandmarks,
+      ringFingerLandmarks,
+      pinkyLandmarks,
+    ];
     if (poseData.rightHandLandmarks) {
       let rightPalmCoords = objMap(
         palmLandmarks,
         landmarkToCoordinates(poseData.rightHandLandmarks)
       );
       connectLandmarks(Object.values(rightPalmCoords), g);
+      let rightFingers = fingerLandmarks.map((fingerLandmarks) =>
+        objMap(
+          fingerLandmarks,
+          landmarkToCoordinates(poseData.rightHandLandmarks)
+        )
+      );
+      rightFingers.forEach((finger) => connectFinger(Object.values(finger), g));
     }
     if (poseData.leftHandLandmarks) {
       let leftPalmCoords = objMap(
@@ -239,6 +309,13 @@ const Pose = (props) => {
         landmarkToCoordinates(poseData.leftHandLandmarks)
       );
       connectLandmarks(Object.values(leftPalmCoords), g);
+      let leftFingers = fingerLandmarks.map((fingerLandmarks) =>
+        objMap(
+          fingerLandmarks,
+          landmarkToCoordinates(poseData.leftHandLandmarks)
+        )
+      );
+      leftFingers.forEach((finger) => connectFinger(Object.values(finger), g));
     }
   };
 
