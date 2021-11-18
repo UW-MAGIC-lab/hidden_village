@@ -17,7 +17,7 @@ const Story = () => {
   // HACK: I should figure out a way to use xstate to migrate from loading to ready
   //  but b/c the async/await nature of the callbacks with Holistic, I'm leaving this hack in for now.
   const [loading, setLoading] = useState(true);
-  const [poseData, setPoseData] = useSetState({});
+  const [poseData, setPoseData] = useState({}); // doesn't momeize
   const [height, setHeight] = useState(window.innerHeight);
   const [width, setWidth] = useState(window.innerWidth);
   const [state, send] = useMachine(GameMachine);
@@ -81,7 +81,7 @@ const Story = () => {
         newResults.poseLandmarks[POSE_LANDMARKS.SOLAR_PLEXIS] = solarPlexis;
       }
       setPoseData((prevState) => {
-        return { ...prevState, ...newResults };
+        return { ...newResults }; // { ...prevState, ...newResults }: merge values
       });
     };
     holistic.onResults(updatePoseResults);
