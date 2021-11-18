@@ -52,8 +52,8 @@ const STROKE_COLOR = blue;
 // ****************************************************************
 
 const Pose = (props) => {
-  const [width] = useState(props.width * 0.2);
-  const [height] = useState(props.height * 0.2);
+  const [width] = useState(props.width * 0.45);
+  const [height] = useState(props.height * 0.66);
   const [armWidth, setArmWidth] = useState(0);
 
   const connectLandmarks = (landmarks, g) => {
