@@ -287,6 +287,53 @@ const Pose = (props) => {
     connectLandmarks(Object.values(torsoCoords), g);
   };
 
+  const drawShins = (poseData, g) => {
+    const shinLandmarks = (({
+      LEFT_KNEE,
+      RIGHT_KNEE,
+      LEFT_ANKLE,
+      RIGHT_ANKLE,
+    }) => ({
+      LEFT_KNEE,
+      RIGHT_KNEE,
+      LEFT_ANKLE,
+      RIGHT_ANKLE,
+    }))(POSE_LANDMARKS);
+    const generalCoords = objMap(
+      shinLandmarks,
+      landmarkToCoordinates(poseData.poseLandmarks)
+    );
+    if (generalCoords.RIGHT_KNEE.visibility > 0.6) {
+      const rightShinCoords = [
+        {
+          x: generalCoords.RIGHT_KNEE.x + armWidth,
+          y: generalCoords.RIGHT_KNEE.y + armWidth,
+        },
+        {
+          x: generalCoords.RIGHT_KNEE.x - armWidth,
+          y: generalCoords.RIGHT_KNEE.y - armWidth,
+        },
+        generalCoords.RIGHT_ANKLE,
+      ];
+      connectLandmarks(rightShinCoords, g);
+    }
+    if (generalCoords.LEFT_KNEE.visibility > 0.6) {
+      const leftShinCoords = [
+        {
+          x: generalCoords.LEFT_KNEE.x + armWidth,
+          y: generalCoords.LEFT_KNEE.y + armWidth,
+        },
+        {
+          x: generalCoords.LEFT_KNEE.x - armWidth,
+          y: generalCoords.LEFT_KNEE.y - armWidth,
+        },
+        generalCoords.LEFT_ANKLE,
+      ];
+
+      connectLandmarks(leftShinCoords, g);
+    }
+  };
+
   const drawAbdomen = (poseData, g) => {
     const abdomenLandmarks = (({ PELVIS, LEFT_HIP }) => ({ PELVIS, LEFT_HIP }))(
       POSE_LANDMARKS
@@ -413,6 +460,7 @@ const Pose = (props) => {
         drawBiceps(props.poseData, g);
         drawForearms(props.poseData, g);
         drawThighs(props.poseData, g);
+        drawShins(props.poseData, g);
       }
       drawHands(props.poseData, g);
     },
