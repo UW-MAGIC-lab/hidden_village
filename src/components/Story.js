@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useSetState } from "react-use";
 import { Camera } from "@mediapipe/camera_utils";
 import { Holistic, POSE_LANDMARKS } from "@mediapipe/holistic/holistic";
 import Loader from "./utilities/Loader.js";
@@ -18,7 +17,7 @@ const Story = () => {
   // HACK: I should figure out a way to use xstate to migrate from loading to ready
   //  but b/c the async/await nature of the callbacks with Holistic, I'm leaving this hack in for now.
   const [loading, setLoading] = useState(true);
-  const [poseData, setPoseData] = useSetState({});
+  const [poseData, setPoseData] = useState({}); // doesn't momeize
   const [height, setHeight] = useState(window.innerHeight);
   const [width, setWidth] = useState(window.innerWidth);
   const [state, send] = useMachine(GameMachine);
@@ -81,8 +80,8 @@ const Story = () => {
         newResults.poseLandmarks[POSE_LANDMARKS.PELVIS] = pelvis;
         newResults.poseLandmarks[POSE_LANDMARKS.SOLAR_PLEXIS] = solarPlexis;
       }
-      setPoseData((prevState) => {
-        return { ...prevState, ...newResults };
+      setPoseData(() => {
+        return { ...newResults }; // { ...prevState, ...newResults }: merge values
       });
     };
     holistic.onResults(updatePoseResults);
