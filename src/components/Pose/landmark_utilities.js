@@ -145,7 +145,32 @@ const LANDMARK_GROUPINGS = {
   }))(HAND_LANDMARKS),
 };
 
-export { LANDMARK_GROUPINGS };
+// create an object that represents the three points necessary to calculate a body
+// segment's angle
+const SEGMENT_ANGLE_LANDMARKS = {
+  RIGHT_BICEP: (({ RIGHT_HIP, RIGHT_SHOULDER, RIGHT_ELBOW }) => ({
+    RIGHT_HIP,
+    RIGHT_SHOULDER,
+    RIGHT_ELBOW,
+  }))(POSE_LANDMARKS),
+  RIGHT_FOREARM: (({ RIGHT_SHOULDER, RIGHT_ELBOW, RIGHT_WRIST }) => ({
+    RIGHT_SHOULDER,
+    RIGHT_ELBOW,
+    RIGHT_WRIST,
+  }))(POSE_LANDMARKS),
+  LEFT_BICEP: (({ LEFT_HIP, LEFT_SHOULDER, LEFT_ELBOW }) => ({
+    LEFT_HIP,
+    LEFT_SHOULDER,
+    LEFT_ELBOW,
+  }))(POSE_LANDMARKS),
+  LEFT_FOREARM: (({ LEFT_SHOULDER, LEFT_ELBOW, LEFT_WRIST }) => ({
+    LEFT_SHOULDER,
+    LEFT_ELBOW,
+    LEFT_WRIST,
+  }))(POSE_LANDMARKS),
+};
+
+export { LANDMARK_GROUPINGS, SEGMENT_ANGLE_LANDMARKS };
 
 /**
  * @param {Object} newResults - an object containing the new pose detection results
@@ -154,7 +179,7 @@ export { LANDMARK_GROUPINGS };
  * @description Calculates and adds the pose detection results for pelvis and solar plexis
  * to the pose detection results object.
  */
- const enrichLandmarks = (newResults) => {
+const enrichLandmarks = (newResults) => {
   const abdomenLandmarks = (({ RIGHT_HIP, LEFT_HIP, RIGHT_SHOULDER }) => ({
     RIGHT_HIP,
     LEFT_HIP,
