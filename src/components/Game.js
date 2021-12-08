@@ -1,24 +1,15 @@
-import ErrorBoundary from "./utilities/ErrorBoundary.js";
+import Pose from './Pose/index';
 import { Container } from "@inlet/react-pixi";
-import Pose from "./Pose.js";
 
 const Game = (props) => {
+  const { columnDimensions, rowDimensions, poseData } = props;
+
   return (
-    <Container
-      position={[props.width, props.height * 0.75]}
-      options={{
-        antialias: true,
-        autoDensity: true,
-        backgroundColor: 0xffd900,
-      }}
-    >
-      <ErrorBoundary>
-        <Pose
-          poseData={props.poseData}
-          width={props.width}
-          height={props.height}
-        />
-      </ErrorBoundary>
+    <Container>
+      <Pose
+        poseData={poseData}
+        colAttr={columnDimensions(3)}
+      />
     </Container>
   );
 };

@@ -1,45 +1,16 @@
 import { useCallback, useState } from "react";
-import { Graphics } from "@inlet/react-pixi";
+import { Graphics, Container } from "@inlet/react-pixi";
 import {
   FACEMESH_FACE_OVAL,
   POSE_LANDMARKS,
 } from "@mediapipe/holistic/holistic";
-import { blue, yellow } from "../utils/colors";
-
-POSE_LANDMARKS.SOLAR_PLEXIS = 33;
-POSE_LANDMARKS.PELVIS = 34;
-
-const HAND_LANDMARKS = {
-  WRIST: 0,
-  THUMB_CMC: 1,
-  THUMB_MCP: 2,
-  THUMB_IP: 3,
-  THUMB_TIP: 4,
-  INDEX_FINGER_MCP: 5,
-  INDEX_FINGER_PIP: 6,
-  INDEX_FINGER_DIP: 7,
-  INDEX_FINGER_TIP: 8,
-  MIDDLE_FINGER_MCP: 9,
-  MIDDLE_FINGER_PIP: 10,
-  MIDDLE_FINGER_DIP: 11,
-  MIDDLE_FINGER_TIP: 12,
-  RING_FINGER_MCP: 13,
-  RING_FINGER_PIP: 14,
-  RING_FINGER_DIP: 15,
-  RING_FINGER_TIP: 16,
-  PINKY_MCP: 17,
-  PINKY_PIP: 18,
-  PINKY_DIP: 19,
-  PINKY_TIP: 20,
-};
+import { blue, yellow } from "../../utils/colors";
+import { LANDMARK_GROUPINGS } from "./landmark_utilities";
+import { landmarkToCoordinates, objMap } from "./pose_drawing_utilities";
 
 // ****************************************************************
 // Utility functions
 // ****************************************************************
-function objMap(obj, func) {
-  return Object.fromEntries(Object.entries(obj).map(([k, v]) => [k, func(v)]));
-}
-
 const magnitude = (point1, point2) => {
   return Math.sqrt((point1.x - point2.x) ** 2 + (point1.y - point2.y) ** 2);
 };
@@ -52,11 +23,15 @@ const STROKE_COLOR = blue;
 // ****************************************************************
 
 const Pose = (props) => {
-  const [width] = useState(props.width * 0.45);
-  const [height] = useState(props.height * 0.66);
   const [armWidth, setArmWidth] = useState(0);
+  const { colAttr } = props;
+  const { width, height } = colAttr;
 
   const connectLandmarks = (landmarks, g) => {
+    // return if landmarks x or y is larger than width or height
+    if (landmarks.some((l) => l.x > width || l.y > height)) {
+      return;
+    }
     const coord = landmarks.shift();
     g.beginFill(FILL_COLOR);
     g.lineStyle(4, STROKE_COLOR, 1);
@@ -79,15 +54,6 @@ const Pose = (props) => {
     g.endFill();
   };
 
-  const landmarkToCoordinates = (data) => {
-    return (landmark) => {
-      const coordinates = Object.assign({}, data[landmark]);
-      coordinates.x = coordinates.x * width - width;
-      coordinates.y = coordinates.y * height - height;
-      return coordinates;
-    };
-  };
-
   const calculateArmWidth = (poseData) => {
     const landmarks = (({ RIGHT_SHOULDER, SOLAR_PLEXIS }) => ({
       RIGHT_SHOULDER,
@@ -95,26 +61,15 @@ const Pose = (props) => {
     }))(POSE_LANDMARKS);
     const coords = objMap(
       landmarks,
-      landmarkToCoordinates(poseData.poseLandmarks)
+      landmarkToCoordinates(poseData.poseLandmarks, width, height)
     );
     return magnitude(coords.RIGHT_SHOULDER, coords.SOLAR_PLEXIS) * 0.04;
   };
 
   const drawBiceps = (poseData, g) => {
-    const bicepLandmarks = (({
-      RIGHT_SHOULDER,
-      LEFT_SHOULDER,
-      RIGHT_ELBOW,
-      LEFT_ELBOW,
-    }) => ({
-      RIGHT_SHOULDER,
-      LEFT_SHOULDER,
-      RIGHT_ELBOW,
-      LEFT_ELBOW,
-    }))(POSE_LANDMARKS);
     const generalCoords = objMap(
-      bicepLandmarks,
-      landmarkToCoordinates(poseData.poseLandmarks)
+      LANDMARK_GROUPINGS.BICEP_LANDMARKS,
+      landmarkToCoordinates(poseData.poseLandmarks, width, height)
     );
     const rightBicepCoords = [
       {
@@ -143,21 +98,28 @@ const Pose = (props) => {
   };
 
   const drawForearms = (poseData, g) => {
-    const forearmLandmarks = (({
-      RIGHT_ELBOW,
-      RIGHT_WRIST,
-      LEFT_ELBOW,
-      LEFT_WRIST,
-    }) => ({
-      RIGHT_ELBOW,
-      RIGHT_WRIST,
-      LEFT_ELBOW,
-      LEFT_WRIST,
-    }))(POSE_LANDMARKS);
     const generalCoords = objMap(
-      forearmLandmarks,
-      landmarkToCoordinates(poseData.poseLandmarks)
+      LANDMARK_GROUPINGS.FOREARM_LANDMARKS,
+      landmarkToCoordinates(poseData.poseLandmarks, width, height)
     );
+    let rightWrist;
+    let leftWrist;
+    if (poseData.rightHandLandmarks) {
+      rightWrist = objMap(
+        LANDMARK_GROUPINGS.WRIST_LANDMARK,
+        landmarkToCoordinates(poseData.rightHandLandmarks, width, height)
+      ).WRIST;
+    } else {
+      rightWrist = generalCoords.RIGHT_WRIST;
+    }
+    if (poseData.leftHandLandmarks) {
+      leftWrist = objMap(
+        LANDMARK_GROUPINGS.WRIST_LANDMARK,
+        landmarkToCoordinates(poseData.leftHandLandmarks, width, height)
+      ).WRIST;
+    } else {
+      leftWrist = generalCoords.LEFT_WRIST;
+    }
     const rightForearmCoords = [
       {
         x: generalCoords.RIGHT_ELBOW.x + armWidth,
@@ -167,7 +129,7 @@ const Pose = (props) => {
         x: generalCoords.RIGHT_ELBOW.x - armWidth,
         y: generalCoords.RIGHT_ELBOW.y - armWidth,
       },
-      generalCoords.RIGHT_WRIST,
+      rightWrist,
     ];
     const leftForearmCoords = [
       {
@@ -178,7 +140,7 @@ const Pose = (props) => {
         x: generalCoords.LEFT_ELBOW.x - armWidth,
         y: generalCoords.LEFT_ELBOW.y - armWidth,
       },
-      generalCoords.LEFT_WRIST,
+      leftWrist,
     ];
     connectLandmarks(rightForearmCoords, g);
     connectLandmarks(leftForearmCoords, g);
@@ -187,8 +149,8 @@ const Pose = (props) => {
   const drawFace = (poseData, g) => {
     let faceOvalCoords = FACEMESH_FACE_OVAL.map((indexPair) => {
       const coordinates = poseData.faceLandmarks[indexPair[0]];
-      coordinates.x = coordinates.x * width - width;
-      coordinates.y = coordinates.y * height - height;
+      coordinates.x *= width;
+      coordinates.y *= height;
       return coordinates;
     });
     connectLandmarks(faceOvalCoords, g);
@@ -200,22 +162,9 @@ const Pose = (props) => {
   // and the LEFT_KNEE and RIGHT_KNEE landmarks instead of the
   // LEFT_ELBOW and RIGHT_ELBOW landmarks
   const drawThighs = (poseData, g) => {
-    const thighLandmarks = (({
-      LEFT_HIP,
-      RIGHT_HIP,
-      LEFT_KNEE,
-      RIGHT_KNEE,
-      PELVIS,
-    }) => ({
-      LEFT_HIP,
-      RIGHT_HIP,
-      LEFT_KNEE,
-      RIGHT_KNEE,
-      PELVIS,
-    }))(POSE_LANDMARKS);
     const generalCoords = objMap(
-      thighLandmarks,
-      landmarkToCoordinates(poseData.poseLandmarks)
+      LANDMARK_GROUPINGS.THIGH_LANDMARKS,
+      landmarkToCoordinates(poseData.poseLandmarks, width, height)
     );
     // Add magnitude to y coordinate to get a shorter distance b/c 0,0 is top left
     if (generalCoords.RIGHT_KNEE.visibility > 0.6) {
@@ -275,33 +224,17 @@ const Pose = (props) => {
   };
 
   const drawTorso = (poseData, g) => {
-    const torsoLandmarks = (({
-      RIGHT_SHOULDER,
-      LEFT_SHOULDER,
-      SOLAR_PLEXIS,
-    }) => ({ RIGHT_SHOULDER, LEFT_SHOULDER, SOLAR_PLEXIS }))(POSE_LANDMARKS);
     let torsoCoords = objMap(
-      torsoLandmarks,
-      landmarkToCoordinates(poseData.poseLandmarks)
+      LANDMARK_GROUPINGS.TORSO_LANDMARKS,
+      landmarkToCoordinates(poseData.poseLandmarks, width, height)
     );
     connectLandmarks(Object.values(torsoCoords), g);
   };
 
   const drawShins = (poseData, g) => {
-    const shinLandmarks = (({
-      LEFT_KNEE,
-      RIGHT_KNEE,
-      LEFT_ANKLE,
-      RIGHT_ANKLE,
-    }) => ({
-      LEFT_KNEE,
-      RIGHT_KNEE,
-      LEFT_ANKLE,
-      RIGHT_ANKLE,
-    }))(POSE_LANDMARKS);
     const generalCoords = objMap(
-      shinLandmarks,
-      landmarkToCoordinates(poseData.poseLandmarks)
+      LANDMARK_GROUPINGS.SHIN_LANDMARKS,
+      landmarkToCoordinates(poseData.poseLandmarks, width, height)
     );
     if (generalCoords.RIGHT_KNEE.visibility > 0.6) {
       const rightShinCoords = [
@@ -335,12 +268,9 @@ const Pose = (props) => {
   };
 
   const drawAbdomen = (poseData, g) => {
-    const abdomenLandmarks = (({ PELVIS, LEFT_HIP }) => ({ PELVIS, LEFT_HIP }))(
-      POSE_LANDMARKS
-    );
     let abdomenCoords = objMap(
-      abdomenLandmarks,
-      landmarkToCoordinates(poseData.poseLandmarks)
+      LANDMARK_GROUPINGS.ABDOMEN_LANDMARKS,
+      landmarkToCoordinates(poseData.poseLandmarks, width, height)
     );
     const radius = magnitude(abdomenCoords.PELVIS, abdomenCoords.LEFT_HIP); //*0.8
     g.beginFill(FILL_COLOR);
@@ -349,97 +279,37 @@ const Pose = (props) => {
   };
 
   const drawHands = (poseData, g) => {
-    const palmLandmarks = (({
-      WRIST,
-      THUMB_CMC,
-      INDEX_FINGER_MCP,
-      MIDDLE_FINGER_MCP,
-      RING_FINGER_MCP,
-      PINKY_MCP,
-    }) => ({
-      WRIST,
-      THUMB_CMC,
-      INDEX_FINGER_MCP,
-      MIDDLE_FINGER_MCP,
-      RING_FINGER_MCP,
-      PINKY_MCP,
-    }))(HAND_LANDMARKS);
-    const thumbLandmarks = (({
-      THUMB_CMC,
-      THUMB_MCP,
-      THUMB_IP,
-      THUMB_TIP,
-    }) => ({ THUMB_CMC, THUMB_MCP, THUMB_IP, THUMB_TIP }))(HAND_LANDMARKS);
-    const indexFingerLandmarks = (({
-      INDEX_FINGER_MCP,
-      INDEX_FINGER_PIP,
-      INDEX_FINGER_DIP,
-      INDEX_FINGER_TIP,
-    }) => ({
-      INDEX_FINGER_MCP,
-      INDEX_FINGER_PIP,
-      INDEX_FINGER_DIP,
-      INDEX_FINGER_TIP,
-    }))(HAND_LANDMARKS);
-    const middleFingerLandmarks = (({
-      MIDDLE_FINGER_MCP,
-      MIDDLE_FINGER_PIP,
-      MIDDLE_FINGER_DIP,
-      MIDDLE_FINGER_TIP,
-    }) => ({
-      MIDDLE_FINGER_MCP,
-      MIDDLE_FINGER_PIP,
-      MIDDLE_FINGER_DIP,
-      MIDDLE_FINGER_TIP,
-    }))(HAND_LANDMARKS);
-    const ringFingerLandmarks = (({
-      RING_FINGER_MCP,
-      RING_FINGER_PIP,
-      RING_FINGER_DIP,
-      RING_FINGER_TIP,
-    }) => ({
-      RING_FINGER_MCP,
-      RING_FINGER_PIP,
-      RING_FINGER_DIP,
-      RING_FINGER_TIP,
-    }))(HAND_LANDMARKS);
-    const pinkyLandmarks = (({
-      PINKY_MCP,
-      PINKY_PIP,
-      PINKY_DIP,
-      PINKY_TIP,
-    }) => ({ PINKY_MCP, PINKY_PIP, PINKY_DIP, PINKY_TIP }))(HAND_LANDMARKS);
     const fingerLandmarks = [
-      thumbLandmarks,
-      indexFingerLandmarks,
-      middleFingerLandmarks,
-      ringFingerLandmarks,
-      pinkyLandmarks,
+      LANDMARK_GROUPINGS.THUMB_LANDMARKS,
+      LANDMARK_GROUPINGS.INDEX_FINGER_LANDMARKS,
+      LANDMARK_GROUPINGS.MIDDLE_FINGER_LANDMARKS,
+      LANDMARK_GROUPINGS.RING_FINGER_LANDMARKS,
+      LANDMARK_GROUPINGS.PINKY_LANDMARKS,
     ];
     if (poseData.rightHandLandmarks) {
       let rightPalmCoords = objMap(
-        palmLandmarks,
-        landmarkToCoordinates(poseData.rightHandLandmarks)
+        LANDMARK_GROUPINGS.PALM_LANDMARKS,
+        landmarkToCoordinates(poseData.rightHandLandmarks, width, height)
       );
       connectLandmarks(Object.values(rightPalmCoords), g);
       let rightFingers = fingerLandmarks.map((fingerLandmarks) =>
         objMap(
           fingerLandmarks,
-          landmarkToCoordinates(poseData.rightHandLandmarks)
+          landmarkToCoordinates(poseData.rightHandLandmarks, width, height)
         )
       );
       rightFingers.forEach((finger) => connectFinger(Object.values(finger), g));
     }
     if (poseData.leftHandLandmarks) {
       let leftPalmCoords = objMap(
-        palmLandmarks,
-        landmarkToCoordinates(poseData.leftHandLandmarks)
+        LANDMARK_GROUPINGS.PALM_LANDMARKS,
+        landmarkToCoordinates(poseData.leftHandLandmarks, width, height)
       );
       connectLandmarks(Object.values(leftPalmCoords), g);
       let leftFingers = fingerLandmarks.map((fingerLandmarks) =>
         objMap(
           fingerLandmarks,
-          landmarkToCoordinates(poseData.leftHandLandmarks)
+          landmarkToCoordinates(poseData.leftHandLandmarks, width, height)
         )
       );
       leftFingers.forEach((finger) => connectFinger(Object.values(finger), g));
@@ -449,6 +319,9 @@ const Pose = (props) => {
   const draw = useCallback(
     (g) => {
       g.clear();
+      // g.beginFill(0xffffff);
+      // g.drawRect(colAttr.x, colAttr.y, colAttr.width, colAttr.height);
+      // g.endFill();
       if (props.poseData.faceLandmarks) {
         drawFace(props.poseData, g);
       }
@@ -467,7 +340,11 @@ const Pose = (props) => {
     [props.poseData]
   );
 
-  return <Graphics draw={draw} />;
+  return (
+    <Container position={[colAttr.x, colAttr.y]} scale={0.8}>
+      <Graphics draw={draw} />
+    </Container>
+  );
 };
 
 export default Pose;
