@@ -15,16 +15,15 @@ import {
 } from "./Pose/pose_drawing_utilities";
 
 const Tutorial = (props) => {
-  const { columnDimensions, _, poseData } = props;
   const [state, send] = useMachine(TutorialMachine);
   const { text } = state.context;
-  const modelColumn = columnDimensions(1);
-  const col2Dim = columnDimensions(2);
-  const playerColumn = columnDimensions(3);
+  const modelColumn = props.columnDimensions(1);
+  const col2Dim = props.columnDimensions(2);
+  const playerColumn = props.columnDimensions(3);
   const [poses, setPoses] = useState([]);
   const [currentPose, setCurrentPose] = useState({});
   const [poseMatchData, setPoseMatchData] = useState({});
-  const [poseSimilarity, setPoseSimilarity] = useState([0]);
+  const [poseSimilarity, setPoseSimilarity] = useState([]);
 
   // on mount, create an array of the poses that will be used in the tutorial
   useEffect(() => {
@@ -83,9 +82,12 @@ const Tutorial = (props) => {
               convertedLandmarks.segment === segmentSet.segment
           )[0].landmarks;
           const modelSet = segmentSet.landmarks;
-          return segmentSimilarity(playerSet, modelSet);
+          const similarityScore = segmentSimilarity(playerSet, modelSet);
+          return { segment: segmentSet.segment, similarityScore };
         });
         setPoseSimilarity(similarityScores);
+      } else {
+        setPoseSimilarity([{ similarityScore: 0 }]);
       }
     }
   }, [props.poseData]);
@@ -99,14 +101,16 @@ const Tutorial = (props) => {
       (previousValue, currentValue) => {
         // all segments need to be over the threshold -- will only return true if
         // all are over threshold
-        return previousValue && currentValue > similarityThreshold;
+        return (
+          previousValue && currentValue.similarityScore > similarityThreshold
+        );
       },
       true
     );
     if (similarityScore) {
       // move to next state and reset pose similarity
       send("NEXT");
-      setPoseSimilarity([0]);
+      setPoseSimilarity([{ similarityScore: 0 }]);
     }
   }, [poseSimilarity]);
 
@@ -130,7 +134,11 @@ const Tutorial = (props) => {
             })
           }
         />
-        <Pose poseData={poseData} colAttr={playerColumn} />
+        <Pose
+          poseData={props.poseData}
+          colAttr={playerColumn}
+          similarityScores={poseSimilarity}
+        />
       </ErrorBoundary>
     </Container>
   );

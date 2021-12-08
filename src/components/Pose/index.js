@@ -4,9 +4,17 @@ import {
   FACEMESH_FACE_OVAL,
   POSE_LANDMARKS,
 } from "@mediapipe/holistic/holistic";
-import { blue, yellow } from "../../utils/colors";
+import { blue, yellow, pink } from "../../utils/colors";
 import { LANDMARK_GROUPINGS } from "./landmark_utilities";
 import { landmarkToCoordinates, objMap } from "./pose_drawing_utilities";
+import { scale } from "chroma-js";
+
+const matchedFill = scale([yellow.toString(16), pink.toString(16)]).domain([
+  0, 100,
+]);
+const matchedStroke = scale([blue.toString(16), pink.toString(16)]).domain([
+  0, 100,
+]);
 
 // ****************************************************************
 // Utility functions
@@ -27,14 +35,34 @@ const Pose = (props) => {
   const { colAttr } = props;
   const { width, height } = colAttr;
 
-  const connectLandmarks = (landmarks, g) => {
+  const connectLandmarks = (landmarks, g, similarityScoreSegment) => {
+    let fillColor = yellow;
+    let strokeColor = blue;
+    if (
+      props.similarityScores &&
+      props.similarityScores.length > 1 &&
+      similarityScoreSegment
+    ) {
+      props.similarityScores.forEach((score) => {
+        if (score.segment === similarityScoreSegment) {
+          fillColor = parseInt(
+            matchedFill(score.similarityScore).hex().substring(1),
+            16
+          );
+          strokeColor = parseInt(
+            matchedStroke(score.similarityScore).hex().substring(1),
+            16
+          );
+        }
+      });
+    }
     // return if landmarks x or y is larger than width or height
     if (landmarks.some((l) => l.x > width || l.y > height)) {
       return;
     }
     const coord = landmarks.shift();
-    g.beginFill(FILL_COLOR);
-    g.lineStyle(4, STROKE_COLOR, 1);
+    g.beginFill(fillColor);
+    g.lineStyle(4, strokeColor, 1);
     g.moveTo(coord.x, coord.y);
     landmarks.forEach((coordinate) => {
       g.lineTo(coordinate.x, coordinate.y);
@@ -93,8 +121,8 @@ const Pose = (props) => {
       },
       generalCoords.LEFT_ELBOW,
     ];
-    connectLandmarks(rightBicepCoords, g);
-    connectLandmarks(leftBicepCoords, g);
+    connectLandmarks(rightBicepCoords, g, "RIGHT_BICEP");
+    connectLandmarks(leftBicepCoords, g, "LEFT_BICEP");
   };
 
   const drawForearms = (poseData, g) => {
@@ -142,8 +170,8 @@ const Pose = (props) => {
       },
       leftWrist,
     ];
-    connectLandmarks(rightForearmCoords, g);
-    connectLandmarks(leftForearmCoords, g);
+    connectLandmarks(rightForearmCoords, g, "RIGHT_FOREARM");
+    connectLandmarks(leftForearmCoords, g, "LEFT_FOREARM");
   };
 
   const drawFace = (poseData, g) => {
