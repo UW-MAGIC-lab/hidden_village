@@ -1,14 +1,14 @@
-import Pose from './Pose/index';
+import Tutorial from "./Tutorial.js";
 import { Container } from "@inlet/react-pixi";
 
 const Game = (props) => {
   const { columnDimensions, rowDimensions, poseData } = props;
-
   return (
     <Container>
-      <Pose
+      <Tutorial
         poseData={poseData}
-        colAttr={columnDimensions(3)}
+        columnDimensions={columnDimensions}
+        rowDimensions={rowDimensions}
       />
     </Container>
   );
