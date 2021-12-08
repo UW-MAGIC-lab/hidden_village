@@ -13,6 +13,7 @@ import {
   matchSegmentToLandmarks,
   segmentSimilarity,
 } from "./Pose/pose_drawing_utilities";
+import CursorMode from "./CursorMode.js";
 
 const Tutorial = (props) => {
   const [state, send] = useMachine(TutorialMachine);
@@ -83,6 +84,9 @@ const Tutorial = (props) => {
           )[0].landmarks;
           const modelSet = segmentSet.landmarks;
           const similarityScore = segmentSimilarity(playerSet, modelSet);
+          // collect similarity score for comparison in this component
+          // collect segment name to use similarity score for visual feedback (color)
+          // in player pose
           return { segment: segmentSet.segment, similarityScore };
         });
         setPoseSimilarity(similarityScores);
@@ -96,7 +100,7 @@ const Tutorial = (props) => {
   // the threshold for similarity to the model pose. If it is, then transition to the
   // next state. If not, stay in the same state
   useEffect(() => {
-    const similarityThreshold = 70;
+    const similarityThreshold = 60;
     const similarityScore = poseSimilarity.reduce(
       (previousValue, currentValue) => {
         // all segments need to be over the threshold -- will only return true if
@@ -139,6 +143,9 @@ const Tutorial = (props) => {
           colAttr={playerColumn}
           similarityScores={poseSimilarity}
         />
+        {state.context.currentStepIndex === 6 && (
+          <CursorMode poseData={props.poseData} callback={() => send("NEXT")} />
+        )}
       </ErrorBoundary>
     </Container>
   );
