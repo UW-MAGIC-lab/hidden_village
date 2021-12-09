@@ -64,7 +64,7 @@ const Tutorial = (props) => {
   // into a variable to be monitored
   useEffect(() => {
     if (!state.matches("transition")) {
-      if (poseMatchData && Object.keys(poseMatchData).length > 0) {
+      if (poseMatchData && Object.keys(poseMatchData).length > 0 && props.poseData.poseLandmarks) {
         // extract segment from the larger player pose dataset
         const convertedLandmarks = poseMatchData.map((segmentSet) => {
           return {
