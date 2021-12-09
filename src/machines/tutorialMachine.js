@@ -23,7 +23,7 @@ const TutorialMachine = createMachine(
       welcome2: {
         exit: "moveToNextStep",
         after: {
-          2000: {
+          10000: {
             target: "running",
           },
         },

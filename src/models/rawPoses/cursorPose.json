@@ -2,7 +2,9 @@
   "name": "cursor_pose", 
   "matchingConfig": [
     {"segment": "RIGHT_BICEP", "data": "poseLandmarks"}, 
-    {"segment": "RIGHT_FOREARM", "data": "poseLandmarks"}
+    {"segment": "RIGHT_FOREARM", "data": "poseLandmarks"},
+    // {"segment": "LEFT_BICEP", "data": "poseLandmarks"}, 
+    {"segment": "LEFT_FOREARM", "data": "poseLandmarks"}
   ],
   "landmarks": {
     "leftHandLandmarks": [

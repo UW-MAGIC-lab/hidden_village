@@ -14,7 +14,7 @@ const landmarkToCoordinates = (data, width, height) => {
     // coordinates.x = Math.min(Math.max(coordinates.x, 0), width);
     // coordinates.y = Math.min(Math.max(coordinates.y, 0), height);
     return coordinates;
-  };
+  }
 };
 
 export { objMap, landmarkToCoordinates };
