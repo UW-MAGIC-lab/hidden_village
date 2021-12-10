@@ -4,12 +4,32 @@ import { useState, useEffect} from "react";
 import { Camera } from "@mediapipe/camera_utils";
 import { Holistic } from "@mediapipe/holistic/holistic";
 import { enrichLandmarks } from "./Pose/landmark_utilities";
+import { generateRowAndColumnFunctions } from "./utilities/layoutFunction";
+
+const [
+  numRows,
+  numColumns,
+  marginBetweenRows,
+  marginBetweenColumns,
+  columnGutter,
+  rowGutter,
+] = [2, 3, 20, 20, 30, 30];
 
 const Sandbox = () => {
   let holistic;
   const [height, setHeight] = useState(window.innerHeight);
   const [width, setWidth] = useState(window.innerWidth);
   const [poseData, setPoseData] = useState({});
+  let [rowDimensions, columnDimensions] = generateRowAndColumnFunctions(
+    width,
+    height,
+    numRows,
+    numColumns,
+    marginBetweenRows,
+    marginBetweenColumns,
+    columnGutter,
+    rowGutter
+  );
 
   useEffect(() => {
     holistic = new Holistic({
