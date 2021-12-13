@@ -4,6 +4,30 @@ import { white } from "../utils/colors";
 
 /**
  * @component
+ * @example
+ * return (
+ *   <Face
+        placement={[0,0]}
+        height={76}
+        width={76}
+        browType={'angry'}
+        mouthType={'happy'}
+        eyeSpacing={"small"}
+      />
+ * )
+ * @description
+ * placement: An array with an x and y value, with (0,0) being the top left corner of the screen
+ * 
+ * height: Number (in pixels); often a scalar value of the height or other segment length
+ * 
+ * width:  Number (in pixels); often a scalar value of the height or other segment length
+ * 
+ * browType: String; one of 'angry', 'neutral', 'sad', 'happy'
+ * 
+ * mouthType: String; one of 'angry', 'neutral', 'sad', 'happy'
+ * 
+ * eyeSpacing: String; one of 'small', 'medium', 'large'
+ * 
  */
 
 // props
