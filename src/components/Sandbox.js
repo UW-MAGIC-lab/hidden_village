@@ -82,8 +82,8 @@ const Sandbox = () => {
       <Character
         placement={[row1.x + row1.width * 0.4, row1.y + row1.height * 0.4]}
         type={"circle"}
-        color={pink}
-        facePosition={[-20, -30]}
+        color={green}
+        facePosition={[-30, -10]}
         height={col1.height * 0.1}
         mood={"happy"}
       />

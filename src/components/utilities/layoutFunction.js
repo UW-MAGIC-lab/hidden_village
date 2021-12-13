@@ -24,7 +24,7 @@
  * @param {number} marginBetweenColumns in pixels
  * @param {number} columnGutter - in pixels, the space between the edge of the screen and the column [margin]
  * @param {number} rowGutter - in pixels, the space between the edge of the screen and the row [margin]
- * @returns {Array<function>} [rowDimensionsCallback, columnDimensionsCallback]
+ * @returns {[rowDimensionsCallback, columnDimensionsCallback]}
  */
 const generateRowAndColumnFunctions = (
   screenWidth,

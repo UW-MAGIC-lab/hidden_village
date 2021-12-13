@@ -1,8 +1,7 @@
 import { Graphics, Container } from "@inlet/react-pixi";
-import { blue, pink, green } from "../utils/colors";
+import { blue } from "../utils/colors";
 import { useCallback } from "react";
 import Face from "./Face";
-import PropTypes from "prop-types";
 
 const drawCircle = (g, height) => {
   g.drawCircle(0, 0, height);
@@ -24,7 +23,7 @@ const trapezoid = (g, height) => {
   g.lineTo(2.25 * height, height);
   g.lineTo(0, height);
   g.endFill();
-};
+}
 
 const square = (g, height) => {
   g.drawRect(0, 0, height, height);
@@ -39,7 +38,7 @@ const rectangle = (g, height) => {
 const scaleneTriangle = (g, height) => {
   const width = height * 0.5;
   g.moveTo(0, height);
-  g.lineTo(width / 2, 0);
+  g.lineTo(width/2, 0);
   g.lineTo(width, height);
   g.lineTo(0, height);
   g.endFill();
@@ -50,63 +49,35 @@ const moodToProps = (mood) => {
     case "happy":
       return {
         mouthType: "happy",
-        browType: "angry",
+        browType: "angry"
       };
     case "sad":
       return {
         mouthType: "sad",
-        browType: "angry",
+        browType: "angry"
       };
     case "angry":
       return {
         mouthType: "angry",
-        browType: "angry",
+        browType: "angry"
       };
     case "neutral":
       return {
         mouthType: "neutral",
-        browType: "neutral",
+        browType: "neutral"
       };
     case "surprised":
       return {
         mouthType: "surprised",
-        browType: "neutral",
+        browType: "neutral"
       };
     default:
       return {
         mouthType: "neutral",
-        browType: "neutral",
+        browType: "neutral"
       };
-  }
-};
-
-/**
- * @component
- * @example
- * return (
- *   <Character
- *    type={"rectangle"}
- *    height={200}
- *    placement={[200, 200]}
- *    color={blue}
- *    mood={"neutral"}
- *    facePosition={[70, 50]}
- *  />
- * )
- * @description
- * type: String; One of ["circle", "equilateralTriangle", "scaleneTriangle", "square", "trapezoid", "rectangle"]
- *
- * color: String (hex); One of [blue, pink, green]
- *
- * height: Number (in pixels); often a scalar value of the height or other segment length
- *
- * facePosition: Array<Number>; An array with an x and y value, with (0,0) being the top left corner of the character
- *
- * mood: String; One of ["happy", "sad", "angry", "neutral", "surprised"]
- *
- * placement: Array<Number>; An array with an x and y value, with (0,0) being the top left corner of the screen
- *
- */
+    }
+}
 
 const Character = (props) => {
   const { placement, type, color, height, facePosition } = props;
@@ -137,6 +108,7 @@ const Character = (props) => {
     }
   }, []);
 
+
   return (
     <Container position={placement} scale={1}>
       <Graphics draw={draw} />
@@ -145,7 +117,7 @@ const Character = (props) => {
         height={76}
         width={76}
         {...moodToProps(props.mood)}
-        eyeSpacing={type === "scaleneTriangle" ? "small" : "medium"}
+        eyeSpacing={type === 'scaleneTriangle' ? "small" : "medium" }
       />
     </Container>
   );
