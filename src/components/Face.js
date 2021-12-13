@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { Graphics } from "@inlet/react-pixi";
+import { Container, Graphics } from "@inlet/react-pixi";
 import { white } from "../utils/colors";
 
 /**
@@ -12,7 +12,7 @@ import { white } from "../utils/colors";
 // mouth: happy, confused, neutral, sad, None
 
 const Face = (props) => {
-  const { eyeSpacing, browType, mouthType, width, height, position } = props;
+  const { eyeSpacing, browType, mouthType, width, height, placement } = props;
   const drawEyes = (g) => {
     // eyeshape would manipulate eyeHeight and eyeWidth
     const eyeHeight = height * 0.175;
@@ -54,7 +54,11 @@ const Face = (props) => {
     switch (mouthType) {
       case "happy":
         g.beginFill();
-        g.arc(width * 0.45, height * 0.45, width * 0.35, 0, Math.PI);
+        if (eyeSpacing === "small") {
+          g.arc(width * 0.5, height * 0.5, width * 0.25, 0, Math.PI);
+        } else {
+          g.arc(width * 0.5, height * 0.5, width * 0.35, 0, Math.PI);
+        }
         g.endFill();
         break;
       case "neutral":
@@ -171,7 +175,11 @@ const Face = (props) => {
     [props]
   );
 
-  return <Graphics draw={draw} position={position} />;
+  return (
+    <Container>
+      <Graphics draw={draw} position={placement} />
+    </Container>
+  );
 };
 
 export default Face;
