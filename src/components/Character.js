@@ -1,8 +1,9 @@
-import { Graphics, Container } from "@inlet/react-pixi";
+import { Graphics, Container, Sprite, useApp } from "@inlet/react-pixi";
+import { useCallback, useEffect, useState, useRef } from "react";
 import { blue, pink, green } from "../utils/colors";
-import { useCallback } from "react";
 import Face from "./Face";
 import PropTypes from "prop-types";
+import { SCALE_MODES } from "@pixi/constants";
 
 const drawCircle = (g, height) => {
   g.drawCircle(0, 0, height);
@@ -109,7 +110,10 @@ const moodToProps = (mood) => {
  */
 
 const Character = (props) => {
+  const app = useApp();
   const { placement, type, color, height, facePosition } = props;
+  const characterRef = useRef(null);
+  const [texture, setTexture] = useState(null);
   const draw = useCallback((g) => {
     g.clear();
     g.beginFill(color);
@@ -137,17 +141,33 @@ const Character = (props) => {
     }
   }, []);
 
+  useEffect(() => {
+    setTexture(
+      app.renderer.generateTexture(characterRef.current, {
+        scaleMode: SCALE_MODES.LINEAR,
+        resolution: window.innerWidth / window.innerHeight,
+      })
+    );
+  }, []);
+
   return (
-    <Container position={placement} scale={1}>
-      <Graphics draw={draw} />
-      <Face
-        placement={facePosition}
-        height={76}
-        width={76}
-        {...moodToProps(props.mood)}
-        eyeSpacing={type === "scaleneTriangle" ? "small" : "medium"}
-      />
-    </Container>
+    <>
+      {texture && (
+        <Sprite texture={texture} x={placement[0]} y={placement[1]} />
+      )}
+      {!texture && (
+        <Container position={placement} scale={1} ref={characterRef}>
+          <Graphics draw={draw} />
+          <Face
+            placement={facePosition}
+            height={76}
+            width={76}
+            {...moodToProps(props.mood)}
+            eyeSpacing={type === "scaleneTriangle" ? "small" : "medium"}
+          />
+        </Container>
+      )}
+    </>
   );
 };
 
