@@ -5,7 +5,7 @@ import TextBox from "./TextBox.js";
 import Pose from "./Pose/index.js";
 import { useEffect, useState } from "react";
 import { useMachine, useSelector } from "@xstate/react";
-import ChapterMachine from "../machines/ChapterMachine.js";
+import ChapterMachine from "../machines/chapterMachine.js";
 import { Sprite } from "@inlet/react-pixi";
 
 const characterRenderOrder = {
