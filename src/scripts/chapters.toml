@@ -21,6 +21,7 @@ intro = [
   { speaker = "equilateralTriangle", text = "Hmmmm… Try this?" }
 ]
 outro = [
+  { speaker = "equilateralTriangle", text = "Thanks for trying out the latest prototype of The Hidden Village online! Future versions will include experimental tasks for participants to perform, alongside experiment planning and pose editing tools." },
   { speaker = "equilateralTriangle", text = "Wow! You’re speedy. Look at that!" },
   { speaker = "player", text = 'I guess I am! Any idea where I should go next?' },
   { speaker = "equilateralTriangle", text = "I’m not sure. It’s all the same around here, but maybe it’ll all come together the more you are inside?" }
