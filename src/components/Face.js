@@ -35,93 +35,94 @@ import { white } from "../utils/colors";
 // brows: angry, neutral, happy, None
 // mouth: happy, confused, neutral, sad, None
 
+const drawEyes = (g, height, width, eyeSpacing) => {
+  // eyeshape would manipulate eyeHeight and eyeWidth
+  const eyeHeight = height * 0.175;
+  const eyeWidth = width * 0.125;
+  let [rightEyeCoords, leftEyeCoords, rightPupil, leftPupil] = [];
+  switch (eyeSpacing) {
+    case "small":
+      rightEyeCoords = { x: width * 0.65, y: 0 };
+      rightPupil = { x: width * 0.625, y: height * -0.1 };
+      leftEyeCoords = { x: width * 0.35, y: 0 };
+      leftPupil = { x: width * 0.325, y: height * -0.1 };
+      break;
+    case "medium":
+      rightEyeCoords = { x: width * 0.75, y: 0 };
+      leftEyeCoords = { x: width * 0.25, y: 0 };
+      rightPupil = { x: width * 0.725, y: height * -0.1 };
+      leftPupil = { x: width * 0.225, y: height * -0.1 };
+      break;
+    case "large":
+      rightEyeCoords = { x: width * 0.85, y: 0 };
+      rightPupil = { x: width * 0.825, y: height * -0.1 };
+      leftEyeCoords = { x: width * 0.15, y: 0 };
+      leftPupil = { x: width * 0.125, y: height * -0.1 };
+    default:
+      break;
+  }
+  g.beginFill();
+  g.drawEllipse(rightEyeCoords.x, rightEyeCoords.y, eyeWidth, eyeHeight);
+  g.drawEllipse(leftEyeCoords.x, leftEyeCoords.y, eyeWidth, eyeHeight);
+  g.endFill();
+  g.beginFill(white);
+  g.drawCircle(rightPupil.x, rightPupil.y, eyeWidth * 0.5);
+  g.drawCircle(leftPupil.x, leftPupil.y, eyeWidth * 0.5);
+  g.endFill();
+};
+
+const drawMouth = (g, height, width, mouthType, eyeSpacing) => {
+  // TODO: update position based on eyeSpacing
+  switch (mouthType) {
+    case "happy":
+      g.beginFill();
+      if (eyeSpacing === "small") {
+        g.arc(width * 0.5, height * 0.5, width * 0.25, 0, Math.PI);
+      } else {
+        g.arc(width * 0.5, height * 0.5, width * 0.35, 0, Math.PI);
+      }
+      g.endFill();
+      break;
+    case "neutral":
+      g.beginFill();
+      g.lineStyle(width * 0.1);
+      g.moveTo(width * 0.25, height * 0.55);
+      g.lineTo(width * 0.65, height * 0.55);
+      g.endFill();
+      break;
+    case "confused":
+      g.beginFill();
+      g.drawCircle(width * 0.4, height * 0.65, width * 0.1);
+      g.endFill();
+      break;
+    case "sad":
+      g.beginFill();
+      g.endFill();
+      break;
+    default:
+      break;
+  }
+};
+
+const drawBrows = (g, height, width, browType) => {
+  return;
+  switch (browType) {
+    case "angry":
+      g.lineStyle(width * 0.1);
+      break;
+    case "neutral":
+      // brows
+      break;
+    case "happy":
+      // brows
+      break;
+    default:
+      break;
+  }
+};
+
 const Face = (props) => {
   const { eyeSpacing, browType, mouthType, width, height, placement } = props;
-  const drawEyes = (g) => {
-    // eyeshape would manipulate eyeHeight and eyeWidth
-    const eyeHeight = height * 0.175;
-    const eyeWidth = width * 0.125;
-    let [rightEyeCoords, leftEyeCoords, rightPupil, leftPupil] = [];
-    switch (eyeSpacing) {
-      case "small":
-        rightEyeCoords = { x: width * 0.65, y: 0 };
-        rightPupil = { x: width * 0.625, y: height * -0.1 };
-        leftEyeCoords = { x: width * 0.35, y: 0 };
-        leftPupil = { x: width * 0.325, y: height * -0.1 };
-        break;
-      case "medium":
-        rightEyeCoords = { x: width * 0.75, y: 0 };
-        leftEyeCoords = { x: width * 0.25, y: 0 };
-        rightPupil = { x: width * 0.725, y: height * -0.1 };
-        leftPupil = { x: width * 0.225, y: height * -0.1 };
-        break;
-      case "large":
-        rightEyeCoords = { x: width * 0.85, y: 0 };
-        rightPupil = { x: width * 0.825, y: height * -0.1 };
-        leftEyeCoords = { x: width * 0.15, y: 0 };
-        leftPupil = { x: width * 0.125, y: height * -0.1 };
-      default:
-        break;
-    }
-    g.beginFill();
-    g.drawEllipse(rightEyeCoords.x, rightEyeCoords.y, eyeWidth, eyeHeight);
-    g.drawEllipse(leftEyeCoords.x, leftEyeCoords.y, eyeWidth, eyeHeight);
-    g.endFill();
-    g.beginFill(white);
-    g.drawCircle(rightPupil.x, rightPupil.y, eyeWidth * 0.5);
-    g.drawCircle(leftPupil.x, leftPupil.y, eyeWidth * 0.5);
-    g.endFill();
-  };
-
-  const drawMouth = (g) => {
-    // TODO: update position based on eyeSpacing
-    switch (mouthType) {
-      case "happy":
-        g.beginFill();
-        if (eyeSpacing === "small") {
-          g.arc(width * 0.5, height * 0.5, width * 0.25, 0, Math.PI);
-        } else {
-          g.arc(width * 0.5, height * 0.5, width * 0.35, 0, Math.PI);
-        }
-        g.endFill();
-        break;
-      case "neutral":
-        g.beginFill();
-        g.lineStyle(width * 0.1);
-        g.moveTo(width * 0.25, height * 0.55);
-        g.lineTo(width * 0.65, height * 0.55);
-        g.endFill();
-        break;
-      case "confused":
-        g.beginFill();
-        g.drawCircle(width * 0.4, height * 0.65, width * 0.1);
-        g.endFill();
-        break;
-      case "sad":
-        g.beginFill();
-        g.endFill();
-        break;
-      default:
-        break;
-    }
-  };
-
-  const drawBrows = (g) => {
-    return;
-    switch (browType) {
-      case "angry":
-        g.lineStyle(width * 0.1);
-        break;
-      case "neutral":
-        // brows
-        break;
-      case "happy":
-        // brows
-        break;
-      default:
-        break;
-    }
-  };
 
   const draw = useCallback(
     (g) => {
@@ -192,9 +193,9 @@ const Face = (props) => {
       // g.drawRect(props.mouthPosition[0], props.mouthPosition[1], props.mouthWidth, props.mouthHeight);
       // g.endFill();
       g.clear();
-      drawEyes(g);
-      drawMouth(g);
-      drawBrows(g);
+      drawEyes(g, height, width, eyeSpacing);
+      drawMouth(g, height, width, mouthType, eyeSpacing);
+      drawBrows(g, height, width, browType);
     },
     [props]
   );

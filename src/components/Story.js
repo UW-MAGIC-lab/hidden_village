@@ -113,6 +113,8 @@ const Story = () => {
             poseData={poseData}
             columnDimensions={columnDimensions}
             rowDimensions={rowDimensions}
+            height={height}
+            width={width}
           />
         )}
       </Stage>

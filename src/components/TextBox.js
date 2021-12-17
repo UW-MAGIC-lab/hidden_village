@@ -1,4 +1,4 @@
-import { Container, Graphics, Sprite, Text } from "@inlet/react-pixi";
+import { Container, Graphics, Text } from "@inlet/react-pixi";
 import { useCallback, useEffect, useState } from "react";
 import { white, darkGray } from "../utils/colors";
 import { TextStyle } from "@pixi/text";
@@ -6,22 +6,9 @@ import { TextStyle } from "@pixi/text";
 const TextBox = (props) => {
   const { rowDimensionsCallback, text } = props;
   const [rowDimensions] = useState(rowDimensionsCallback(2));
-  const [hovering, setHovering] = useState(false);
-  const [textStartX] = useState(
-    12 * rowDimensions.margin
-  );
-  const [textStartY] = useState(
-    4 * rowDimensions.margin
-  );
-  const [displayText, setDisplayText] = useState(text[0]);
-  const [nextButton, setNextButton] = useState(new URL('../assets/next_button.png', import.meta.url))
-  useEffect(() => {
-    if (hovering) {
-      setNextButton(new URL('../assets/next_button_hover.png', import.meta.url))
-    } else {
-      setNextButton(new URL('../assets/next_button.png', import.meta.url))
-    }
-  }, [hovering])
+  const [textStartX] = useState(12 * rowDimensions.margin);
+  const [textStartY] = useState(4 * rowDimensions.margin);
+  const [displayText, setDisplayText] = useState(text);
   // create background design drawing a horizontal line across the top of the Container
   const draw = useCallback((g) => {
     g.clear();
@@ -35,11 +22,18 @@ const TextBox = (props) => {
     g.endFill();
   }, []);
 
+  useEffect(() => {
+    setDisplayText(text);
+  }, [props.text]);
+
   return (
     // Position the Container to the top of the row -- this will set all x, y coordinates _RELATIVE_ to the Container
     // e.g. (0,0) will be the top left corner of the container.
     <Container position={[rowDimensions.x, rowDimensions.y]}>
       <Graphics draw={draw} />
+      <Container position={[rowDimensions.margin, 5 * rowDimensions.margin]}>
+        {props.speaker}
+      </Container>
       <Text
         text={displayText}
         x={textStartX}
@@ -56,19 +50,6 @@ const TextBox = (props) => {
           })
         }
       />
-      <Sprite
-        image={nextButton.href}
-        x={rowDimensions.width - (3*rowDimensions.margin)}
-        y={rowDimensions.height - (4*rowDimensions.margin)}
-        mouseover={() => setHovering(true)}
-        mouseout={() => setHovering(false)}
-        mouseup={() => {
-          text.shift();
-          setDisplayText(text[0]);
-        }}
-        interactive={true}
-        anchor={0.5}
-      ></Sprite>
     </Container>
   );
 };
