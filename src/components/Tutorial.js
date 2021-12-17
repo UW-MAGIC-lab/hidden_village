@@ -57,6 +57,9 @@ const Tutorial = (props) => {
         setCurrentPose({});
       }
     }
+    if (state.matches("final")) {
+      props.onComplete();
+    }
   }, [state.value]);
 
   // if there is a pose to match, calculate the similarity between the player's current
@@ -64,7 +67,11 @@ const Tutorial = (props) => {
   // into a variable to be monitored
   useEffect(() => {
     if (!state.matches("transition")) {
-      if (poseMatchData && Object.keys(poseMatchData).length > 0 && props.poseData.poseLandmarks) {
+      if (
+        poseMatchData &&
+        Object.keys(poseMatchData).length > 0 &&
+        props.poseData.poseLandmarks
+      ) {
         // extract segment from the larger player pose dataset
         const convertedLandmarks = poseMatchData.map((segmentSet) => {
           return {
@@ -100,7 +107,7 @@ const Tutorial = (props) => {
   // the threshold for similarity to the model pose. If it is, then transition to the
   // next state. If not, stay in the same state
   useEffect(() => {
-    const similarityThreshold = 60;
+    const similarityThreshold = 50;
     const similarityScore = poseSimilarity.reduce(
       (previousValue, currentValue) => {
         // all segments need to be over the threshold -- will only return true if
@@ -144,7 +151,11 @@ const Tutorial = (props) => {
           similarityScores={poseSimilarity}
         />
         {state.context.currentStepIndex === 6 && (
-          <CursorMode poseData={props.poseData} callback={() => send("NEXT")} />
+          <CursorMode
+            poseData={props.poseData}
+            rowDimensions={props.rowDimensions}
+            callback={() => send("NEXT")}
+          />
         )}
       </ErrorBoundary>
     </Container>

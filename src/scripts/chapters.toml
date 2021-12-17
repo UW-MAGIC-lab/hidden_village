@@ -1,0 +1,34 @@
+[chapter-1]
+scene = [
+  { id = "equilateralTriangle", distance = "foreground", placement = "center", color = "blue", mood = "happy" },
+  { id = "circle", distance = "aboveground", placement = "right", color = "pink", mood = "happy" },
+  { id = "rectangle", distance = "foreground", placement = "left", color = "blue", mood = "neutral" },
+  { id = "square", distance = "foreground", placement = "right", color = "green", mood = "happy" },
+  { id = "scaleneTriangle", distance = "background", placement = "center", color = "green", mood = "neutral" },
+  { id = "trapezoid", distance = "midground", placement = "center", color = "pink", mood = "happy" }
+]
+intro = [
+  { speaker= "equilateralTriangle", text = "Hello?" },
+  { speaker = "player", text = "… … … Uhm, hi? Where am I?"},
+  { speaker = "equilateralTriangle", text = "You mean you don’t know?" },
+  { speaker = "player", text = "… Definitely not." },
+  { speaker = "equilateralTriangle", text = "Really? Nothing?" },
+  { speaker = "player", text = "Nope." },
+  { speaker = "equilateralTriangle", text = "You’re inside." },
+  { speaker = "player", text = "Inside what?" },
+  { speaker = "equilateralTriangle", text = "Just...inside. Curious, that you don't know... In any event, you appear to be stuck… Can you come closer?" },
+  { speaker = "player", text = "It appears not." },
+  { speaker = "equilateralTriangle", text = "Hmmmm… Try this?" }
+]
+outro = [
+  { speaker = "equilateralTriangle", text = "Wow! You’re speedy. Look at that!" },
+  { speaker = "player", text = 'I guess I am! Any idea where I should go next?' },
+  { speaker = "equilateralTriangle", text = "I’m not sure. It’s all the same around here, but maybe it’ll all come together the more you are inside?" }
+]
+completionAnimation = [
+  { id = "equilateralTriangle", moveTo = "background center", animation = "triangle_waving" }
+]
+
+[chapter-2]
+intro = []
+outro = []
