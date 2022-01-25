@@ -8,7 +8,7 @@ scene = [
   { id = "trapezoid", distance = "midground", placement = "center", color = "pink", mood = "happy" }
 ]
 intro = [
-  { speaker= "equilateralTriangle", text = "Hello?" },
+  { speaker= "equilateralTriangle", text = "Waasssup?" },
   { speaker = "player", text = "… … … Uhm, hi? Where am I?"},
   { speaker = "equilateralTriangle", text = "You mean you don’t know?" },
   { speaker = "player", text = "… Definitely not." },
