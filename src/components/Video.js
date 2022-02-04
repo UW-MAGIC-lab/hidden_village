@@ -9,20 +9,20 @@ const Video = PixiComponent('Video', {
     const videoPathNoTemplateString = new URL(path, import.meta.url)
     const mp4VideoPath = new URL(mp4path, import.meta.url)
     let ultimatePath = new URL("../assets/animations/oppose_angle.mp4", import.meta.url);
+    const otherUrl = new URL("../assets/animations/other_one.webm", import.meta.url)
     // these two lines are functioning as expected
     switch (path) {
       case '../assets/animations/other_one.webm':
-        ultimatePath = new URL("../assets/animations/other_one.webm", import.meta.url)
+        ultimatePath = otherUrl;
+        break;
       case '../assets/animations/oppose_angle.mp4':
         ultimatePath = new URL("../assets/animations/oppose_angle.mp4", import.meta.url)
+        break;
       default:
         ultimatePath = new URL(path, import.meta.url)
+        break;
     }
-    // const otherUrl = new URL("../assets/animations/other_one.webm", import.meta.url)
     // const otherMp4Url = new URL("../assets/animations/oppose_angle.mp4", import.meta.url)
-    // debugger;
-    // const url = new URL("../assets/next_button.png", import.meta.url)
-    // const texture = PIXI.Texture.from(videoPath.href);
     const texture = PIXI.Texture.from(ultimatePath.href);
     const video = new PIXI.Sprite(texture);
     video.x = x;
