@@ -9,6 +9,7 @@ import "regenerator-runtime/runtime";
 // This global declaration is necessary to make the chrome PIXI devtools work
 window.PIXI = PIXI;
 import Sandbox from "./components/Sandbox";
+import PoseEditor from "./components/PoseEditor"
 const Story = lazy(() => import("./components/Story"));
 let { NODE_ENV } = process.env;
 
@@ -22,6 +23,9 @@ const App = () => {
               <Sandbox />
             </Route>
           )}
+          <Route path="/pose-editor">
+            <PoseEditor />
+          </Route>
           <Route path="/settings">
             <Settings />
           </Route>
