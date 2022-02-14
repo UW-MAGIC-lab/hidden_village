@@ -60,7 +60,7 @@ const PoseEditor = () => {
         // ? what is the code doing here 
         const holistic = new Holistic({locateFile: (file) => {
             return `https://cdn.jsdelivr.net/npm/@mediapipe/holistic/${file}`;
-        }});
+        }}); // instantiate mediapipe holistic obj
         holistic.setOptions({
             modelComplexity: 1,
             smoothLandmarks: true,
@@ -71,12 +71,15 @@ const PoseEditor = () => {
             minTrackingConfidence: 0.5
         });
 
-        holistic.onResults(onResults);
+        holistic.onResults(onResults); //eventListener (eventHandler function)
 
         let camera = new Camera(videoElement, {
             onFrame: async () => {
-                await holistic.send({image: videoElement});
-            },
+                await holistic.send({image: videoElement}); // wait for its completion than push to callback queue
+            }, // listening to the Frame event
+            // async: to handle long standing running func
+            // await: a way to yield from the async func
+            // js event loop
             width: window.innerWidth,
             height: window.innerHeight,
             facingMode: "environment",
