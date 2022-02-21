@@ -162,9 +162,9 @@ const PoseGrab = (props) => {
         colOffset={1.75}
         text={"Save"}
       />
-      <Pose poseData={poseData} colAttr={columnDimensions(3)} ref={poseRef} />
+      <Pose poseData={poseData} colAttr={columnDimensions(3)} />
       {poseToMatch && (
-        <Pose poseData={poseToMatch} colAttr={columnDimensions(1)} />
+        <Pose poseData={poseToMatch} colAttr={columnDimensions(1)} ref={poseRef} />
       )}
     </>
   );
