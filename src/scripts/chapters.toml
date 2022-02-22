@@ -10,15 +10,15 @@ scene = [
 intro = [
   { speaker= "equilateralTriangle", text = "Hello?" },
   { speaker = "player", text = "… … … Uhm, hi? Where am I?"},
-  { speaker = "equilateralTriangle", text = "You mean you don’t know?" },
-  { speaker = "player", text = "… Definitely not." },
-  { speaker = "equilateralTriangle", text = "Really? Nothing?" },
-  { speaker = "player", text = "Nope." },
-  { speaker = "equilateralTriangle", text = "You’re inside." },
-  { speaker = "player", text = "Inside what?" },
-  { speaker = "equilateralTriangle", text = "Just...inside. Curious, that you don't know... In any event, you appear to be stuck… Can you come closer?" },
-  { speaker = "player", text = "It appears not." },
-  { speaker = "equilateralTriangle", text = "Hmmmm… Try this?" }
+  { speaker = "equilateralTriangle", text = "You're in Shape" },
+  { speaker = "player", text = "I am?" },
+  { speaker = "equilateralTriangle", text = "Yes. Just take a look! You are in Shapes!" },
+  { speaker = "player", text = "Oh my goodness. I am!" },
+  { speaker = "equilateralTriangle", text = "Yes... Triangles! Circles! Quadralaterals!" },
+  { speaker = "player", text = "Ok, so now what?" },
+  { speaker = "equilateralTriangle", text = "Well, in order to be in shape, you have to get in shape!" },
+  { speaker = "player", text = "What do I have to do to get in shape?" },
+  { speaker = "equilateralTriangle", text = "Simply follow my movements to stay in shape! Let's get started!" }
 ]
 outro = [
   { speaker = "equilateralTriangle", text = "Thanks for trying out the latest prototype of The Hidden Village online! Future versions will include experimental tasks for participants to perform, alongside experiment planning and pose editing tools." },
