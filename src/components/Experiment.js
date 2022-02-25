@@ -1,91 +1,87 @@
-import { useMachine } from '@xstate/react';
-import ExperimentMachine from '../machines/experimentMachine';
-import { Graphics, Text } from "@inlet/react-pixi";
-import Video from './Video';
-import { useCallback } from 'react';
-import { white, darkGray, yellow } from "../utils/colors";
-
-const VideoPlayer  = (props) => {
-  const { columnDimensions, onComplete } = props;
-  const drawModalBackground = useCallback((g) => {
-    g.beginFill(darkGray, 0.9);
-    g.drawRect(0, 0, window.innerWidth, window.innerHeight);
-    const col1 = columnDimensions(1);
-    const col3 = columnDimensions(3);
-    g.endFill();
-    g.beginFill(yellow, 1);
-    g.drawRect(col1.x, col1.y, col1.width, col1.height);
-    g.endFill();
-  }, []);
-  return(
-    <>
-      <Graphics draw={drawModalBackground} />
-      <Text
-        text={"Watch this video,\nthen match the movements!"}
-        x={columnDimensions(2).x + columnDimensions(2).width / 2}
-        y={columnDimensions(2).height / 2}
-        style={
-          new PIXI.TextStyle({
-            align: "center",
-            fontFamily: '"Futura", Helvetica, sans-serif',
-            fontSize: 50,
-            fontWeight: 400,
-            fill: [white],
-          })
-        }
-      />
-      <Video 
-        path={"../assets/animations/opposite_angle.webm"}
-        x={columnDimensions(1).x}
-        y={columnDimensions(1).y}
-        width={columnDimensions(1).width}
-        height={columnDimensions(1).height}
-        onComplete={onComplete}
-      />
-    </>
-  )
-}
-
-
+import { useMachine } from "@xstate/react";
+import ExperimentMachine from "../machines/experimentMachine";
+import { Graphics } from "@inlet/react-pixi";
+import { useCallback, useState, useEffect } from "react";
+import { darkGray, yellow } from "../utils/colors";
+import PoseMatching from "./PoseMatching";
+import oppositeAnglePoseData from "../models/rawPoses/oppositeAnglePoses.json";
+import VideoPlayer from "./VideoPlayer";
+import ExperimentalTask from "./ExperimentalTask";
 
 const Experiment = (props) => {
   const { columnDimensions, poseData, posesToMatch, rowDimensions } = props;
   const [state, send, service] = useMachine(ExperimentMachine);
+  const [experimentText, setExperimentText] = useState(
+    "QUICK! Tell us your gut reaction OUT LOUD. \nTRUE or FALSE:\n\nThe opposite angle of two lines that cross are always the same."
+  );
+
+  const drawModalBackground = useCallback((g) => {
+    g.beginFill(darkGray, 0.9);
+    g.drawRect(0, 0, window.innerWidth, window.innerHeight);
+    g.endFill();
+    const col1 = columnDimensions(1);
+    g.beginFill(yellow, 1);
+    g.drawRect(col1.x, col1.y, col1.width, col1.height);
+    const col3 = columnDimensions(3);
+    g.drawRect(col3.x, col3.y, col3.width, col3.height);
+    g.endFill();
+  }, []);
+
+  useEffect(() => {
+    if (state.value === "intuition") {
+      setExperimentText(
+        "QUICK! Tell us your gut reaction OUT LOUD. \nTRUE or FALSE:\n\nThe opposite angle of two lines that cross are always the same."
+      );
+    } else if (state.value === "insight") {
+      setExperimentText(
+        "Alright! Now, explain OUT LOUD:\n\nWHY is it TRUE or FALSE that the is the opposite angle of two lines that cross are always the same?"
+      );
+    }
+  }, [state.value]);
+
   return (
     <>
-      {
-        state.value === 'videoPlaying' && 
-        <VideoPlayer onComplete={() => send('NEXT')} columnDimensions={columnDimensions} />
-      }
-      {/* <Pose poseData={currentPose} colAttr={modelColumn} />
-      <Text
-        text={text}
-        y={col2Dim.y + col2Dim.height / 4}
-        x={col2Dim.x}
-        style={
-          new TextStyle({
-            align: "center",
-            fontFamily: "Futura",
-            fontSize: "5em",
-            fontWeight: 800,
-            fill: [blue],
-            wordWrap: true,
-            wordWrapWidth: col2Dim.width,
-          })
-        }
-      />
-      <Pose
-        poseData={props.poseData}
-        colAttr={playerColumn}
-        similarityScores={poseSimilarity}
-      />
-      {state.context.currentStepIndex === 6 && (
-        <CursorMode
-          poseData={props.poseData}
-          rowDimensions={props.rowDimensions}
-          callback={() => send("NEXT")}
+      {state.value === "videoPlaying" && (
+        <VideoPlayer
+          onComplete={() => send("NEXT")}
+          columnDimensions={columnDimensions}
         />
-      )} */}
+      )}
+      {state.value === "poseMatching" && (
+        <>
+          <Graphics draw={drawModalBackground} />
+          <PoseMatching
+            poseData={poseData}
+            posesToMatch={[
+              oppositeAnglePoseData.poses,
+              oppositeAnglePoseData.poses,
+              oppositeAnglePoseData.poses,
+            ].flat()}
+            columnDimensions={columnDimensions}
+            onComplete={() => send("NEXT")}
+          />
+        </>
+      )}
+      {state.value === "intuition" && (
+        <ExperimentalTask
+          prompt={experimentText}
+          columnDimensions={columnDimensions}
+          poseData={poseData}
+          rowDimensions={rowDimensions}
+          onComplete={() => send("NEXT")}
+          cursorTimer={10_000}
+        />
+      )}
+      {state.value === "insight" && (
+        <ExperimentalTask
+          prompt={experimentText}
+          columnDimensions={columnDimensions}
+          poseData={poseData}
+          rowDimensions={rowDimensions}
+          onComplete={() => send("NEXT")}
+          cursorTimer={30_000}
+        />
+      )}
     </>
   );
 };
