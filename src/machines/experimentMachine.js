@@ -25,16 +25,7 @@ const ExperimentMachine =
         },
         poseMatching: {
           on: {
-            NEXT: [
-              {
-                cond: "finishedMatching",
-                target: "#experiment.conjectureReasoning",
-              },
-              {
-                actions: "updateMatchTracking",
-                target: "#experiment.poseMatching",
-              },
-            ],
+            NEXT: "#experiment.intuition",
           },
         },
         conjectureReasoning: {
@@ -43,6 +34,16 @@ const ExperimentMachine =
               actions: "triggerEndOfExperiment",
               target: "#experiment.experimentEnd",
             },
+          },
+        },
+        insight: {
+          on: {
+            NEXT: "experimentEnd",
+          },
+        },
+        intuition: {
+          on: {
+            NEXT: "insight",
           },
         },
         experimentEnd: {
