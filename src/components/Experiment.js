@@ -9,7 +9,14 @@ import VideoPlayer from "./VideoPlayer";
 import ExperimentalTask from "./ExperimentalTask";
 
 const Experiment = (props) => {
-  const { columnDimensions, poseData, posesToMatch, rowDimensions } = props;
+  const {
+    columnDimensions,
+    poseData,
+    posesToMatch,
+    rowDimensions,
+    onComplete,
+    debugMode
+  } = props;
   const [state, send, service] = useMachine(ExperimentMachine);
   const [experimentText, setExperimentText] = useState(
     "QUICK! Tell us your gut reaction OUT LOUD. \nTRUE or FALSE:\n\nThe opposite angle of two lines that cross are always the same."
@@ -69,7 +76,7 @@ const Experiment = (props) => {
           poseData={poseData}
           rowDimensions={rowDimensions}
           onComplete={() => send("NEXT")}
-          cursorTimer={10_000}
+          cursorTimer={debugMode ? 1_000 : 10_000}
         />
       )}
       {state.value === "insight" && (
@@ -78,8 +85,8 @@ const Experiment = (props) => {
           columnDimensions={columnDimensions}
           poseData={poseData}
           rowDimensions={rowDimensions}
-          onComplete={() => send("NEXT")}
-          cursorTimer={30_000}
+          onComplete={onComplete}
+          cursorTimer={debugMode ? 1_000 : 30_000}
         />
       )}
     </>

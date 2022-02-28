@@ -2,7 +2,7 @@ import { PixiComponent } from "@inlet/react-pixi";
 
 const Video = PixiComponent("Video", {
   create: (props) => {
-    const { path, mp4path, onComplete, x, y, width, height } = props;
+    const { path, onComplete, x, y, width, height } = props;
 
     // HACK: as mentioned in the parcel issue https://github.com/parcel-bundler/parcel/issues/7643
     // there's a weirdness that still exists with how parcel is resolving

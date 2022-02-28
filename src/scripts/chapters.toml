@@ -21,10 +21,11 @@ intro = [
   { speaker = "equilateralTriangle", text = "Simply follow my movements to stay in shape! Let's get started!" }
 ]
 outro = [
-  { speaker = "equilateralTriangle", text = "Thanks for trying out the latest prototype of The Hidden Village online! Future versions will include experimental tasks for participants to perform, alongside experiment planning and pose editing tools." },
-  { speaker = "equilateralTriangle", text = "Wow! You’re speedy. Look at that!" },
+  { speaker = "equilateralTriangle", text = "HACK! THIS LINE WILL GET SKIPPED" },
+  { speaker = "equilateralTriangle", text = "Great job! You’re speedy." },
   { speaker = "player", text = 'I guess I am! Any idea where I should go next?' },
-  { speaker = "equilateralTriangle", text = "I’m not sure. It’s all the same around here, but maybe it’ll all come together the more you are inside?" }
+  { speaker = "equilateralTriangle", text = "I’m not sure. It’s all the same around here, but maybe it’ll all come together the more you are inside?" },
+  { speaker = "equilateralTriangle", text = "Thanks for trying out the latest prototype of The Hidden Village online! Future versions will include experimental tasks for participants to perform, alongside experiment planning and pose editing tools." },
 ]
 completionAnimation = [
   { id = "equilateralTriangle", moveTo = "background center", animation = "triangle_waving" }

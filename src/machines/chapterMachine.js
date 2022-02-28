@@ -1,6 +1,5 @@
 import { createMachine, assign } from "xstate";
 import intro from "../scripts/chapters.toml";
-
 const chapterMachine = createMachine(
   {
     initial: "intro",
@@ -44,21 +43,14 @@ const chapterMachine = createMachine(
         },
       },
       experiment: {
-        exit: "outroDialogStep",
-        after: {
-          3000: {
-            target: "outro",
-          },
-        },
         on: {
-          NEXT: {
+          ADVANCE: {
             target: "outro",
           },
         },
       },
       outro: {
-        entry: "toggleCursorMode",
-        exit: "outroDialogStep",
+        entry: "outroDialogStep",
         on: {
           NEXT: [
             {
@@ -66,7 +58,7 @@ const chapterMachine = createMachine(
               cond: "continueOutro",
             },
             {
-              target: "loading",
+              target: "final",
             },
           ],
         },

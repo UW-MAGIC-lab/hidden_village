@@ -4,9 +4,10 @@ import Character from "./Character.js";
 import TextBox from "./TextBox.js";
 import Pose from "./Pose/index.js";
 import { useEffect, useState } from "react";
-import { useMachine, useSelector } from "@xstate/react";
+import { useMachine, useSelector, assign } from "@xstate/react";
 import ChapterMachine from "../machines/chapterMachine.js";
 import { Sprite } from "@inlet/react-pixi";
+import Experiment from "./Experiment.js";
 
 const characterRenderOrder = {
   aboveground: 1,
@@ -85,6 +86,8 @@ const createScene = (sceneConfig, columnDimensions, rowDimensions) => {
 const selectCurrentText = (state) => state.context.currentText;
 const selectCursorMode = (state) => state.context.cursorMode;
 
+import angleAngleAnglePoseData from "../models/rawPoses/angleAngleAnglePoses.json";
+
 const Chapter = (props) => {
   const { rowDimensions, columnDimensions, height, width, poseData } = props;
   const [characters, setCharacters] = useState(undefined);
@@ -95,11 +98,9 @@ const Chapter = (props) => {
   const cursorMode = useSelector(service, selectCursorMode);
 
   useEffect(() => {
-    setCharacters(createScene(
-      state.context.scene,
-      columnDimensions(1),
-      rowDimensions(1)
-    ));
+    setCharacters(
+      createScene(state.context.scene, columnDimensions(1), rowDimensions(1))
+    );
   }, []);
 
   useEffect(() => {
@@ -113,7 +114,7 @@ const Chapter = (props) => {
   }, [service]);
 
   useEffect(() => {
-    if (characters) {
+    if (characters && currentText) {
       setSpeaker(
         <Sprite
           image={idToSprite[currentText.speaker]}
@@ -129,21 +130,38 @@ const Chapter = (props) => {
     <>
       <Background height={height} width={width} />
       {characters}
-      <Pose poseData={poseData} colAttr={columnDimensions(3)} />
-      {displayText && (
-        <TextBox
-          text={displayText}
-          rowDimensionsCallback={rowDimensions}
-          speaker={speaker}
-        />
+      {["intro", "outro"].includes(state.value) && (
+        <Pose poseData={poseData} colAttr={columnDimensions(3)} />
       )}
-      {cursorMode && (
+      {["intro", "introReading", "outro", "outroReading"].includes(
+        state.value
+      ) &&
+        displayText && (
+          <TextBox
+            text={displayText}
+            rowDimensionsCallback={rowDimensions}
+            speaker={speaker}
+          />
+        )}
+      {cursorMode && !['experiment', 'final'].includes(state.value) && (
         <CursorMode
           poseData={poseData}
           rowDimensions={rowDimensions}
           callback={() => {
             send("NEXT");
           }}
+        />
+      )}
+      {state.value === "experiment" && (
+        <Experiment
+          columnDimensions={columnDimensions}
+          poseData={poseData}
+          posesToMatch={angleAngleAnglePoseData}
+          rowDimensions={rowDimensions}
+          onComplete={() => {
+            send("ADVANCE");
+          }}
+          debugMode={false}
         />
       )}
     </>
