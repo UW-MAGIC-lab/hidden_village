@@ -51,17 +51,35 @@ const ExperimentalTask = (props) => {
             fontWeight: 800,
             fill: [white],
             wordWrap: true,
-            wordWrapWidth: columnDimensions(1).width * 2,
+            wordWrapWidth: columnDimensions(2).width * 2,
           })
         }
       />
       <Pose poseData={poseData} colAttr={columnDimensions(3)} />
       {showCursor && (
-        <CursorMode
-          poseData={poseData}
-          rowDimensions={rowDimensions}
-          callback={onComplete}
+        <>
+          <CursorMode
+            poseData={poseData}
+            rowDimensions={rowDimensions}
+            callback={onComplete}
+          />
+          <Text
+          text={"Click 'Next' to continue"}
+          y={columnDimensions(1).y + 7*(columnDimensions(1).height / 8)}
+          x={columnDimensions(2).x - columnDimensions(1).margin}
+          style={
+            new PIXI.TextStyle({
+              align: "center",
+              fontFamily: "Futura",
+              fontSize: "3.5em",
+              fontWeight: 800,
+              fill: [white],
+              wordWrap: true,
+              wordWrapWidth: columnDimensions(2).width * 2,
+            })
+          }
         />
+      </>
       )}
     </>
   );
