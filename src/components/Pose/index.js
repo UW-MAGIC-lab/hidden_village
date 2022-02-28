@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState, forwardRef } from "react";
 import { Graphics, Container } from "@inlet/react-pixi";
 import { Graphics as PIXIGraphics } from "@pixi/graphics";
 import {
@@ -400,17 +400,14 @@ const drawHands = (poseData, g, width, height, similarityScores) => {
 // Component Logic
 // ****************************************************************
 
-const Pose = (props) => {
+const Pose = forwardRef((props, ref) => {
   const [armWidth, setArmWidth] = useState(0);
-  const { colAttr, similarityScores } = props;
+  const { colAttr, similarityScores, modelBodySegments } = props;
   const { width, height } = colAttr;
 
   const draw = useCallback(
     (g) => {
       g.clear();
-      // g.beginFill(0xffffff);
-      // g.drawRect(colAttr.x, colAttr.y, colAttr.width, colAttr.height);
-      // g.endFill();
       if (props.poseData.faceLandmarks) {
         drawFace(props.poseData, g, width, height, similarityScores);
       }
@@ -451,11 +448,16 @@ const Pose = (props) => {
   );
 
   return (
-    <Container position={[colAttr.x, colAttr.y]} scale={0.8}>
+    <Container
+      position={[colAttr.x, colAttr.y]}
+      scale={0.8}
+      ref={ref}
+      poseData={props.poseData}
+    >
       <Graphics draw={draw} />
     </Container>
   );
-};
+});
 
 export default Pose;
 
@@ -476,6 +478,7 @@ const PoseGraphic = (poseData, colAttr) => {
     drawShins(poseData, g, armWidth, width, height);
   }
   drawHands(poseData, g, width, height);
+  g.endFill();
   return g;
 };
 
