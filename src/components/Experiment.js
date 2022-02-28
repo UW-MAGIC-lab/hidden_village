@@ -19,7 +19,7 @@ const Experiment = (props) => {
   } = props;
   const [state, send, service] = useMachine(ExperimentMachine);
   const [experimentText, setExperimentText] = useState(
-    "QUICK! Tell us your gut reaction OUT LOUD. \nTRUE or FALSE:\n\nThe opposite angle of two lines that cross are always the same."
+    "QUICK! TRUE or FALSE:\n\nThe opposite angle of two lines that cross are always the same. \n\n Tell us your answer OUT LOUD."
   );
 
   const drawModalBackground = useCallback((g) => {
@@ -37,11 +37,11 @@ const Experiment = (props) => {
   useEffect(() => {
     if (state.value === "intuition") {
       setExperimentText(
-        "QUICK! Tell us your gut reaction OUT LOUD. \nTRUE or FALSE:\n\nThe opposite angle of two lines that cross are always the same."
+        "QUICK! TRUE or FALSE:\n\nThe opposite angle of two lines that cross are always the same. \n\n Tell us your answer OUT LOUD."
       );
     } else if (state.value === "insight") {
       setExperimentText(
-        "Alright! Now, explain OUT LOUD:\n\nWHY is it TRUE or FALSE that the is the opposite angle of two lines that cross are always the same?"
+        "Alright! Now, explain OUT LOUD:\n\nWHY is it TRUE or FALSE that: \n\n the is the opposite angle of two lines that cross are always the same?"
       );
     }
   }, [state.value]);
