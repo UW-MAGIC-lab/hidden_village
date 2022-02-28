@@ -41,7 +41,7 @@ const Experiment = (props) => {
       );
     } else if (state.value === "insight") {
       setExperimentText(
-        "Alright! Now, explain OUT LOUD:\n\nWHY is it TRUE or FALSE that: \n\n the is the opposite angle of two lines that cross are always the same?"
+        "Alright! Now, explain OUT LOUD:\n\nWHY is it TRUE or FALSE that: \n\n the opposite angle of two lines that cross are always the same?"
       );
     }
   }, [state.value]);
