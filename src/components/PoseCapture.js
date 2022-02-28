@@ -71,6 +71,7 @@ const PoseGrab = (props) => {
   const [poseToMatch, setPoseToMatch] = useState(null);
   const textRef = useRef();
   const poseRef = useRef();
+  const modelRef = useRef();
   const app = useApp();
   const drawModalBackground = useCallback((g) => {
     g.beginFill(darkGray, 0.9);
@@ -122,10 +123,10 @@ const PoseGrab = (props) => {
         { segment: "LEFT_FOREARM", data: "poseLandmarks" },
       ],
       landmarks: {
-        poseLandmarks: poseRef.current.poseData.poseLandmarks,
-        leftHandLandmarks: poseRef.current.poseData.leftHandLandmarks,
-        rightHandLandmarks: poseRef.current.poseData.rightHandLandmarks,
-        faceLandmarks: poseRef.current.poseData.faceLandmarks,
+        poseLandmarks: modelRef.current.poseData.poseLandmarks,
+        leftHandLandmarks: modelRef.current.poseData.leftHandLandmarks,
+        rightHandLandmarks: modelRef.current.poseData.rightHandLandmarks,
+        faceLandmarks: modelRef.current.poseData.faceLandmarks,
       },
     };
     downloadTextFile(JSON.stringify(pose), "myObj.json");
@@ -162,9 +163,13 @@ const PoseGrab = (props) => {
         colOffset={1.75}
         text={"Save"}
       />
-      <Pose poseData={poseData} colAttr={columnDimensions(3)} />
+      <Pose poseData={poseData} colAttr={columnDimensions(3)} ref={poseRef} />
       {poseToMatch && (
-        <Pose poseData={poseToMatch} colAttr={columnDimensions(1)} ref={poseRef} />
+        <Pose
+          poseData={poseToMatch}
+          colAttr={columnDimensions(1)}
+          ref={modelRef}
+        />
       )}
     </>
   );
