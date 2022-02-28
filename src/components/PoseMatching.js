@@ -1,10 +1,8 @@
-import { useMachine } from "@xstate/react";
 import {
   matchSegmentToLandmarks,
   segmentSimilarity,
 } from "./Pose/pose_drawing_utilities";
 import { enrichLandmarks } from "./Pose/landmark_utilities";
-import PoseֿMatchMachine from "../machines/poseMatchingMachine";
 import ErrorBoundary from "./utilities/ErrorBoundary.js";
 import Pose from "./Pose/index.js";
 import { useState, useEffect, useMemo } from "react";
