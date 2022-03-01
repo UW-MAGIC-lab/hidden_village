@@ -64,9 +64,9 @@ const ExperimentalTask = (props) => {
             callback={onComplete}
           />
           <Text
-          text={"When you're ready to \nmove on, click 'Next' to continue"}
+          text={"When you're ready to move on, click 'Next' to continue"}
           y={columnDimensions(1).y + 7*(columnDimensions(1).height / 8)}
-          x={columnDimensions(2).x - columnDimensions(1).margin}
+          x={columnDimensions(1).x + columnDimensions(1).margin}
           style={
             new PIXI.TextStyle({
               align: "center",
@@ -75,7 +75,7 @@ const ExperimentalTask = (props) => {
               fontWeight: 800,
               fill: [white],
               wordWrap: true,
-              wordWrapWidth: columnDimensions(2).width * 2,
+              wordWrapWidth: columnDimensions(1).width * 2,
             })
           }
         />
