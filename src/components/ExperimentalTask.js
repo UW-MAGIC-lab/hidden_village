@@ -64,7 +64,7 @@ const ExperimentalTask = (props) => {
             callback={onComplete}
           />
           <Text
-          text={"Click 'Next' to continue"}
+          text={"When you're ready to move on, click 'Next' to continue"}
           y={columnDimensions(1).y + 7*(columnDimensions(1).height / 8)}
           x={columnDimensions(2).x - columnDimensions(1).margin}
           style={
