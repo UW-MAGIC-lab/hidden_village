@@ -10,6 +10,7 @@ import "regenerator-runtime/runtime";
 window.PIXI = PIXI;
 import Sandbox from "./components/Sandbox";
 import EditorCanvas from "./components/EditorCanvas"
+import PoseEditor from "./components/PoseEditor.js";
 const Story = lazy(() => import("./components/Story"));
 let { NODE_ENV } = process.env;
 
@@ -24,7 +25,7 @@ const App = () => {
             </Route>
           )}
           <Route path="/pose-editor">
-            <EditorCanvas />
+            <PoseEditor />
           </Route>
           <Route path="/settings">
             <Settings />
