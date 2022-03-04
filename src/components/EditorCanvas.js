@@ -400,87 +400,34 @@ const magnitude = (point1, point2) => {
 // Component Logic
 // ****************************************************************
 const EditorCanvas = (props) => {
-  const {height, width} = props;
+  const {height, width, poseData} = props;
   // const [height, setHeight] = useState(600);
   // const [width, setWidth] = useState(800);
   const [open, setOpen] = useState(false);
-  const [poseData, setPoseData] = useState({});
+  // const [poseData, setPoseData] = useState({});
 
   // const widthSliderRef = useRef(null);
   // const heightSliderRef = useRef(null);
   const canvasRef = useRef(null);
-  const context = useRef(null);
-
-  // will be called when the component PoseEditor gets mounted
-  useEffect(() => {
-    if (open) {
-      // const videoElement = videoRef.current;
-      const videoElement = document.getElementsByClassName("input-video")[0];
-      const canvasElement = canvasRef.current;
-      context.current = canvasElement.getContext('2d');
-      // onchange updates the value when the slider first stops while oninput updates the instant value
-      // I use here onchange in prefer of the delay
-      // heightSliderRef.current.onchange = () => {
-      //     setHeight(heightSliderRef.current.value);
-      //     // context.current.fillStyle = '#A7D3BD';
-      //     // context.current.fillRect(0, 0, canvasElement.width, canvasElement.height);
-      // };
-      // widthSliderRef.current.onchange = () => {
-      //     setWidth(widthSliderRef.current.value);
-      //     // context.current.fillStyle = '#A7D3BD';
-      //     // context.current.fillRect(0, 0, canvasElement.width, canvasElement.height);
-      // };
-      
-      // ? what is the code doing here 
-      const holistic = new Holistic({locateFile: (file) => {
-          return `https://cdn.jsdelivr.net/npm/@mediapipe/holistic/${file}`;
-      }}); // instantiate mediapipe holistic obj
-      holistic.setOptions({
-          modelComplexity: 1,
-          smoothLandmarks: true,
-          enableSegmentation: true,
-          smoothSegmentation: true,
-          refineFaceLandmarks: true,
-          minDetectionConfidence: 0.5,
-          minTrackingConfidence: 0.5
-      });
-
-      let camera = new Camera(videoElement, {
-          onFrame: async () => {
-              await holistic.send({image: videoElement}); // wait for its completion than push to callback queue
-          }, // listening to the Frame event
-          // async: to handle long standing running func
-          // await: a way to yield from the async func
-          // js event loop
-          width: width,
-          height: height,
-          facingMode: "environment",
-      });
-      camera.start();
-
-      const updatePoseResults = (newResults) => {
-          setPoseData(enrichLandmarks(newResults));
-      };
-      holistic.onResults(updatePoseResults); //eventListener (eventHandler function)
-    } 
-  }, [open]) // empty array at 2nd arg tells that func as 1st arg is only executing once
+  // const context = useRef(null);
 
   // draw poseData logic
   const [armWidth, setArmWidth] = useState(0);
   const draw = useCallback(
     () => {
-      context.current.clearRect(0, 0, width, height); // context.current.clear();
+      const context = canvasRef.current.getContext('2d');
+      context.clearRect(0, 0, width, height); // context.clear();
       if (poseData.faceLandmarks) {
-        drawFace(poseData, context.current, width, height, false);
+        drawFace(poseData, context, width, height, false);
       }
       if (poseData.poseLandmarks) {
         setArmWidth(calculateArmWidth(poseData, width, height));
         // NOTE: Order of drawing body section matters, do not reorder
-        drawTorso(poseData, context.current, width, height, false);
-        drawAbdomen(poseData, context.current, width, height);
+        drawTorso(poseData, context, width, height, false);
+        drawAbdomen(poseData, context, width, height);
         drawBiceps(
           poseData,
-          context.current,
+          context,
           armWidth,
           width,
           height,
@@ -488,7 +435,7 @@ const EditorCanvas = (props) => {
         );
         drawForearms(
           poseData,
-          context.current,
+          context,
           armWidth,
           width,
           height,
@@ -496,15 +443,15 @@ const EditorCanvas = (props) => {
         );
         drawThighs(
           poseData,
-          context.current,
+          context,
           armWidth,
           width,
           height,
           false
         );
-        drawShins(poseData, context.current, armWidth, width, height, false);
+        drawShins(poseData, context, armWidth, width, height, false);
       }
-      drawHands(poseData, context.current, width, height, false);
+      drawHands(poseData, context, width, height, false);
     },
     [poseData]
   );
@@ -522,7 +469,7 @@ const EditorCanvas = (props) => {
           </div>
         )}
         {!open && (
-          <p1>CLOSE STATE</p1>
+          <div>CLOSE STATE</div>
         )}
           {/* <div>
               <input ref={widthSliderRef} type="range" min="400" max="800" defaultValue={width} step="25"></input>

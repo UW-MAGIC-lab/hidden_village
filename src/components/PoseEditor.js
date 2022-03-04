@@ -1,93 +1,53 @@
 import { useState, useEffect, useRef } from "react";
 import { Camera } from "@mediapipe/camera_utils";
-import { drawConnectors, drawLandmarks} from "@mediapipe/drawing_utils";
-import { Holistic, POSE_CONNECTIONS, FACEMESH_TESSELATION, HAND_CONNECTIONS } from '@mediapipe/holistic';
+import { Holistic, POSE_LANDMARKS_LEFT } from '@mediapipe/holistic';
 import PoseCapture from "./PoseCapture";
+import { enrichLandmarks } from "./Pose/landmark_utilities";
 import EditorCanvas from "./EditorCanvas";
 
 const PoseEditor = () => {
-    // const [height, setHeight] = useState(window.innerHeight);
-    // const [width, setWidth] = useState(window.innerWidth);
+    const [poseData, setPoseData] = useState(null);
+    const videoElement = document.getElementsByClassName("input-video")[0];
+    const [width, setWidth] = useState(window.innerWidth);
+    const [height, setHeight] = useState(window.innerHeight);
 
-    // // const videoRef = useRef(null);
-    // const canvasRef = useRef(null);
+    useEffect(() => {
+        console.log(poseData);
+    },[poseData]);
 
-    // will be called when the component PoseEditor gets mounted
-    // useEffect(() => {
-    //     // const videoElement = videoRef.current;
-    //     const videoElement = document.getElementsByClassName("input-video")[0];
-    //     const canvasElement = canvasRef.current;
-    //     const canvasCtx = canvasElement.getContext('2d');
+    // when PoseEditor get mounted, do it once:
+    useEffect(() => {
+        const holistic = new Holistic({locateFile: (file) => {
+            return `https://cdn.jsdelivr.net/npm/@mediapipe/holistic/${file}`;
+        }}); // instantiate mediapipe holistic obj
+        holistic.setOptions({
+            modelComplexity: 1,
+            smoothLandmarks: true,
+            enableSegmentation: true,
+            smoothSegmentation: true,
+            refineFaceLandmarks: true,
+            minDetectionConfidence: 0.5,
+            minTrackingConfidence: 0.5
+        });
+        // set up camera
+        let camera = new Camera(videoElement, {
+            onFrame: async () => {
+                await holistic.send({image: videoElement}); // wait for its completion than push to callback queue
+            }, // listening to the Frame event
+            // async: to handle long standing running func
+            // await: a way to yield from the async func
+            // js event loop
+            width: width,
+            height: height,
+            facingMode: "environment",
+        });
+        camera.start();
 
-    //     function onResults(results) {
-    //         canvasCtx.save();
-    //         canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
-    //         // canvasCtx.drawImage(results.segmentationMask, 0, 0,
-    //         //                     canvasElement.width, canvasElement.height);
-          
-    //         // ? not sure what the options for globalCompositeOperation means
-    //         // Only overwrite existing pixels.
-    //         canvasCtx.globalCompositeOperation = 'source-in'; 
-    //         canvasCtx.fillStyle = '#00FF00';
-    //         canvasCtx.fillRect(0, 0, canvasElement.width, canvasElement.height);
-          
-    //         // Only overwrite missing pixels.
-    //         canvasCtx.globalCompositeOperation = 'destination-atop';
-    //         canvasCtx.drawImage(
-    //             results.image, 0, 0, canvasElement.width, canvasElement.height);
-          
-    //         canvasCtx.globalCompositeOperation = 'source-over';
-    //         drawConnectors(canvasCtx, results.poseLandmarks, POSE_CONNECTIONS,
-    //                        {color: '#00FF00', lineWidth: 4});
-    //         drawLandmarks(canvasCtx, results.poseLandmarks,
-    //                       {color: '#FF0000', lineWidth: 2});
-    //         drawConnectors(canvasCtx, results.faceLandmarks, FACEMESH_TESSELATION,
-    //                        {color: '#C0C0C070', lineWidth: 1});
-    //         drawConnectors(canvasCtx, results.leftHandLandmarks, HAND_CONNECTIONS,
-    //                        {color: '#CC0000', lineWidth: 5});
-    //         drawLandmarks(canvasCtx, results.leftHandLandmarks,
-    //                       {color: '#00FF00', lineWidth: 2});
-    //         drawConnectors(canvasCtx, results.rightHandLandmarks, HAND_CONNECTIONS,
-    //                        {color: '#00CC00', lineWidth: 5});
-    //         drawLandmarks(canvasCtx, results.rightHandLandmarks,
-    //                       {color: '#FF0000', lineWidth: 2});
-    //         canvasCtx.restore();
-    //     }
-
-    //     canvasCtx.fillStyle = '#A7D3BD';
-    //     canvasCtx.fillRect(0, 0, width, height);
-    //     // draw here on canvas ...
-        
-    //     // ? what is the code doing here 
-    //     const holistic = new Holistic({locateFile: (file) => {
-    //         return `https://cdn.jsdelivr.net/npm/@mediapipe/holistic/${file}`;
-    //     }}); // instantiate mediapipe holistic obj
-    //     holistic.setOptions({
-    //         modelComplexity: 1,
-    //         smoothLandmarks: true,
-    //         enableSegmentation: false,
-    //         smoothSegmentation: true,
-    //         refineFaceLandmarks: true,
-    //         minDetectionConfidence: 0.5,
-    //         minTrackingConfidence: 0.5
-    //     });
-
-    //     holistic.onResults(onResults); //eventListener (eventHandler function)
-
-    //     let camera = new Camera(videoElement, {
-    //         onFrame: async () => {
-    //             await holistic.send({image: videoElement}); // wait for its completion than push to callback queue
-    //         }, // listening to the Frame event
-    //         // async: to handle long standing running func
-    //         // await: a way to yield from the async func
-    //         // js event loop
-    //         width: window.innerWidth,
-    //         height: window.innerHeight,
-    //         facingMode: "environment",
-    //     });
-    //     camera.start();
-
-    // }, []) // empty array at 2nd arg tells that func as 1st arg is only executing once
+        const updatePoseResults = (newResults) => {
+            setPoseData(enrichLandmarks(newResults));
+        };
+        holistic.onResults(updatePoseResults); //eventListener (eventHandler function)
+    },[])
 
     return (
         <div className="
@@ -107,7 +67,8 @@ const PoseEditor = () => {
                 justify-self-center">
                 <EditorCanvas
                     width={300}
-                    height={300} 
+                    height={300}
+                    poseData={poseData}
                 />
             </div>
             <div className="
@@ -117,6 +78,7 @@ const PoseEditor = () => {
                 <EditorCanvas
                     width={300}
                     height={300} 
+                    poseData={poseData}
                 />
             </div>
         </div>
