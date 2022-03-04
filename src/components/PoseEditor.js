@@ -3,6 +3,7 @@ import { Camera } from "@mediapipe/camera_utils";
 import { drawConnectors, drawLandmarks} from "@mediapipe/drawing_utils";
 import { Holistic, POSE_CONNECTIONS, FACEMESH_TESSELATION, HAND_CONNECTIONS } from '@mediapipe/holistic';
 import PoseCapture from "./PoseCapture";
+import EditorCanvas from "./EditorCanvas";
 
 const PoseEditor = () => {
     // const [height, setHeight] = useState(window.innerHeight);
@@ -97,9 +98,27 @@ const PoseEditor = () => {
             h-screen">
             {/* <video ref={videoRef}></video> */}
             {/* <canvas ref={canvasRef} width={width} height={height}></canvas>  */}
+            {/* <PoseCapture/>
             <PoseCapture/>
-            <PoseCapture/>
-            <PoseCapture/>
+            <PoseCapture/> */}
+            <div className="
+                bg-white
+                w-1/2
+                justify-self-center">
+                <EditorCanvas
+                    width={300}
+                    height={300} 
+                />
+            </div>
+            <div className="
+                bg-white
+                w-1/2
+                justify-self-center">
+                <EditorCanvas
+                    width={300}
+                    height={300} 
+                />
+            </div>
         </div>
     )
 };
