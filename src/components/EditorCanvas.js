@@ -1,9 +1,8 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { Camera } from "@mediapipe/camera_utils";
-import { Holistic, FACEMESH_FACE_OVAL, POSE_LANDMARKS } from '@mediapipe/holistic/holistic';
+import { FACEMESH_FACE_OVAL, POSE_LANDMARKS } from '@mediapipe/holistic/holistic';
 import { blue, yellow} from "../utils/colors";
 import { landmarkToCoordinates, objMap } from "./Pose/pose_drawing_utilities";
-import { enrichLandmarks, LANDMARK_GROUPINGS } from "./Pose/landmark_utilities";
+import { LANDMARK_GROUPINGS } from "./Pose/landmark_utilities";
 
 // ****************************************************************
 // Utility functions
@@ -401,17 +400,8 @@ const magnitude = (point1, point2) => {
 // ****************************************************************
 const EditorCanvas = (props) => {
   const {height, width, poseData} = props;
-  // const [height, setHeight] = useState(600);
-  // const [width, setWidth] = useState(800);
   const [open, setOpen] = useState(false);
-  // const [poseData, setPoseData] = useState({});
-
-  // const widthSliderRef = useRef(null);
-  // const heightSliderRef = useRef(null);
   const canvasRef = useRef(null);
-  // const context = useRef(null);
-
-  // draw poseData logic
   const [armWidth, setArmWidth] = useState(0);
   const draw = useCallback(
     () => {
@@ -471,10 +461,6 @@ const EditorCanvas = (props) => {
         {!open && (
           <div>CLOSE STATE</div>
         )}
-          {/* <div>
-              <input ref={widthSliderRef} type="range" min="400" max="800" defaultValue={width} step="25"></input>
-              <input ref={heightSliderRef} type="range" min="300" max="600" defaultValue={height} step="25"></input>
-          </div> */}
       </div>
   )
 };
