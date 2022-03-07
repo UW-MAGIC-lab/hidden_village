@@ -93,6 +93,12 @@ const Chapter = (props) => {
   const [characters, setCharacters] = useState(undefined);
   const [displayText, setDisplayText] = useState(null);
   const [speaker, setSpeaker] = useState(null);
+  const [currentConjecture, setCurrentConjecture] = useState({
+    conjecture:
+      "The opposite angle of two lines that cross are always the same.",
+    poseDataFileName: "oppositeAnglePoses.json",
+    videoPath: "../assets/animations/opposite_angle.webm",
+  });
   const [state, send, service] = useMachine(ChapterMachine);
   const currentText = useSelector(service, selectCurrentText);
   const cursorMode = useSelector(service, selectCursorMode);
@@ -143,7 +149,7 @@ const Chapter = (props) => {
             speaker={speaker}
           />
         )}
-      {cursorMode && !['experiment', 'final'].includes(state.value) && (
+      {cursorMode && !["experiment", "final"].includes(state.value) && (
         <CursorMode
           poseData={poseData}
           rowDimensions={rowDimensions}
@@ -162,6 +168,7 @@ const Chapter = (props) => {
             send("ADVANCE");
           }}
           debugMode={false}
+          conjectureData={currentConjecture}
         />
       )}
     </>
