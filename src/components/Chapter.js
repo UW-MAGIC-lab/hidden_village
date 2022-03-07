@@ -89,16 +89,18 @@ const selectCursorMode = (state) => state.context.cursorMode;
 import angleAngleAnglePoseData from "../models/rawPoses/angleAngleAnglePoses.json";
 
 const Chapter = (props) => {
-  const { rowDimensions, columnDimensions, height, width, poseData } = props;
+  const {
+    rowDimensions,
+    columnDimensions,
+    height,
+    width,
+    poseData,
+    chapterConjecture,
+  } = props;
   const [characters, setCharacters] = useState(undefined);
   const [displayText, setDisplayText] = useState(null);
   const [speaker, setSpeaker] = useState(null);
-  const [currentConjecture, setCurrentConjecture] = useState({
-    conjecture:
-      "The opposite angle of two lines that cross are always the same.",
-    poseDataFileName: "oppositeAnglePoses.json",
-    videoPath: "../assets/animations/opposite_angle.webm",
-  });
+  const [currentConjecture, setCurrentConjecture] = useState(chapterConjecture);
   const [state, send, service] = useMachine(ChapterMachine);
   const currentText = useSelector(service, selectCurrentText);
   const cursorMode = useSelector(service, selectCursorMode);
