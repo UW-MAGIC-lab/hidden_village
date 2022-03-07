@@ -64,22 +64,22 @@ const ExperimentalTask = (props) => {
             callback={onComplete}
           />
           <Text
-          text={"When you're ready to move on, click 'Next' to continue"}
-          y={columnDimensions(1).y + 7*(columnDimensions(1).height / 8)}
-          x={columnDimensions(1).x + columnDimensions(1).margin}
-          style={
-            new PIXI.TextStyle({
-              align: "center",
-              fontFamily: "Futura",
-              fontSize: "3.5em",
-              fontWeight: 800,
-              fill: [white],
-              wordWrap: true,
-              wordWrapWidth: columnDimensions(1).width * 2,
-            })
-          }
-        />
-      </>
+            text={"When you're ready to move on, click 'Next' to continue"}
+            y={columnDimensions(1).y + 7 * (columnDimensions(1).height / 8)}
+            x={columnDimensions(1).x + columnDimensions(1).margin}
+            style={
+              new PIXI.TextStyle({
+                align: "center",
+                fontFamily: "Futura",
+                fontSize: "3.5em",
+                fontWeight: 800,
+                fill: [white],
+                wordWrap: true,
+                wordWrapWidth: columnDimensions(1).width * 2,
+              })
+            }
+          />
+        </>
       )}
     </>
   );

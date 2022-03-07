@@ -8,6 +8,50 @@ import oppositeAnglePoseData from "../models/rawPoses/oppositeAnglePoses.json";
 import VideoPlayer from "./VideoPlayer";
 import ExperimentalTask from "./ExperimentalTask";
 
+/**
+@typedef {Object} NormalizedLandmark 
+@property {number} x
+@property {number} y
+@property {number} z
+@property {number} [visibility]
+*/
+
+/**
+@typedef {Object} MatchingConfig
+@property {string} segment - This should map to a particular "friendly name" of a POSE_LANDMARKS that should be matched
+@property {string} data -  This corresponds to the key (in the landmarks) where you would find the "friendly name" of the POSE LANDMARK
+*/
+
+/**
+@typedef {Object} PoseLandmarks
+@property {Array.NormalizedLandmark} poseLandmarks
+@property {Array.NormalizedLandmark} [faceLandmarks]
+@property {Array.NormalizedLandmark} [rightHandLandmarks]
+@property {Array.NormalizedLandmark} [leftHandLandmarks]
+*/
+
+/**
+@typedef {Object} Pose
+@property {PoseLandmarks} landmarks
+@property {MatchingConfig} matchingConfig
+@property {string} name
+*/
+
+/**
+@typedef {Object} ExperimentConjecture
+@property {string} conjecture
+@property {string} poseDataFileName - name of the pose data file to load
+@property {string} videoPath - name of the pose data file to load
+*/
+/**
+ * @param {Object} props
+ * @param {function} props.columnDimensions
+ * @param {Pose} props.poseData
+ * @param {function} props.rowDimensions
+ * @param {function} props.onComplete
+ * @param {boolean} props.debugMode
+ * @param {ExperimentConjecture} props.conjectureData
+ */
 const Experiment = (props) => {
   const {
     columnDimensions,
@@ -15,12 +59,23 @@ const Experiment = (props) => {
     posesToMatch,
     rowDimensions,
     onComplete,
-    debugMode
+    debugMode,
+    conjectureData,
   } = props;
   const [state, send, service] = useMachine(ExperimentMachine);
   const [experimentText, setExperimentText] = useState(
-    "QUICK! TRUE or FALSE:\n\nThe opposite angle of two lines that cross are always the same. \n\n Tell us your answer OUT LOUD."
+    `QUICK! TRUE or FALSE:\n\n${conjectureData.conjecture} \n\n Tell us your answer OUT LOUD.`
   );
+  const [conjecturePoses, setConjecturePoses] = useState("");
+  useEffect(() => {
+    switch (conjectureData.poseDataFileName) {
+      case "oppositeAnglePoses.json":
+        console.log(oppositeAnglePoseData);
+        setConjecturePoses(oppositeAnglePoseData);
+      default:
+        return null;
+    }
+  }, [conjectureData.poseDataFileName]);
 
   const drawModalBackground = useCallback((g) => {
     g.beginFill(darkGray, 0.9);
@@ -37,11 +92,11 @@ const Experiment = (props) => {
   useEffect(() => {
     if (state.value === "intuition") {
       setExperimentText(
-        "QUICK! TRUE or FALSE:\n\nThe opposite angle of two lines that cross are always the same. \n\n Tell us your answer OUT LOUD."
+        `QUICK! TRUE or FALSE:\n\n${conjectureData.conjecture} \n\n Tell us your answer OUT LOUD.`
       );
     } else if (state.value === "insight") {
       setExperimentText(
-        "Alright! Now, explain OUT LOUD:\n\nWHY is it TRUE or FALSE that: \n\n the opposite angle of two lines that cross are always the same?"
+        `Alright! Now, explain OUT LOUD:\n\nWHY is it TRUE or FALSE that: \n\n ${conjectureData.conjecture.toLowerCase()}?`
       );
     }
   }, [state.value]);
@@ -52,6 +107,7 @@ const Experiment = (props) => {
         <VideoPlayer
           onComplete={() => send("NEXT")}
           columnDimensions={columnDimensions}
+          videoPath={conjectureData.videoPath}
         />
       )}
       {state.value === "poseMatching" && (
@@ -60,9 +116,9 @@ const Experiment = (props) => {
           <PoseMatching
             poseData={poseData}
             posesToMatch={[
-              oppositeAnglePoseData.poses,
-              oppositeAnglePoseData.poses,
-              oppositeAnglePoseData.poses,
+              conjecturePoses.poses,
+              conjecturePoses.poses,
+              conjecturePoses.poses,
             ].flat()}
             columnDimensions={columnDimensions}
             onComplete={() => send("NEXT")}
