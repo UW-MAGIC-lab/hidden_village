@@ -2,6 +2,7 @@ import Tutorial from "./Tutorial.js";
 import { Container } from "@inlet/react-pixi";
 import Chapter from "./Chapter.js";
 import { useState, useEffect } from "react";
+import { conjectures } from "../models/conjectures.js";
 
 // create game machine that starts on tutorial, then moves to chapter
 
@@ -25,6 +26,7 @@ const Game = (props) => {
           rowDimensions={props.rowDimensions}
           height={height}
           width={width}
+          chapterConjecture={conjectures[0]}
         />
       )}
     </Container>
