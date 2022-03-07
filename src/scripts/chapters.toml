@@ -8,23 +8,21 @@ scene = [
   { id = "trapezoid", distance = "midground", placement = "center", color = "pink", mood = "happy" }
 ]
 intro = [
-  { speaker= "equilateralTriangle", text = "Hello?" },
+  { speaker= "equilateralTriangle", text = "Hi! Welcome to Shapes!" },
   { speaker = "player", text = "… … … Uhm, hi? Where am I?"},
-  { speaker = "equilateralTriangle", text = "You're in Shape" },
-  { speaker = "player", text = "I am?" },
-  { speaker = "equilateralTriangle", text = "Yes. Just take a look! You are in Shapes!" },
-  { speaker = "player", text = "Oh my goodness. I am!" },
-  { speaker = "equilateralTriangle", text = "Yes... Triangles! Circles! Quadralaterals!" },
-  { speaker = "player", text = "Ok, so now what?" },
-  { speaker = "equilateralTriangle", text = "Well, in order to be in shape, you have to get in shape!" },
-  { speaker = "player", text = "What do I have to do to get in shape?" },
-  { speaker = "equilateralTriangle", text = "Simply follow my movements to stay in shape! Let's get started!" }
+  { speaker = "equilateralTriangle", text = "Just take a look - you are in Shapes, a world is governed by the rules of geometry." },
+  { speaker = "player", text = "In the immortal words of Keanu Reeves...whoaaaa. So. Now what?" },
+  { speaker = "equilateralTriangle", text = "Well, recently my friends and I have been disagreeing about how our world of Shapes works. Maybe you could help us settle our disagreements?" },
+  { speaker = "player", text = "Sure, I guess...where do you want to start?" },
+  { speaker = "equilateralTriangle", text = "Well, in Shapes, we care about being in shape. So, before we talk ideas, let's get up and move around!" },
+  { speaker = "player", text = "Jeez, you're demanding. So, what do I have to do?" },
+  { speaker = "equilateralTriangle", text = "Simply follow my movements to stay in shape! Click next and let's get started!" }
 ]
 outro = [
-  { speaker = "equilateralTriangle", text = "HACK! THIS LINE WILL GET SKIPPED" },
-  { speaker = "equilateralTriangle", text = "Great job! You’re speedy." },
-  { speaker = "player", text = 'I guess I am! Any idea where I should go next?' },
-  { speaker = "equilateralTriangle", text = "I’m not sure. It’s all the same around here, but maybe it’ll all come together the more you are inside?" },
+  { speaker = "equilateralTriangle", text = "OOPS! You found a bug! Sorry about that. Click next to progress." },
+  { speaker = "equilateralTriangle", text = "Thanks, that was really helpful!" },
+  { speaker = "player", text = 'I guess I am! What next?' },
+  { speaker = "equilateralTriangle", text = "Hmmm, I think circle wanted to chat about something..." },
   { speaker = "equilateralTriangle", text = "Thanks for trying out the latest prototype of The Hidden Village online! Future versions will include experimental tasks for participants to perform, alongside experiment planning and pose editing tools." },
 ]
 completionAnimation = [
@@ -32,5 +30,9 @@ completionAnimation = [
 ]
 
 [chapter-2]
-intro = []
+intro = [
+  { speaker = "circle", text = "What are you??" },
+  { speaker = "player", text = "That's...kind of a rude greeting. Nice to meet you, too. I heard you wanted to chat about something?" },
+  { speaker = "circle", text = "Oh yeah -- triangle and I were chatting, but came to an impasse. Click next so I can show you what I mean!" },
+]
 outro = []
