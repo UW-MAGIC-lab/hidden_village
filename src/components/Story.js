@@ -5,7 +5,7 @@ import Loader from "./utilities/Loader.js";
 import Game from "./Game.js";
 import Home from "./Home.js";
 import { useMachine } from "@xstate/react";
-import { GameMachine } from "../machines/gameMachine.js";
+import { StoryMachine } from "../machines/storyMachine.js";
 import { Stage } from "@inlet/react-pixi";
 import { yellow } from "../utils/colors";
 import { generateRowAndColumnFunctions } from "./utilities/layoutFunction";
@@ -27,7 +27,7 @@ const Story = () => {
   const [poseData, setPoseData] = useState({});
   const [height, setHeight] = useState(window.innerHeight);
   const [width, setWidth] = useState(window.innerWidth);
-  const [state, send] = useMachine(GameMachine);
+  const [state, send] = useMachine(StoryMachine);
   let [rowDimensions, columnDimensions] = generateRowAndColumnFunctions(
     width,
     height,
