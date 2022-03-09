@@ -50,6 +50,24 @@ const conjectures = [
     poseDataFileName: "oppositeAnglePoses.json",
     videoPath: "../assets/animations/opposite_angle.webm",
   },
+  {
+    conjecture:
+      "The area of a parallelogram is the same as the area of a rectangle with the same base and width.",
+    poseDataFileName: "area_parallelogram.json",
+    videoPath: "../assets/animations/area_parallelogram_trimmed.webm",
+  },
+  // {
+  //   conjecture:
+  //     "If you double the length and the width of a rectangle, then the area is exactly doubled.",
+  //   poseDataFileName: "oppositeAnglePoses.json",
+  //   videoPath: "../assets/animations/area_doubled.webm",
+  // },
+  // {
+  //   conjecture:
+  //     "Given that you know the measure of all three angles of a triangle, there is only one unique triangle that can be formed with these three angle measurements.",
+  //   poseDataFileName: "oppositeAnglePoses.json",
+  //   videoPath: "../assets/animations/angle_angle_angle.webm",
+  // },
 ];
 
 export { conjectures };
