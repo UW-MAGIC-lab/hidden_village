@@ -46,7 +46,7 @@
 const conjectures = [
   {
     conjecture:
-      "The opposite angle of two lines that cross are always the same.",
+      "The opposite angle of two lines that cross are always the same",
     poseDataFileName: "oppositeAnglePoses.json",
     videoPath: "../assets/animations/opposite_angle.webm",
   },
