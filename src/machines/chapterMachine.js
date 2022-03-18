@@ -10,6 +10,7 @@ const chapterMachine = createMachine(
       outroText: intro["chapter-1"].outro,
       cursorMode: true,
       scene: intro["chapter-1"].scene,
+      loaded: false,
     },
     states: {
       idle: {
@@ -24,9 +25,8 @@ const chapterMachine = createMachine(
         on: {
           NEXT: [
             {
-              target: "introReading",
+              target: "intro",
               cond: "continueIntro",
-              actions: ["introDialogStep"],
             },
             {
               target: "experiment",
@@ -58,15 +58,31 @@ const chapterMachine = createMachine(
               cond: "continueOutro",
             },
             {
-              target: "final",
+              target: "loadingNextChapter",
+              actions: assign({
+                currentText: (context) => {
+                  console.log(context);
+                  return { text: "Loading next chapter...", speaker: "player" };
+                },
+                loaded: () => false,
+              }),
             },
           ],
         },
       },
-      final: {
-        type: "final",
+      loadingNextChapter: {
+        on: {
+          target: "intro",
+          RESET_CONTEXT: {
+            actions: assign({
+              introText: (_, event) => event.introText,
+              outroText: (_, event) => event.outroText,
+              currentText: (_, event) => null,
+              lastText: () => [],
+            }),
+          },
+        },
       },
-      loading: {},
     },
   },
   {
