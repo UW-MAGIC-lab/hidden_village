@@ -138,12 +138,10 @@ const Chapter = (props) => {
     <>
       <Background height={height} width={width} />
       {characters}
-      {["intro", "outro"].includes(state.value) && (
+      {["intro", "outro", "loadingNextChapter"].includes(state.value) && (
         <Pose poseData={poseData} colAttr={columnDimensions(3)} />
       )}
-      {["intro", "introReading", "outro", "outroReading"].includes(
-        state.value
-      ) &&
+      {["intro", "outro", "loadingNextChapter"].includes(state.value) &&
         displayText && (
           <TextBox
             text={displayText}
