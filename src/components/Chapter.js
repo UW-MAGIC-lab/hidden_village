@@ -8,6 +8,7 @@ import { useMachine, useSelector, assign } from "@xstate/react";
 import ChapterMachine from "../machines/chapterMachine.js";
 import { Sprite } from "@inlet/react-pixi";
 import Experiment from "./Experiment.js";
+import script from "../scripts/chapters.toml";
 
 const characterRenderOrder = {
   aboveground: 1,
@@ -96,12 +97,23 @@ const Chapter = (props) => {
     width,
     poseData,
     chapterConjecture,
+    nextChapterCallback,
+    currentConjectureIdx,
   } = props;
+  const [context] = useState({
+    introText: script[`chapter-${currentConjectureIdx + 1}`].intro,
+    outroText: script[`chapter-${currentConjectureIdx + 1}`].outro,
+    scene: script[`chapter-${currentConjectureIdx + 1}`].scene,
+    currentText: null,
+    lastText: [],
+    cursorMode: true,
+  });
   const [characters, setCharacters] = useState(undefined);
   const [displayText, setDisplayText] = useState(null);
   const [speaker, setSpeaker] = useState(null);
   const [currentConjecture, setCurrentConjecture] = useState(chapterConjecture);
-  const [state, send, service] = useMachine(ChapterMachine);
+
+  const [state, send, service] = useMachine(ChapterMachine, { context });
   const currentText = useSelector(service, selectCurrentText);
   const cursorMode = useSelector(service, selectCursorMode);
 
@@ -110,7 +122,31 @@ const Chapter = (props) => {
       createScene(state.context.scene, columnDimensions(1), rowDimensions(1))
     );
   }, []);
+  useEffect(() => {
+    let [intro, outro, scene] = [[], [], []];
+    if (script[`chapter-${currentConjectureIdx + 1}`]) {
+      intro = script[`chapter-${currentConjectureIdx + 1}`].intro
+        ? script[`chapter-${currentConjectureIdx + 1}`].intro
+        : [];
+      outro = script[`chapter-${currentConjectureIdx + 1}`].outro
+        ? script[`chapter-${currentConjectureIdx + 1}`].outro
+        : [];
+      scene = script[`chapter-${currentConjectureIdx + 1}`].outro
+        ? script[`chapter-${currentConjectureIdx + 1}`].outro
+        : [];
+    }
+    send({
+      type: "RESET_CONTEXT",
+      introText: intro,
+      outroText: outro,
+      scene: scene,
+      currentText: null,
+      lastText: [],
+      cursorMode: true,
+    });
+  }, [currentConjectureIdx]);
 
+  // Effect to update the current text being displayed
   useEffect(() => {
     const subscription = service.subscribe((state) => {
       if (state.context.currentText) {
@@ -149,13 +185,23 @@ const Chapter = (props) => {
             speaker={speaker}
           />
         )}
-      {cursorMode && !["experiment", "final"].includes(state.value) && (
+      {cursorMode &&
+        !["experiment", "final", "loadingNextChapter"].includes(
+          state.value
+        ) && (
+          <CursorMode
+            poseData={poseData}
+            rowDimensions={rowDimensions}
+            callback={() => {
+              send("NEXT");
+            }}
+          />
+        )}
+      {cursorMode && state.value === "loadingNextChapter" && (
         <CursorMode
           poseData={poseData}
           rowDimensions={rowDimensions}
-          callback={() => {
-            send("NEXT");
-          }}
+          callback={nextChapterCallback}
         />
       )}
       {state.value === "experiment" && (

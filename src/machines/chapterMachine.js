@@ -1,17 +1,7 @@
 import { createMachine, assign } from "xstate";
-import intro from "../scripts/chapters.toml";
 const chapterMachine = createMachine(
   {
     initial: "intro",
-    context: {
-      introText: intro["chapter-1"].intro,
-      currentText: null,
-      lastText: [],
-      outroText: intro["chapter-1"].outro,
-      cursorMode: true,
-      scene: intro["chapter-1"].scene,
-      loaded: false,
-    },
     states: {
       idle: {
         after: {
@@ -62,7 +52,10 @@ const chapterMachine = createMachine(
               actions: assign({
                 currentText: (context) => {
                   console.log(context);
-                  return { text: "Loading next chapter...", speaker: "player" };
+                  return {
+                    text: "Hit the next button to load the next chapter...",
+                    speaker: "player",
+                  };
                 },
                 loaded: () => false,
               }),
@@ -72,8 +65,8 @@ const chapterMachine = createMachine(
       },
       loadingNextChapter: {
         on: {
-          target: "intro",
           RESET_CONTEXT: {
+            target: "intro",
             actions: assign({
               introText: (_, event) => event.introText,
               outroText: (_, event) => event.outroText,
@@ -99,6 +92,9 @@ const chapterMachine = createMachine(
         currentText: (context) => {
           if (context.introText[0]) {
             return context.introText[0];
+          }
+          if (context.currentText) {
+            return context.currentText;
           }
           return {};
         },
