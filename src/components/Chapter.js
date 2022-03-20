@@ -49,6 +49,7 @@ const idToSprite = {
     "../assets/equilateralTriangle_sprite.png",
     import.meta.url
   ).href,
+  circle: new URL("../assets/circle_sprite.png", import.meta.url).href,
 };
 
 const createScene = (sceneConfig, columnDimensions, rowDimensions) => {
@@ -100,14 +101,19 @@ const Chapter = (props) => {
     nextChapterCallback,
     currentConjectureIdx,
   } = props;
-  const [context] = useState({
-    introText: script[`chapter-${currentConjectureIdx + 1}`].intro,
-    outroText: script[`chapter-${currentConjectureIdx + 1}`].outro,
-    scene: script[`chapter-${currentConjectureIdx + 1}`].scene,
-    currentText: null,
-    lastText: [],
-    cursorMode: true,
-  });
+  let context;
+  if (script[`chapter-${currentConjectureIdx + 1}`]) {
+    const { intro, outro, scene } =
+      script[`chapter-${currentConjectureIdx + 1}`];
+    context = {
+      introText: intro ? intro : "",
+      outroText: outro ? outro : "",
+      scene: scene ? scene : "",
+      currentText: null,
+      lastText: [],
+      cursorMode: true,
+    };
+  }
   const [characters, setCharacters] = useState(undefined);
   const [displayText, setDisplayText] = useState(null);
   const [speaker, setSpeaker] = useState(null);
@@ -122,6 +128,10 @@ const Chapter = (props) => {
       createScene(state.context.scene, columnDimensions(1), rowDimensions(1))
     );
   }, []);
+  useEffect(() => {
+    setCurrentConjecture(chapterConjecture);
+  }, [chapterConjecture]);
+
   useEffect(() => {
     let [intro, outro, scene] = [[], [], []];
     if (script[`chapter-${currentConjectureIdx + 1}`]) {
@@ -204,11 +214,10 @@ const Chapter = (props) => {
           callback={nextChapterCallback}
         />
       )}
-      {state.value === "experiment" && (
+      {state.value === "experiment" && currentConjecture && (
         <Experiment
           columnDimensions={columnDimensions}
           poseData={poseData}
-          posesToMatch={angleAngleAnglePoseData}
           rowDimensions={rowDimensions}
           onComplete={() => {
             send("ADVANCE");

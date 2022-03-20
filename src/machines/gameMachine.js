@@ -10,6 +10,13 @@ const GameMachine = createMachine(
           NEXT: {
             target: "#GameMachine.chapter",
           },
+          SET_CURRENT_CONJECTURE: {
+            actions: assign({
+              currentConjectureIdx: (_, event) => {
+                return event.currentConjectureIdx;
+              },
+            }),
+          },
         },
       },
       chapter: {
@@ -28,6 +35,13 @@ const GameMachine = createMachine(
               target: "#GameMachine.chapter",
             },
           ],
+          SET_CURRENT_CONJECTURE: {
+            actions: assign({
+              currentConjectureIdx: (_, event) => {
+                return event.currentConjectureIdx;
+              },
+            }),
+          },
         },
       },
       intervention: {

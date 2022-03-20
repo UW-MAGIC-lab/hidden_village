@@ -61,6 +61,14 @@ const chapterMachine = createMachine(
               }),
             },
           ],
+          RESET_CONTEXT: {
+            actions: assign({
+              introText: (_, event) => event.introText,
+              outroText: (_, event) => event.outroText,
+              currentText: (_, event) => event.introText[0],
+              lastText: () => [],
+            }),
+          },
         },
       },
       loadingNextChapter: {

@@ -14,8 +14,7 @@ const hitAreasIntersect = (hitAreaOne, hitAreaTwo) => {
 };
 const randomValueFromInterval = (min, max) => {
   return Math.random() * (max - min) + min;
-}
-
+};
 
 const selectHovering = (state) => state.context.hovering;
 
@@ -50,7 +49,7 @@ const CursorMode = (props) => {
   });
   const [nextButtonCoordinates, setNextButtonCoordinates] = useState({
     x: rowDimensions.width - 3 * rowDimensions.margin,
-    y: (window.innerHeight * randomValueFromInterval(0.575, 0.85)),
+    y: window.innerHeight * randomValueFromInterval(0.575, 0.85),
   });
 
   useEffect(() => {
@@ -60,8 +59,8 @@ const CursorMode = (props) => {
       );
       setNextButtonCoordinates({
         x: rowDimensions.width - 3 * rowDimensions.margin,
-        y: (window.innerHeight * randomValueFromInterval(0.575, 0.85)),
-      })
+        y: window.innerHeight * randomValueFromInterval(0.575, 0.85),
+      });
     } else {
       setNextButton(new URL("../assets/next_button.png", import.meta.url));
     }
