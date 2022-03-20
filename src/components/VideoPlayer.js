@@ -10,24 +10,22 @@ const Video = PixiComponent("Video", {
     // HACK: as mentioned in the parcel issue https://github.com/parcel-bundler/parcel/issues/7643
     // there's a weirdness that still exists with how parcel is resolving
     // the URL paths
-    let ultimatePath = new URL(
-      "../assets/animations/oppose_angle.mp4",
-      import.meta.url
-    );
-    const otherUrl = new URL(
+    // default is opposite angle
+    let ultimatePath;
+    const oppositeAnglePath = new URL(
       "../assets/animations/opposite_angle.webm",
       import.meta.url
     );
-    // these two lines are functioning as expected
+    const parallelogramPath = new URL(
+      "../assets/animations/area_parallelogram_trimmed.webm",
+      import.meta.url
+    );
     switch (path) {
       case "../assets/animations/opposite_angle.webm":
-        ultimatePath = otherUrl;
+        ultimatePath = oppositeAnglePath;
         break;
-      case "../assets/animations/oppose_angle.mp4":
-        ultimatePath = new URL(
-          "../assets/animations/oppose_angle.mp4",
-          import.meta.url
-        );
+      case "../assets/animations/area_parallelogram_trimmed.webm":
+        ultimatePath = parallelogramPath;
         break;
       default:
         ultimatePath = new URL(path, import.meta.url);
@@ -50,7 +48,7 @@ const Video = PixiComponent("Video", {
 });
 
 const VideoPlayer = (props) => {
-  const { columnDimensions, onComplete } = props;
+  const { columnDimensions, onComplete, videoPath } = props;
   const drawModalBackground = useCallback((g) => {
     g.beginFill(darkGray, 0.9);
     g.drawRect(0, 0, window.innerWidth, window.innerHeight);
@@ -71,7 +69,7 @@ const VideoPlayer = (props) => {
           new PIXI.TextStyle({
             align: "center",
             fontFamily: "Futura",
-            fontSize: "5em",
+            fontSize: "4em",
             fontWeight: 800,
             fill: [white],
             wordWrap: true,
@@ -80,7 +78,7 @@ const VideoPlayer = (props) => {
         }
       />
       <Video
-        path={"../assets/animations/opposite_angle.webm"}
+        path={videoPath}
         x={columnDimensions(1).x}
         y={columnDimensions(1).y}
         width={columnDimensions(1).width}

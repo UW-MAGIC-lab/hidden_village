@@ -46,13 +46,13 @@
 const conjectures = [
   {
     conjecture:
-      "The opposite angle of two lines that cross are always the same.",
+      "The opposite angle of two lines that cross are always the same",
     poseDataFileName: "oppositeAnglePoses.json",
     videoPath: "../assets/animations/opposite_angle.webm",
   },
   {
     conjecture:
-      "The area of a parallelogram is the same as the area of a rectangle with the same base and width.",
+      "The area of a parallelogram is the same as the area of a rectangle with the same base and width",
     poseDataFileName: "area_parallelogram.json",
     videoPath: "../assets/animations/area_parallelogram_trimmed.webm",
   },

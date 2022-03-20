@@ -5,6 +5,7 @@ import { useCallback, useState, useEffect } from "react";
 import { darkGray, yellow } from "../utils/colors";
 import PoseMatching from "./PoseMatching";
 import oppositeAnglePoseData from "../models/rawPoses/oppositeAnglePoses.json";
+import parallelogramPoseData from "../models/rawPoses/area_parallelogram.json";
 import VideoPlayer from "./VideoPlayer";
 import ExperimentalTask from "./ExperimentalTask";
 
@@ -12,7 +13,6 @@ const Experiment = (props) => {
   const {
     columnDimensions,
     poseData,
-    posesToMatch,
     rowDimensions,
     onComplete,
     debugMode,
@@ -28,6 +28,11 @@ const Experiment = (props) => {
       case "oppositeAnglePoses.json":
         console.log(oppositeAnglePoseData);
         setConjecturePoses(oppositeAnglePoseData);
+        break;
+      case "area_parallelogram.json":
+        console.log(parallelogramPoseData);
+        setConjecturePoses(parallelogramPoseData);
+        break;
       default:
         return null;
     }
@@ -48,7 +53,7 @@ const Experiment = (props) => {
   useEffect(() => {
     if (state.value === "intuition") {
       setExperimentText(
-        `QUICK! TRUE or FALSE:\n\n${conjectureData.conjecture} \n\n Tell us your answer OUT LOUD.`
+        `QUICK! TRUE or FALSE:\n\n${conjectureData.conjecture}. \n\n Tell us your answer OUT LOUD.`
       );
     } else if (state.value === "insight") {
       setExperimentText(

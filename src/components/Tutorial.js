@@ -107,7 +107,7 @@ const Tutorial = (props) => {
   // the threshold for similarity to the model pose. If it is, then transition to the
   // next state. If not, stay in the same state
   useEffect(() => {
-    const similarityThreshold = 50;
+    const similarityThreshold = 45;
     const similarityScore = poseSimilarity.reduce(
       (previousValue, currentValue) => {
         // all segments need to be over the threshold -- will only return true if

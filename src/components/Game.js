@@ -9,7 +9,7 @@ import { useMachine, useSelector } from "@xstate/react";
 import GameMachine from "../machines/gameMachine.js";
 
 const reorder = (array, indices) => {
-  return indices.map((idx) => array[idx]);
+  return indices.map((idx) => array[idx - 1]);
 };
 
 const context = {
@@ -24,13 +24,43 @@ const selectCurrentConjectureIdx = (state) =>
 
 const Game = (props) => {
   const { columnDimensions, rowDimensions, poseData, height, width } = props;
-  const [chapterConjecture, setChapterConjecture] = useState(conjectures[0]);
+  const [chapterConjecture, setChapterConjecture] = useState([]);
 
   const [performTutorial, setPerformTutorial] = useState(true);
   // const [performTutorial, setPerformTutorial] = useState(false);
-  const [allConjectures, setAllConjectures] = useState(conjectures);
+  const [allConjectures, setAllConjectures] = useState([]);
   const [state, send, service] = useMachine(GameMachine, context);
   const currentConjectureIdx = useSelector(service, selectCurrentConjectureIdx);
+
+  useEffect(() => {
+    const numConjectures = conjectures.length;
+    const latinSquare = new Latin(numConjectures);
+    const queryParams = new URLSearchParams(window.location.search);
+    let condition = 0;
+    if (queryParams.has("condition")) {
+      condition = parseInt(queryParams.get("condition"));
+    }
+    const conjectureOrder =
+      condition < numConjectures
+        ? latinSquare.square[condition]
+        : latinSquare.square[0];
+    let orderedConjectures = reorder(conjectures, conjectureOrder);
+    if (queryParams.has("conjecture")) {
+      const conjectureStart = parseInt(queryParams.get("conjecture"));
+      setPerformTutorial(false);
+      send({
+        type: "SET_CURRENT_CONJECTURE",
+        currentConjectureIdx: conjectureStart - 1,
+      });
+    }
+    setAllConjectures(orderedConjectures);
+  }, []);
+
+  useEffect(() => {
+    setChapterConjecture(allConjectures[currentConjectureIdx]);
+    // since allConjectures is also set asyncronously, monitor
+    // allConjectures and currentConjectureIdx to update chapterConjecture
+  }, [allConjectures, currentConjectureIdx]);
 
   return (
     <Container>
