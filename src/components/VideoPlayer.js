@@ -20,12 +20,26 @@ const Video = PixiComponent("Video", {
       "../assets/animations/area_parallelogram_trimmed.webm",
       import.meta.url
     );
+    const angleAngleAnglePath = new URL(
+      "../assets/animations/angle_angle_angle_trimmed.webm",
+      import.meta.url
+    );
+    const areaDoubledPath = new URL(
+      "../assets/animations/area_doubled_trimmed.webm",
+      import.meta.url
+    );
     switch (path) {
       case "../assets/animations/opposite_angle.webm":
         ultimatePath = oppositeAnglePath;
         break;
       case "../assets/animations/area_parallelogram_trimmed.webm":
         ultimatePath = parallelogramPath;
+        break;
+      case "../assets/animations/angle_angle_angle_trimmed.webm":
+        ultimatePath = angleAngleAnglePath;
+        break;
+      case "../assets/animations/area_doubled_trimmed.webm":
+        ultimatePath = areaDoubledPath;
         break;
       default:
         ultimatePath = new URL(path, import.meta.url);
