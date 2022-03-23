@@ -50,6 +50,16 @@ const idToSprite = {
     import.meta.url
   ).href,
   circle: new URL("../assets/circle_sprite.png", import.meta.url).href,
+  square: new URL(
+    "../assets/square_sprite.png",
+    import.meta.url
+  ).href,
+  trapezoid: new URL("../assets/trapezoid_sprite.png", import.meta.url).href,
+  scaleneTriangle: new URL(
+    "../assets/scaleneTriangle_sprite.png",
+    import.meta.url
+  ).href,
+  rectangle: new URL("../assets/rectangle_sprite.png", import.meta.url).href,
 };
 
 const createScene = (sceneConfig, columnDimensions, rowDimensions) => {
