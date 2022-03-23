@@ -30,9 +30,24 @@ completionAnimation = [
 ]
 
 [chapter-2]
+scene = [
+  { id = "equilateralTriangle", distance = "foreground", placement = "center", color = "blue", mood = "happy" },
+  { id = "circle", distance = "aboveground", placement = "right", color = "pink", mood = "happy" },
+  { id = "rectangle", distance = "foreground", placement = "left", color = "blue", mood = "neutral" },
+  { id = "square", distance = "foreground", placement = "right", color = "green", mood = "happy" },
+  { id = "scaleneTriangle", distance = "background", placement = "center", color = "green", mood = "neutral" },
+  { id = "trapezoid", distance = "midground", placement = "center", color = "pink", mood = "happy" }
+]
 intro = [
+  { speaker = "equilateralTriangle", text = "OOPS! You found a bug! Sorry about that. Click next to progress." },
   { speaker = "circle", text = "What are you??" },
   { speaker = "player", text = "That's...kind of a rude greeting. Nice to meet you, too. I heard you wanted to chat about something?" },
   { speaker = "circle", text = "Oh yeah -- triangle and I were chatting, but came to an impasse. Click next so I can show you what I mean!" },
 ]
-outro = []
+outro = [
+  { speaker = "equilateralTriangle", text = "OOPS! You found a bug! Sorry about that. Click next to progress." },
+  { speaker = "equilateralTriangle", text = "Humma jumma" },
+  { speaker = "player", text = 'I guess I am! What next?' },
+  { speaker = "equilateralTriangle", text = "Hmmm, I think circle wanted to chat about something..." },
+  { speaker = "equilateralTriangle", text = "Thanks for trying out the latest prototype of The Hidden Village online! Future versions will include experimental tasks for participants to perform, alongside experiment planning and pose editing tools." },
+]
