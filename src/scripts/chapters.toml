@@ -30,6 +30,14 @@ completionAnimation = [
 ]
 
 [chapter-2]
+scene = [
+  { id = "equilateralTriangle", distance = "foreground", placement = "center", color = "blue", mood = "happy" },
+  { id = "circle", distance = "aboveground", placement = "right", color = "pink", mood = "happy" },
+  { id = "rectangle", distance = "foreground", placement = "left", color = "blue", mood = "neutral" },
+  { id = "square", distance = "foreground", placement = "right", color = "green", mood = "happy" },
+  { id = "scaleneTriangle", distance = "background", placement = "center", color = "green", mood = "neutral" },
+  { id = "trapezoid", distance = "midground", placement = "center", color = "pink", mood = "happy" }
+]
 intro = [
   { speaker = "circle", text = "Wow! I can't believe its you!?" },
   { speaker = "player", text = "Me??" },
@@ -39,8 +47,19 @@ intro = [
   { speaker = "circle", text = "Maybe you can help us..." },
   { speaker = "circle", text = "Triangle and I were chatting but we need some help. Click next and I'll show you what I mean!" },
 ]
+outro = [
+  { speaker = "equilateralTriangle", text = "OOPS! You weren't meant to see this! Sorry about that. Click next to progress." },
+]
 
 [chapter-3]
+scene = [
+  { id = "equilateralTriangle", distance = "foreground", placement = "center", color = "blue", mood = "happy" },
+  { id = "circle", distance = "aboveground", placement = "right", color = "pink", mood = "happy" },
+  { id = "rectangle", distance = "foreground", placement = "left", color = "blue", mood = "neutral" },
+  { id = "square", distance = "foreground", placement = "right", color = "green", mood = "happy" },
+  { id = "scaleneTriangle", distance = "background", placement = "center", color = "green", mood = "neutral" },
+  { id = "trapezoid", distance = "midground", placement = "center", color = "pink", mood = "happy" }
+]
 intro = [
   { speaker = "rectangle", text = "Hey, are you the multi-shaper all the shapes are talking about??" },
   { speaker = "player", text = "Yep, that's me!" },
@@ -48,11 +67,22 @@ intro = [
   { speaker = "player", text = "Ok. What can I do?" },
   { speaker = "rectangle", text = "Let's get into shape ... Click next to get started!" }
 ]
+outro = [
+  { speaker = "equilateralTriangle", text = "OOPS! You weren't meant to see this! Sorry about that. Click next to progress." },
+]
 
 [chapter-4]
+scene = [
+  { id = "equilateralTriangle", distance = "foreground", placement = "center", color = "blue", mood = "happy" },
+  { id = "circle", distance = "aboveground", placement = "right", color = "pink", mood = "happy" },
+  { id = "rectangle", distance = "foreground", placement = "left", color = "blue", mood = "neutral" },
+  { id = "square", distance = "foreground", placement = "right", color = "green", mood = "happy" },
+  { id = "scaleneTriangle", distance = "background", placement = "center", color = "green", mood = "neutral" },
+  { id = "trapezoid", distance = "midground", placement = "center", color = "pink", mood = "happy" }
+]
 intro = [
   { speaker = "scaleneTriangle", text = "You-hoo!!" },
-  { speaker = "player", text = "Are you "you-hoo'ing" at me?" },
+  { speaker = "player", text = "Are you \"you-hoo'ing\" at me?" },
   { speaker = "scaleneTriangle", text = "Well of course, who else would I be you-hoo'ing to!" },
   { speaker = "scaleneTriangle", text = "You're the multi-shaper?" },
   { speaker = "player", text = "I am!" },
@@ -60,8 +90,19 @@ intro = [
   { speaker = "player", text = "Ok. What can I do?" },
   { speaker = "scaleneTriangle", text = "Let's get into shape ... Click next to get started!" }
 ]
+outro = [
+  { speaker = "equilateralTriangle", text = "OOPS! You weren't meant to see this! Sorry about that. Click next to progress." },
+]
 
 [chapter-5]
+scene = [
+  { id = "equilateralTriangle", distance = "foreground", placement = "center", color = "blue", mood = "happy" },
+  { id = "circle", distance = "aboveground", placement = "right", color = "pink", mood = "happy" },
+  { id = "rectangle", distance = "foreground", placement = "left", color = "blue", mood = "neutral" },
+  { id = "square", distance = "foreground", placement = "right", color = "green", mood = "happy" },
+  { id = "scaleneTriangle", distance = "background", placement = "center", color = "green", mood = "neutral" },
+  { id = "trapezoid", distance = "midground", placement = "center", color = "pink", mood = "happy" }
+]
 intro = [
   { speaker = "square", text = "I heard that you've been helping everyone!! Is that true?" },
   { speaker = "player", text = "Well, I'm trying - let me guess, you need help too?" },
@@ -69,8 +110,19 @@ intro = [
    { speaker = "player", text = "No trouble. What's up?" },
   { speaker = "square", text = "Let's get into shape ... Click next to get started!" }
 ]
+outro = [
+  { speaker = "equilateralTriangle", text = "OOPS! You weren't meant to see this! Sorry about that. Click next to progress." },
+]
 
 [chapter-6]
+scene = [
+  { id = "equilateralTriangle", distance = "foreground", placement = "center", color = "blue", mood = "happy" },
+  { id = "circle", distance = "aboveground", placement = "right", color = "pink", mood = "happy" },
+  { id = "rectangle", distance = "foreground", placement = "left", color = "blue", mood = "neutral" },
+  { id = "square", distance = "foreground", placement = "right", color = "green", mood = "happy" },
+  { id = "scaleneTriangle", distance = "background", placement = "center", color = "green", mood = "neutral" },
+  { id = "trapezoid", distance = "midground", placement = "center", color = "pink", mood = "happy" }
+]
 intro = [
   { speaker = "trapezoid", text = "That was amazing!!" },
   { speaker = "player", text = "You saw that?" },
@@ -79,17 +131,38 @@ intro = [
   { speaker = "trapezoid", text = "You must be the multi-shaper!" },
   { speaker = "trapezoid", text = "I've got something to show you ... Click next to get started!" },
 ]
+outro = [
+  { speaker = "equilateralTriangle", text = "OOPS! You weren't meant to see this! Sorry about that. Click next to progress." },
+]
 
 [chapter-7]
+scene = [
+  { id = "equilateralTriangle", distance = "foreground", placement = "center", color = "blue", mood = "happy" },
+  { id = "circle", distance = "aboveground", placement = "right", color = "pink", mood = "happy" },
+  { id = "rectangle", distance = "foreground", placement = "left", color = "blue", mood = "neutral" },
+  { id = "square", distance = "foreground", placement = "right", color = "green", mood = "happy" },
+  { id = "scaleneTriangle", distance = "background", placement = "center", color = "green", mood = "neutral" },
+  { id = "trapezoid", distance = "midground", placement = "center", color = "pink", mood = "happy" }
+]
 intro = [
   { speaker = "circle", text = "Hey, Multi-shaper!!" },
   { speaker = "player", text = "Yes?" },
   { speaker = "circle", text = "Need your help again!" },
   { speaker = "player", text = "Click next and I'll show you..." },
-
+]
+outro = [
+  { speaker = "equilateralTriangle", text = "OOPS! You weren't meant to see this! Sorry about that. Click next to progress." },
 ]
 
 [chapter-8]
+scene = [
+  { id = "equilateralTriangle", distance = "foreground", placement = "center", color = "blue", mood = "happy" },
+  { id = "circle", distance = "aboveground", placement = "right", color = "pink", mood = "happy" },
+  { id = "rectangle", distance = "foreground", placement = "left", color = "blue", mood = "neutral" },
+  { id = "square", distance = "foreground", placement = "right", color = "green", mood = "happy" },
+  { id = "scaleneTriangle", distance = "background", placement = "center", color = "green", mood = "neutral" },
+  { id = "trapezoid", distance = "midground", placement = "center", color = "pink", mood = "happy" }
+]
 intro = [
   { speaker = "equilateralTriangle", text = "You've been busy!!" },
   { speaker = "player", text = "Yeah - word spreads pretty fast!" },
@@ -98,4 +171,6 @@ intro = [
   { speaker = "player", text = "What is it." },
   { speaker = "equilateralTriangle", text = "Let's get into shape ... Click next to get started!" }
 ]
-outro = []
+outro = [
+  { speaker = "equilateralTriangle", text = "OOPS! You weren't meant to see this! Sorry about that. Click next to progress." },
+]

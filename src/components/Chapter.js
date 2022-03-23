@@ -8,6 +8,7 @@ import { useMachine, useSelector, assign } from "@xstate/react";
 import ChapterMachine from "../machines/chapterMachine.js";
 import { Sprite } from "@inlet/react-pixi";
 import Experiment from "./Experiment.js";
+import script from "../scripts/chapters.toml";
 
 const characterRenderOrder = {
   aboveground: 1,
@@ -48,6 +49,7 @@ const idToSprite = {
     "../assets/equilateralTriangle_sprite.png",
     import.meta.url
   ).href,
+  circle: new URL("../assets/circle_sprite.png", import.meta.url).href,
 };
 
 const createScene = (sceneConfig, columnDimensions, rowDimensions) => {
@@ -96,12 +98,28 @@ const Chapter = (props) => {
     width,
     poseData,
     chapterConjecture,
+    nextChapterCallback,
+    currentConjectureIdx,
   } = props;
+  let context;
+  if (script[`chapter-${currentConjectureIdx + 1}`]) {
+    const { intro, outro, scene } =
+      script[`chapter-${currentConjectureIdx + 1}`];
+    context = {
+      introText: intro ? intro : "",
+      outroText: outro ? outro : "",
+      scene: scene ? scene : "",
+      currentText: null,
+      lastText: [],
+      cursorMode: true,
+    };
+  }
   const [characters, setCharacters] = useState(undefined);
   const [displayText, setDisplayText] = useState(null);
   const [speaker, setSpeaker] = useState(null);
   const [currentConjecture, setCurrentConjecture] = useState(chapterConjecture);
-  const [state, send, service] = useMachine(ChapterMachine);
+
+  const [state, send, service] = useMachine(ChapterMachine, { context });
   const currentText = useSelector(service, selectCurrentText);
   const cursorMode = useSelector(service, selectCursorMode);
 
@@ -110,7 +128,35 @@ const Chapter = (props) => {
       createScene(state.context.scene, columnDimensions(1), rowDimensions(1))
     );
   }, []);
+  useEffect(() => {
+    setCurrentConjecture(chapterConjecture);
+  }, [chapterConjecture]);
 
+  useEffect(() => {
+    let [intro, outro, scene] = [[], [], []];
+    if (script[`chapter-${currentConjectureIdx + 1}`]) {
+      intro = script[`chapter-${currentConjectureIdx + 1}`].intro
+        ? script[`chapter-${currentConjectureIdx + 1}`].intro
+        : [];
+      outro = script[`chapter-${currentConjectureIdx + 1}`].outro
+        ? script[`chapter-${currentConjectureIdx + 1}`].outro
+        : [];
+      scene = script[`chapter-${currentConjectureIdx + 1}`].outro
+        ? script[`chapter-${currentConjectureIdx + 1}`].outro
+        : [];
+    }
+    send({
+      type: "RESET_CONTEXT",
+      introText: intro,
+      outroText: outro,
+      scene: scene,
+      currentText: null,
+      lastText: [],
+      cursorMode: true,
+    });
+  }, [currentConjectureIdx]);
+
+  // Effect to update the current text being displayed
   useEffect(() => {
     const subscription = service.subscribe((state) => {
       if (state.context.currentText) {
@@ -138,12 +184,10 @@ const Chapter = (props) => {
     <>
       <Background height={height} width={width} />
       {characters}
-      {["intro", "outro"].includes(state.value) && (
+      {["intro", "outro", "loadingNextChapter"].includes(state.value) && (
         <Pose poseData={poseData} colAttr={columnDimensions(3)} />
       )}
-      {["intro", "introReading", "outro", "outroReading"].includes(
-        state.value
-      ) &&
+      {["intro", "outro", "loadingNextChapter"].includes(state.value) &&
         displayText && (
           <TextBox
             text={displayText}
@@ -151,20 +195,29 @@ const Chapter = (props) => {
             speaker={speaker}
           />
         )}
-      {cursorMode && !["experiment", "final"].includes(state.value) && (
+      {cursorMode &&
+        !["experiment", "final", "loadingNextChapter"].includes(
+          state.value
+        ) && (
+          <CursorMode
+            poseData={poseData}
+            rowDimensions={rowDimensions}
+            callback={() => {
+              send("NEXT");
+            }}
+          />
+        )}
+      {cursorMode && state.value === "loadingNextChapter" && (
         <CursorMode
           poseData={poseData}
           rowDimensions={rowDimensions}
-          callback={() => {
-            send("NEXT");
-          }}
+          callback={nextChapterCallback}
         />
       )}
-      {state.value === "experiment" && (
+      {state.value === "experiment" && currentConjecture && (
         <Experiment
           columnDimensions={columnDimensions}
           poseData={poseData}
-          posesToMatch={angleAngleAnglePoseData}
           rowDimensions={rowDimensions}
           onComplete={() => {
             send("ADVANCE");

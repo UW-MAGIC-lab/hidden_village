@@ -147,7 +147,7 @@ const PoseMatching = (props) => {
             new PIXI.TextStyle({
               align: "center",
               fontFamily: "Futura",
-              fontSize: "5em",
+              fontSize: "4em",
               fontWeight: 800,
               fill: [textColor],
               wordWrap: true,
