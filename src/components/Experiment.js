@@ -4,10 +4,9 @@ import { Graphics } from "@inlet/react-pixi";
 import { useCallback, useState, useEffect } from "react";
 import { darkGray, yellow } from "../utils/colors";
 import PoseMatching from "./PoseMatching";
-import oppositeAnglePoseData from "../models/rawPoses/oppositeAnglePoses.json";
-import parallelogramPoseData from "../models/rawPoses/area_parallelogram.json";
 import VideoPlayer from "./VideoPlayer";
 import ExperimentalTask from "./ExperimentalTask";
+import { getPoseData } from "../models/conjectures";
 
 const Experiment = (props) => {
   const {
@@ -24,18 +23,7 @@ const Experiment = (props) => {
   );
   const [conjecturePoses, setConjecturePoses] = useState("");
   useEffect(() => {
-    switch (conjectureData.poseDataFileName) {
-      case "oppositeAnglePoses.json":
-        console.log(oppositeAnglePoseData);
-        setConjecturePoses(oppositeAnglePoseData);
-        break;
-      case "area_parallelogram.json":
-        console.log(parallelogramPoseData);
-        setConjecturePoses(parallelogramPoseData);
-        break;
-      default:
-        return null;
-    }
+    setConjecturePoses(getPoseData(conjectureData.poseDataFileName));
   }, [conjectureData.poseDataFileName]);
 
   const drawModalBackground = useCallback((g) => {
