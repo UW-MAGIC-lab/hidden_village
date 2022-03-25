@@ -48,14 +48,9 @@ const PoseEditor = () => {
   }, []);
 
   return (
-    <div className="bg-slate-100 grid grid-cols-1 gap-4 place-content-center w-screen h-screen"
+    <div className="bg-slate-100 grid grid-cols-1 gap-6 place-content-center justify-items-center w-screen h-screen"
     >
-      <div className="bg-white w-1/2 justify-self-center">
-        <EditorCanvas width={400} height={300} poseData={poseData} />
-      </div>
-      <div className="bg-white w-1/2 justify-self-center">
-        <EditorCanvas width={400} height={300} poseData={poseData} />
-      </div>
+      <PoseCapture poseData={poseData}/>
     </div>
   );
 };

@@ -400,7 +400,6 @@ const magnitude = (point1, point2) => {
 // ****************************************************************
 const EditorCanvas = (props) => {
   const {height, width, poseData} = props;
-  const [open, setOpen] = useState(false);
   const canvasRef = useRef(null);
   const [armWidth, setArmWidth] = useState(0);
   const draw = useCallback(
@@ -447,21 +446,24 @@ const EditorCanvas = (props) => {
   );
 
   useEffect(() => {
-    if (open)
+    // if (open)
       draw();
   }, [poseData]);
 
   return (
-      <div onClick={() => setOpen(!open)}>
-        {open && (
-          <div className="flex justify-center">
-            <canvas ref={canvasRef} width={width} height={height}></canvas>
-          </div>
-        )}
-        {!open && (
-          <div>CLOSE STATE</div>
-        )}
-      </div>
+    // <div onClick={() => setOpen(!open)}>
+    //   {open && (
+    //     <div className="flex justify-center">
+    //       <canvas ref={canvasRef} width={width} height={height}></canvas>
+    //     </div>
+    //   )}
+    //   {!open && (
+    //     <div>CLOSE STATE</div>
+    //   )}
+    // </div>
+    <div className="flex justify-center">
+      <canvas ref={canvasRef} width={width} height={height}></canvas>
+    </div>
   )
 };
 
