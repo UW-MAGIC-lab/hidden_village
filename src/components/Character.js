@@ -177,7 +177,8 @@ const Character = (props) => {
         colDimensions.y + colDimensions.height - height
       );
       return newPlacement;
-    }
+    },
+    [placementText, colDimensions, rowDimensions]
   );
   const [placement, setPlacement] = useState(
     props.placement ||

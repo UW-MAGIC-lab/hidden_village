@@ -1,72 +1,75 @@
-import ErrorBoundary from "./utilities/ErrorBoundary.js";
-import Pose from "./Pose/index.js";
-import { useState, useEffect } from "react";
-import { useMachine } from "@xstate/react";
-import TutorialMachine from "../machines/tutorialMachine";
-import { Text, Container } from "@inlet/react-pixi";
-import { blue } from "../utils/colors";
-import { TextStyle } from "@pixi/text";
-import cursorPoseData from "../models/rawPoses/cursorPose.json";
-import tutorialPoseData from "../models/rawPoses/tutorialPoses.json";
-import { enrichLandmarks } from "./Pose/landmark_utilities";
 import {
   matchSegmentToLandmarks,
   segmentSimilarity,
 } from "./Pose/pose_drawing_utilities";
-import CursorMode from "./CursorMode.js";
+import { enrichLandmarks } from "./Pose/landmark_utilities";
+import ErrorBoundary from "./utilities/ErrorBoundary.js";
+import Pose from "./Pose/index.js";
+import { useState, useEffect, useMemo } from "react";
+import { Text, Container } from "@inlet/react-pixi";
+import { white } from "../utils/colors";
 
-const Tutorial = (props) => {
-  const [state, send] = useMachine(TutorialMachine);
-  const { text } = state.context;
-  const modelColumn = props.columnDimensions(1);
-  const col2Dim = props.columnDimensions(2);
-  const playerColumn = props.columnDimensions(3);
+const PoseMatching = (props) => {
+  const { posesToMatch, columnDimensions, onComplete } = props;
+  const context = posesToMatch.map((x) => {
+    return { text: "Match the pose on the left!" };
+  });
+  const [text, setText] = useState("Match the pose on the left!");
+  const modelColumn = columnDimensions(1);
+  const col2Dim = columnDimensions(2);
+  const playerColumn = columnDimensions(3);
   const [poses, setPoses] = useState([]);
+  const [transition, setTransition] = useState(false);
+  const [firstPose, setFirstPose] = useState(true);
   const [currentPose, setCurrentPose] = useState({});
   const [poseMatchData, setPoseMatchData] = useState({});
   const [poseSimilarity, setPoseSimilarity] = useState([]);
+  const textColor = white;
 
   // on mount, create an array of the poses that will be used in the tutorial
   useEffect(() => {
-    setPoses([...tutorialPoseData.poses, cursorPoseData]);
+    setPoses(posesToMatch);
+    setCurrentPose(posesToMatch[0]);
   }, []);
 
   // monitor the state value -- when you get to a running state, update the current
   // pose for the model to emulate. If there are no more poses to emulate,
   // update the current pose with nothing
   useEffect(() => {
-    if (state.matches("running")) {
-      if (poses.length > 0) {
-        const currentPoseData = poses.shift();
-        const matchData = currentPoseData.matchingConfig.map((config) => {
-          return {
-            ...config,
-            landmarks: matchSegmentToLandmarks(
-              config,
-              currentPoseData.landmarks,
-              modelColumn
-            ),
-          };
-        });
-        setCurrentPose(enrichLandmarks(currentPoseData.landmarks));
-        setPoseMatchData(matchData);
-        setPoses(poses);
-      } else {
-        setPoses([]);
-        setPoseMatchData({});
-        setCurrentPose({});
+    if (poses.length > 0 && !transition) {
+      if (firstPose) {
+        setFirstPose(false);
       }
+      const currentPoseData = poses.shift();
+      const matchData = currentPoseData.matchingConfig.map((config) => {
+        return {
+          ...config,
+          landmarks: matchSegmentToLandmarks(
+            config,
+            currentPoseData.landmarks,
+            modelColumn
+          ),
+        };
+      });
+      setCurrentPose(enrichLandmarks(currentPoseData.landmarks));
+      setPoseMatchData(matchData);
+      setPoses(poses);
     }
-    if (state.matches("final")) {
-      props.onComplete();
+    if (poses.length === 0 && !firstPose) {
+      setText("Great!");
+      const timer = setTimeout(() => {
+        console.log("moved to next step");
+        onComplete();
+      }, 2000);
+      return () => clearTimeout(timer);
     }
-  }, [state.value]);
+  }, [poses, transition]);
 
   // if there is a pose to match, calculate the similarity between the player's current
   // pose and the model pose (foreach segment to be matched). Set the similarity scores
   // into a variable to be monitored
   useEffect(() => {
-    if (!state.matches("transition")) {
+    if (!transition) {
       if (
         poseMatchData &&
         Object.keys(poseMatchData).length > 0 &&
@@ -107,21 +110,28 @@ const Tutorial = (props) => {
   // the threshold for similarity to the model pose. If it is, then transition to the
   // next state. If not, stay in the same state
   useEffect(() => {
-    const similarityThreshold = 45;
-    const similarityScore = poseSimilarity.reduce(
-      (previousValue, currentValue) => {
-        // all segments need to be over the threshold -- will only return true if
-        // all are over threshold
-        return (
-          previousValue && currentValue.similarityScore > similarityThreshold
-        );
-      },
-      true
-    );
-    if (similarityScore) {
-      // move to next state and reset pose similarity
-      send("NEXT");
-      setPoseSimilarity([{ similarityScore: 0 }]);
+    if (!firstPose) {
+      const similarityThreshold = 45;
+      const similarityScore = poseSimilarity.reduce(
+        (previousValue, currentValue) => {
+          // all segments need to be over the threshold -- will only return true if
+          // all are over threshold
+          return (
+            previousValue && currentValue.similarityScore > similarityThreshold
+          );
+        },
+        true
+      );
+      if (similarityScore) {
+        // move to next state and reset pose similarity
+        setTransition(true);
+        setPoseSimilarity([{ similarityScore: 0 }]);
+        setText("Great!");
+        setTimeout(() => {
+          setText("Match the pose on the left!");
+          setTransition(false);
+        }, 1000);
+      }
     }
   }, [poseSimilarity]);
 
@@ -131,15 +141,15 @@ const Tutorial = (props) => {
         <Pose poseData={currentPose} colAttr={modelColumn} />
         <Text
           text={text}
-          y={col2Dim.y + col2Dim.height / 4}
-          x={col2Dim.x}
+          y={col2Dim.height / 2}
+          x={col2Dim.x + col2Dim.margin}
           style={
-            new TextStyle({
+            new PIXI.TextStyle({
               align: "center",
               fontFamily: "Futura",
-              fontSize: "5em",
+              fontSize: "4em",
               fontWeight: 800,
-              fill: [blue],
+              fill: [textColor],
               wordWrap: true,
               wordWrapWidth: col2Dim.width,
             })
@@ -150,16 +160,9 @@ const Tutorial = (props) => {
           colAttr={playerColumn}
           similarityScores={poseSimilarity}
         />
-        {state.context.currentStepIndex === 6 && (
-          <CursorMode
-            poseData={props.poseData}
-            rowDimensions={props.rowDimensions}
-            callback={() => send("NEXT")}
-          />
-        )}
       </ErrorBoundary>
     </Container>
   );
 };
 
-export default Tutorial;
+export default PoseMatching;

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Camera } from "@mediapipe/camera_utils";
 import { Holistic, POSE_LANDMARKS_LEFT } from "@mediapipe/holistic";
-import PoseCapture from "./PoseCapture";
+import CapturePose from "./CapturePose";
 import { enrichLandmarks } from "./Pose/landmark_utilities";
 import EditorCanvas from "./EditorCanvas";
 
@@ -50,7 +50,7 @@ const PoseEditor = () => {
   return (
     <div className="bg-slate-100 grid grid-cols-1 gap-6 place-content-center justify-items-center w-screen h-screen"
     >
-      <PoseCapture poseData={poseData}/>
+      <CapturePose poseData={poseData}/>
     </div>
   );
 };

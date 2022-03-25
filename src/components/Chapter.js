@@ -4,9 +4,11 @@ import Character from "./Character.js";
 import TextBox from "./TextBox.js";
 import Pose from "./Pose/index.js";
 import { useEffect, useState } from "react";
-import { useMachine, useSelector } from "@xstate/react";
+import { useMachine, useSelector, assign } from "@xstate/react";
 import ChapterMachine from "../machines/chapterMachine.js";
 import { Sprite } from "@inlet/react-pixi";
+import Experiment from "./Experiment.js";
+import script from "../scripts/chapters.toml";
 
 const characterRenderOrder = {
   aboveground: 1,
@@ -47,6 +49,17 @@ const idToSprite = {
     "../assets/equilateralTriangle_sprite.png",
     import.meta.url
   ).href,
+  circle: new URL("../assets/circle_sprite.png", import.meta.url).href,
+  square: new URL(
+    "../assets/square_sprite.png",
+    import.meta.url
+  ).href,
+  trapezoid: new URL("../assets/trapezoid_sprite.png", import.meta.url).href,
+  scaleneTriangle: new URL(
+    "../assets/scaleneTriangle_sprite.png",
+    import.meta.url
+  ).href,
+  rectangle: new URL("../assets/rectangle_sprite.png", import.meta.url).href,
 };
 
 const createScene = (sceneConfig, columnDimensions, rowDimensions) => {
@@ -85,23 +98,75 @@ const createScene = (sceneConfig, columnDimensions, rowDimensions) => {
 const selectCurrentText = (state) => state.context.currentText;
 const selectCursorMode = (state) => state.context.cursorMode;
 
+import angleAngleAnglePoseData from "../models/rawPoses/angleAngleAnglePoses.json";
+
 const Chapter = (props) => {
-  const { rowDimensions, columnDimensions, height, width, poseData } = props;
+  const {
+    rowDimensions,
+    columnDimensions,
+    height,
+    width,
+    poseData,
+    chapterConjecture,
+    nextChapterCallback,
+    currentConjectureIdx,
+  } = props;
+  let context;
+  if (script[`chapter-${currentConjectureIdx + 1}`]) {
+    const { intro, outro, scene } =
+      script[`chapter-${currentConjectureIdx + 1}`];
+    context = {
+      introText: intro ? intro : "",
+      outroText: outro ? outro : "",
+      scene: scene ? scene : "",
+      currentText: null,
+      lastText: [],
+      cursorMode: true,
+    };
+  }
   const [characters, setCharacters] = useState(undefined);
   const [displayText, setDisplayText] = useState(null);
   const [speaker, setSpeaker] = useState(null);
-  const [state, send, service] = useMachine(ChapterMachine);
+  const [currentConjecture, setCurrentConjecture] = useState(chapterConjecture);
+
+  const [state, send, service] = useMachine(ChapterMachine, { context });
   const currentText = useSelector(service, selectCurrentText);
   const cursorMode = useSelector(service, selectCursorMode);
 
   useEffect(() => {
-    setCharacters(createScene(
-      state.context.scene,
-      columnDimensions(1),
-      rowDimensions(1)
-    ));
+    setCharacters(
+      createScene(state.context.scene, columnDimensions(1), rowDimensions(1))
+    );
   }, []);
+  useEffect(() => {
+    setCurrentConjecture(chapterConjecture);
+  }, [chapterConjecture]);
 
+  useEffect(() => {
+    let [intro, outro, scene] = [[], [], []];
+    if (script[`chapter-${currentConjectureIdx + 1}`]) {
+      intro = script[`chapter-${currentConjectureIdx + 1}`].intro
+        ? script[`chapter-${currentConjectureIdx + 1}`].intro
+        : [];
+      outro = script[`chapter-${currentConjectureIdx + 1}`].outro
+        ? script[`chapter-${currentConjectureIdx + 1}`].outro
+        : [];
+      scene = script[`chapter-${currentConjectureIdx + 1}`].outro
+        ? script[`chapter-${currentConjectureIdx + 1}`].outro
+        : [];
+    }
+    send({
+      type: "RESET_CONTEXT",
+      introText: intro,
+      outroText: outro,
+      scene: scene,
+      currentText: null,
+      lastText: [],
+      cursorMode: true,
+    });
+  }, [currentConjectureIdx]);
+
+  // Effect to update the current text being displayed
   useEffect(() => {
     const subscription = service.subscribe((state) => {
       if (state.context.currentText) {
@@ -113,7 +178,7 @@ const Chapter = (props) => {
   }, [service]);
 
   useEffect(() => {
-    if (characters) {
+    if (characters && currentText) {
       setSpeaker(
         <Sprite
           image={idToSprite[currentText.speaker]}
@@ -129,21 +194,46 @@ const Chapter = (props) => {
     <>
       <Background height={height} width={width} />
       {characters}
-      <Pose poseData={poseData} colAttr={columnDimensions(3)} />
-      {displayText && (
-        <TextBox
-          text={displayText}
-          rowDimensionsCallback={rowDimensions}
-          speaker={speaker}
-        />
+      {["intro", "outro", "loadingNextChapter"].includes(state.value) && (
+        <Pose poseData={poseData} colAttr={columnDimensions(3)} />
       )}
-      {cursorMode && (
+      {["intro", "outro", "loadingNextChapter"].includes(state.value) &&
+        displayText && (
+          <TextBox
+            text={displayText}
+            rowDimensionsCallback={rowDimensions}
+            speaker={speaker}
+          />
+        )}
+      {cursorMode &&
+        !["experiment", "final", "loadingNextChapter"].includes(
+          state.value
+        ) && (
+          <CursorMode
+            poseData={poseData}
+            rowDimensions={rowDimensions}
+            callback={() => {
+              send("NEXT");
+            }}
+          />
+        )}
+      {cursorMode && state.value === "loadingNextChapter" && (
         <CursorMode
           poseData={poseData}
           rowDimensions={rowDimensions}
-          callback={() => {
-            send("NEXT");
+          callback={nextChapterCallback}
+        />
+      )}
+      {state.value === "experiment" && currentConjecture && (
+        <Experiment
+          columnDimensions={columnDimensions}
+          poseData={poseData}
+          rowDimensions={rowDimensions}
+          onComplete={() => {
+            send("ADVANCE");
           }}
+          debugMode={false}
+          conjectureData={currentConjecture}
         />
       )}
     </>

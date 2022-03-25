@@ -1,17 +1,7 @@
 import { createMachine, assign } from "xstate";
-import intro from "../scripts/chapters.toml";
-
 const chapterMachine = createMachine(
   {
     initial: "intro",
-    context: {
-      introText: intro["chapter-1"].intro,
-      currentText: null,
-      lastText: [],
-      outroText: intro["chapter-1"].outro,
-      cursorMode: true,
-      scene: intro["chapter-1"].scene,
-    },
     states: {
       idle: {
         after: {
@@ -25,9 +15,8 @@ const chapterMachine = createMachine(
         on: {
           NEXT: [
             {
-              target: "introReading",
+              target: "intro",
               cond: "continueIntro",
-              actions: ["introDialogStep"],
             },
             {
               target: "experiment",
@@ -44,21 +33,14 @@ const chapterMachine = createMachine(
         },
       },
       experiment: {
-        exit: "outroDialogStep",
-        after: {
-          3000: {
-            target: "outro",
-          },
-        },
         on: {
-          NEXT: {
+          ADVANCE: {
             target: "outro",
           },
         },
       },
       outro: {
-        entry: "toggleCursorMode",
-        exit: "outroDialogStep",
+        entry: "outroDialogStep",
         on: {
           NEXT: [
             {
@@ -66,15 +48,42 @@ const chapterMachine = createMachine(
               cond: "continueOutro",
             },
             {
-              target: "loading",
+              target: "loadingNextChapter",
+              actions: assign({
+                currentText: (context) => {
+                  console.log(context);
+                  return {
+                    text: "Hit the next button to load the next chapter...",
+                    speaker: "player",
+                  };
+                },
+                loaded: () => false,
+              }),
             },
           ],
+          RESET_CONTEXT: {
+            actions: assign({
+              introText: (_, event) => event.introText,
+              outroText: (_, event) => event.outroText,
+              currentText: (_, event) => event.introText[0],
+              lastText: () => [],
+            }),
+          },
         },
       },
-      final: {
-        type: "final",
+      loadingNextChapter: {
+        on: {
+          RESET_CONTEXT: {
+            target: "intro",
+            actions: assign({
+              introText: (_, event) => event.introText,
+              outroText: (_, event) => event.outroText,
+              currentText: (_, event) => null,
+              lastText: () => [],
+            }),
+          },
+        },
       },
-      loading: {},
     },
   },
   {
@@ -91,6 +100,9 @@ const chapterMachine = createMachine(
         currentText: (context) => {
           if (context.introText[0]) {
             return context.introText[0];
+          }
+          if (context.currentText) {
+            return context.currentText;
           }
           return {};
         },
