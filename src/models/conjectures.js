@@ -43,11 +43,6 @@
  * @param {ExperimentConjecture} props.conjectureData
  */
 
- import oppositeAnglePoseData from "./rawPoses/oppositeAnglePoses.json";
- import parallelogramPoseData from "./rawPoses/area_parallelogram.json";
- import areaDoubled from './rawPoses/area_doubled.json';
- import angleAngleAngle from './rawPoses/angleAngleAnglePoses.json';
-
 const conjectures = [
   {
     conjecture:
@@ -63,18 +58,30 @@ const conjectures = [
   },
   {
     conjecture:
-      "If you double the length and the width of a rectangle, then the area is exactly doubled.",
+      "If you double the length and the width of a rectangle, then the area is exactly doubled",
     poseDataFileName: "area_doubled.json",
     videoPath: "../assets/animations/area_doubled_trimmed.webm",
   },
   {
     conjecture:
-      "Given that you know the measure of all three angles of a triangle, there is only one unique triangle that can be formed with these three angle measurements.",
+      "Given that you know the measure of all three angles of a triangle, there is only one unique triangle that can be formed with these three angle measurements",
     poseDataFileName: "angleAngleAnglePoses.json",
     videoPath: "../assets/animations/angle_angle_angle_trimmed.webm",
   },
+  {
+    conjecture:
+      "The diagonals of a rectangle always have the same length",
+    poseDataFileName: "diagonals_rectangle.json",
+    videoPath: "../assets/animations/diagonals_rectangle.webm",
+  },
 ];
-
+// Import the pose data
+import oppositeAnglePoseData from "./rawPoses/oppositeAnglePoses.json";
+import parallelogramPoseData from "./rawPoses/area_parallelogram.json";
+import areaDoubled from './rawPoses/area_doubled.json';
+import angleAngleAngle from './rawPoses/angleAngleAnglePoses.json';
+import diagonalsRectangle from './rawPoses/diagonals_rectangle.json';
+// reference the pose data
 const getPoseData = (poseDataFileName) => {
   switch (poseDataFileName) {
     case "oppositeAnglePoses.json":
@@ -88,6 +95,9 @@ const getPoseData = (poseDataFileName) => {
       break;
     case "angleAngleAnglePoses.json":
       return angleAngleAngle;
+      break;
+    case "diagonals_rectangle.json":
+      return diagonalsRectangle;
       break;
     default:
       return null;
