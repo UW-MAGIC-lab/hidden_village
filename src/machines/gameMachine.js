@@ -11,6 +11,7 @@ const GameMachine = createMachine(
             target: "#GameMachine.chapter",
           },
           SET_CURRENT_CONJECTURE: {
+            target: "#GameMachine.chapter",
             actions: assign({
               currentConjectureIdx: (_, event) => {
                 return event.currentConjectureIdx;
