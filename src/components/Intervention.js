@@ -1,6 +1,6 @@
 import { Graphics, Text } from "@inlet/react-pixi";
 import { darkGray, white } from "../utils/colors.js";
-import {  useEffect, useCallback } from "react";
+import { useEffect, useCallback } from "react";
 
 const Intervention = (props) => {
   const { triggerNextChapter } = props;
@@ -10,19 +10,19 @@ const Intervention = (props) => {
     g.endFill();
   });
 
-  const handleUserKeyPress = useCallback(event => {
-      const { _, keyCode } = event;
-      // keyCode 78 is n
-      if(keyCode === 78){
-        triggerNextChapter();
-      }
+  const handleUserKeyPress = useCallback((event) => {
+    const { _, keyCode } = event;
+    // keyCode 78 is n
+    if (keyCode === 78) {
+      triggerNextChapter();
+    }
   }, []);
 
   useEffect(() => {
-      window.addEventListener("keydown", handleUserKeyPress);
-      return () => {
-          window.removeEventListener("keydown", handleUserKeyPress);
-      };
+    window.addEventListener("keydown", handleUserKeyPress);
+    return () => {
+      window.removeEventListener("keydown", handleUserKeyPress);
+    };
   }, [handleUserKeyPress]);
   return (
     <>
@@ -42,6 +42,6 @@ const Intervention = (props) => {
         }
       />
     </>
-  )
-}
+  );
+};
 export default Intervention;

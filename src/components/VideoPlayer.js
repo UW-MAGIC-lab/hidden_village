@@ -2,50 +2,13 @@ import { PixiComponent } from "@inlet/react-pixi";
 import { Graphics, Text } from "@inlet/react-pixi";
 import { useCallback } from "react";
 import { white, darkGray, yellow } from "../utils/colors";
+import { getVideoFromPath } from "../models/conjectures";
 
 const Video = PixiComponent("Video", {
   create: (props) => {
     const { path, onComplete, x, y, width, height } = props;
 
-    // HACK: as mentioned in the parcel issue https://github.com/parcel-bundler/parcel/issues/7643
-    // there's a weirdness that still exists with how parcel is resolving
-    // the URL paths
-    // default is opposite angle
-    let ultimatePath;
-    const oppositeAnglePath = new URL(
-      "../assets/animations/opposite_angle.webm",
-      import.meta.url
-    );
-    const parallelogramPath = new URL(
-      "../assets/animations/area_parallelogram_trimmed.webm",
-      import.meta.url
-    );
-    const angleAngleAnglePath = new URL(
-      "../assets/animations/angle_angle_angle_trimmed.webm",
-      import.meta.url
-    );
-    const areaDoubledPath = new URL(
-      "../assets/animations/area_doubled_trimmed.webm",
-      import.meta.url
-    );
-    switch (path) {
-      case "../assets/animations/opposite_angle.webm":
-        ultimatePath = oppositeAnglePath;
-        break;
-      case "../assets/animations/area_parallelogram_trimmed.webm":
-        ultimatePath = parallelogramPath;
-        break;
-      case "../assets/animations/angle_angle_angle_trimmed.webm":
-        ultimatePath = angleAngleAnglePath;
-        break;
-      case "../assets/animations/area_doubled_trimmed.webm":
-        ultimatePath = areaDoubledPath;
-        break;
-      default:
-        ultimatePath = new URL(path, import.meta.url);
-        break;
-    }
-    const texture = PIXI.Texture.from(ultimatePath.href);
+    const texture = PIXI.Texture.from(getVideoFromPath(path).href);
     const video = new PIXI.Sprite(texture);
     video.x = x;
     video.y = y;
