@@ -3,8 +3,8 @@
     {
       "name":"sum_two_sides_1",
       "matchingConfig":[
-        {"segment":"RIGHT_FOREARM","data":"poseLandmarks"},
-        {"segment":"LEFT_FOREARM","data":"poseLandmarks"}
+        {"segment":"RIGHT_BICEP","data":"poseLandmarks"},
+        {"segment":"LEFT_BICEP","data":"poseLandmarks"}
       ],
       "landmarks": {
         "faceLandmarks": [
@@ -2554,8 +2554,8 @@
     {
       "name":"sum_two_sides_2",
       "matchingConfig":[
-        {"segment":"RIGHT_FOREARM","data":"poseLandmarks"},
-        {"segment":"LEFT_FOREARM","data":"poseLandmarks"}
+        {"segment":"RIGHT_BICEP","data":"poseLandmarks"},
+        {"segment":"LEFT_BICEP","data":"poseLandmarks"}
       ],
       "landmarks":{
         "poseLandmarks": [
