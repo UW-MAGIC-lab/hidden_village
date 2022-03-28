@@ -21,9 +21,8 @@ intro = [
 outro = [
   { speaker = "equilateralTriangle", text = "OOPS! You found a bug! Sorry about that. Click next to progress." },
   { speaker = "equilateralTriangle", text = "Thanks, that was really helpful!" },
-  { speaker = "player", text = 'I guess I am! What next?' },
-  { speaker = "equilateralTriangle", text = "Hmmm, I think circle wanted to chat about something..." },
-  { speaker = "equilateralTriangle", text = "Thanks for trying out the latest prototype of The Hidden Village online! Future versions will include experimental tasks for participants to perform, alongside experiment planning and pose editing tools." },
+  { speaker = "player", text = 'I guess it was! What next?' },
+  { speaker = "equilateralTriangle", text = "Hmmm, I think circle wanted to chat about something..." }
 ]
 completionAnimation = [
   { id = "equilateralTriangle", moveTo = "background center", animation = "triangle_waving" }
@@ -69,6 +68,7 @@ intro = [
 ]
 outro = [
   { speaker = "equilateralTriangle", text = "OOPS! You weren't meant to see this! Sorry about that. Click next to progress." },
+  { speaker = "scaleneTriangle", text = "You-hoo!!" },
 ]
 
 [chapter-4]
@@ -81,7 +81,6 @@ scene = [
   { id = "trapezoid", distance = "midground", placement = "center", color = "pink", mood = "happy" }
 ]
 intro = [
-  { speaker = "scaleneTriangle", text = "You-hoo!!" },
   { speaker = "player", text = "Are you \"you-hoo'ing\" at me?" },
   { speaker = "scaleneTriangle", text = "Well of course, who else would I be you-hoo'ing to!" },
   { speaker = "scaleneTriangle", text = "You're the multi-shaper?" },
