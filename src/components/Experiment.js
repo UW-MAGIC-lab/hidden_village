@@ -19,7 +19,7 @@ const Experiment = (props) => {
   } = props;
   const [state, send, service] = useMachine(ExperimentMachine);
   const [experimentText, setExperimentText] = useState(
-    `QUICK! TRUE or FALSE:\n\n${conjectureData.conjecture} \n\n Tell us your answer OUT LOUD.`
+    `Read the following aloud:\n\n${conjectureData.conjecture} \n\n TRUE or FALSE?`
   );
   const [conjecturePoses, setConjecturePoses] = useState("");
   useEffect(() => {
@@ -41,14 +41,29 @@ const Experiment = (props) => {
   useEffect(() => {
     if (state.value === "intuition") {
       setExperimentText(
-        `QUICK! TRUE or FALSE:\n\n${conjectureData.conjecture}. \n\n Tell us your answer OUT LOUD.`
+        `Read the following ALOUD:\n\n${conjectureData.conjecture} \n\n TRUE or FALSE?`
       );
     } else if (state.value === "insight") {
       setExperimentText(
-        `Alright! Now, explain OUT LOUD:\n\nWHY is it TRUE or FALSE that: \n\n ${conjectureData.conjecture.toLowerCase()}?`
+        `Alright! Read the following ALOUD again:\n\n ${conjectureData.conjecture.toLowerCase()} \n\n Explain WHY is it TRUE or FALSE?`
       );
     }
   }, [state.value]);
+
+  const handleUserKeyPress = useCallback((event) => {
+    const { _, keyCode } = event;
+    // keyCode 78 is n
+    if (keyCode === 78) {
+      send("NEXT");
+    }
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleUserKeyPress);
+    return () => {
+      window.removeEventListener("keydown", handleUserKeyPress);
+    };
+  }, [handleUserKeyPress]);
 
   return (
     <>
