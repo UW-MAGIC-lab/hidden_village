@@ -50,10 +50,7 @@ const idToSprite = {
     import.meta.url
   ).href,
   circle: new URL("../assets/circle_sprite.png", import.meta.url).href,
-  square: new URL(
-    "../assets/square_sprite.png",
-    import.meta.url
-  ).href,
+  square: new URL("../assets/square_sprite.png", import.meta.url).href,
   trapezoid: new URL("../assets/trapezoid_sprite.png", import.meta.url).href,
   scaleneTriangle: new URL(
     "../assets/scaleneTriangle_sprite.png",
@@ -97,8 +94,6 @@ const createScene = (sceneConfig, columnDimensions, rowDimensions) => {
 
 const selectCurrentText = (state) => state.context.currentText;
 const selectCursorMode = (state) => state.context.cursorMode;
-
-import angleAngleAnglePoseData from "../models/rawPoses/angleAngleAnglePoses.json";
 
 const Chapter = (props) => {
   const {

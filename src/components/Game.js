@@ -71,7 +71,7 @@ const Game = (props) => {
           columnDimensions={columnDimensions}
           rowDimensions={rowDimensions}
           onComplete={() => {
-            setPerformTutorial(false)
+            setPerformTutorial(false);
             send("NEXT");
           }}
         />

@@ -9,6 +9,7 @@ const CursorMachine = createMachine(
       },
       hovering: false,
       canTransition: true,
+      placementCounter: 0,
     },
     states: {
       activated: {
@@ -39,6 +40,7 @@ const CursorMachine = createMachine(
             actions: [
               assign({
                 hovering: (context) => !context.hovering,
+                placementCounter: (context) => context.placementCounter + 1,
               }),
               (context) => {
                 context.callback();
