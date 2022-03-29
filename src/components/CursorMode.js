@@ -4,15 +4,22 @@ import { useState, useEffect, useRef } from "react";
 import CursorMachine from "../machines/cursorMachine";
 import { useMachine, useSelector } from "@xstate/react";
 
-const hitAreasIntersect = (hitAreaOne, hitAreaTwo) => {
+const hitAreasIntersect = (cursorHitArea, nextButtonHitArea) => {
+  const hitAreaScalar = 0.6;
   return (
-    hitAreaOne.x < hitAreaTwo.x + hitAreaTwo.width &&
-    hitAreaOne.x + hitAreaOne.width > hitAreaTwo.x &&
-    hitAreaOne.y < hitAreaTwo.y + hitAreaTwo.height &&
-    hitAreaOne.y + hitAreaOne.height > hitAreaTwo.y
+    cursorHitArea.x < nextButtonHitArea.x + nextButtonHitArea.width &&
+    cursorHitArea.x + cursorHitArea.width * hitAreaScalar >
+      nextButtonHitArea.x &&
+    cursorHitArea.y <
+      nextButtonHitArea.y + nextButtonHitArea.height * hitAreaScalar &&
+    cursorHitArea.y + cursorHitArea.height > nextButtonHitArea.y
   );
 };
-const randomValueFromInterval = (min, max) => {
+const nextButtonY = (positionCounter) => {
+  const [min, max] = [0.595, 0.85];
+  if (positionCounter) {
+    return positionCounter % 2 === 0 ? min : max;
+  }
   return Math.random() * (max - min) + min;
 };
 
@@ -31,10 +38,11 @@ const selectHovering = (state) => state.context.hovering;
  */
 
 const CursorMode = (props) => {
+  const { callback } = props;
   const nextButtonRef = useRef(null);
   const cursorRef = useRef(null);
   const [state, send, service] = useMachine(CursorMachine, {
-    context: { callback: props.callback },
+    context: { callback: callback, placementCounter: 0 },
   });
   const hovering = useSelector(service, selectHovering);
   const [rowDimensions] = useState(props.rowDimensions(2));
@@ -47,9 +55,10 @@ const CursorMode = (props) => {
     x: window.innerWidth * 0.65,
     y: window.innerHeight * 0.5,
   });
+
   const [nextButtonCoordinates, setNextButtonCoordinates] = useState({
     x: rowDimensions.width - 3 * rowDimensions.margin,
-    y: window.innerHeight * randomValueFromInterval(0.575, 0.85),
+    y: window.innerHeight * nextButtonY(props.placementCounter),
   });
 
   useEffect(() => {
@@ -57,14 +66,17 @@ const CursorMode = (props) => {
       setNextButton(
         new URL("../assets/next_button_hover.png", import.meta.url)
       );
-      setNextButtonCoordinates({
-        x: rowDimensions.width - 3 * rowDimensions.margin,
-        y: window.innerHeight * randomValueFromInterval(0.575, 0.85),
-      });
     } else {
       setNextButton(new URL("../assets/next_button.png", import.meta.url));
     }
   }, [hovering]);
+
+  useEffect(() => {
+    setNextButtonCoordinates({
+      x: rowDimensions.width - 3 * rowDimensions.margin,
+      y: window.innerHeight * nextButtonY(state.context.placementCounter),
+    });
+  }, [state.context]);
 
   useEffect(() => {
     if (
