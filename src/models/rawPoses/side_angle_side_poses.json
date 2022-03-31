@@ -1,9 +1,9 @@
 {
   "poses": [
     {
-      "name":"side_angle_1",
+      "name":"side_angle_side_1",
       "matchingConfig":[
-        {"segment":"RIGHT_FOREARM","data":"poseLandmarks"},
+        // {"segment":"RIGHT_FOREARM","data":"poseLandmarks"},
         {"segment":"LEFT_FOREARM","data":"poseLandmarks"}
       ],
       "landmarks": {
@@ -2766,9 +2766,9 @@
       }
     },
     {
-      "name":"side_angle_2",
+      "name":"side_angle_side_2",
       "matchingConfig":[
-        {"segment":"RIGHT_FOREARM","data":"poseLandmarks"},
+        // {"segment":"RIGHT_FOREARM","data":"poseLandmarks"},
         {"segment":"LEFT_FOREARM","data":"poseLandmarks"}
       ],
       "landmarks":{
