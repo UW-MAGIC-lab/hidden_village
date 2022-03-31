@@ -46,13 +46,13 @@
 const conjectures = [
   {
     conjecture:
-      "The opposite angle of two lines that cross are always the same",
+      "The opposite angles of two lines that cross are always the same",
     poseDataFileName: "oppositeAnglePoses.json",
     videoPath: "../assets/animations/opposite_angle.webm",
   },
   {
     conjecture:
-      "The area of a parallelogram is the same as the area of a rectangle with the same base and width",
+      "The area of a parallelogram is the same as the area of a rectangle with the same base and height",
     poseDataFileName: "area_parallelogram.json",
     videoPath: "../assets/animations/area_parallelogram_trimmed.webm",
   },
@@ -64,7 +64,7 @@ const conjectures = [
   },
   {
     conjecture:
-      "Given that you know the measure of all three angles of a triangle, there is only one unique triangle that can be formed with these three angle measurements",
+      "Given that you know the measure of all three angles of a triangle, there is only one unique size of the triangle that can be formed with these three angle measurements",
     poseDataFileName: "angleAngleAnglePoses.json",
     videoPath: "../assets/animations/angle_angle_angle_trimmed.webm",
   },
@@ -75,13 +75,13 @@ const conjectures = [
   },
   {
     conjecture:
-      "If one angle of a triangle is larger than the second angle, then the side opposite first angle is longer than the side opposite the second angle",
+      "If one angle of a triangle is larger than a second angle, then the side opposite the first angle is longer than the side opposite the second angle",
     poseDataFileName: "side_angle_side_poses.json",
     videoPath: "../assets/animations/side_angle_side_trimmed.webm",
   },
   {
     conjecture:
-      "The sum of the length of two sides of a triangle is always greater than the length of the third side",
+      "The sum of the lengths of two sides of a triangle is always greater than the length of the third side",
     poseDataFileName: "sum_two_sides_poses.json",
     videoPath: "../assets/animations/sum_two_sides_trimmed.webm",
   },
@@ -96,11 +96,11 @@ const conjectures = [
 // Import the pose data
 import oppositeAnglePoseData from "./rawPoses/oppositeAnglePoses.json";
 import parallelogramPoseData from "./rawPoses/area_parallelogram.json";
-import areaDoubled from "./rawPoses/area_doubled.json";
+import areaDoubled from "./rawPoses/area_doubled_2.json";
 import angleAngleAngle from "./rawPoses/angleAngleAnglePoses.json";
 import diagonalsRectangle from "./rawPoses/diagonals_rectangle.json";
 import reflectionOverAxis from "./rawPoses/reflection_over_axis_poses.json";
-import sumTwoSides from "./rawPoses/sum_two_sides_poses.json";
+import sumTwoSides from "./rawPoses/sum_two_sides_poses_2.json";
 import sideAngleSide from "./rawPoses/side_angle_side_poses.json";
 // reference the pose data
 const getPoseData = (poseDataFileName) => {
@@ -154,7 +154,7 @@ const angleAngleAnglePath = new URL(
   import.meta.url
 );
 const areaDoubledPath = new URL(
-  "../assets/animations/area_doubled_trimmed.webm",
+  "../assets/animations/area_doubled_trimmed_2.webm",
   import.meta.url
 );
 const diagonalsRectanglePath = new URL(
@@ -170,7 +170,7 @@ const sideAngleSidePath = new URL(
   import.meta.url
 );
 const sumTwoSidesPath = new URL(
-  "../assets/animations/sum_two_sides_trimmed.webm",
+  "../assets/animations/sum_two_sides_trimmed_2.webm",
   import.meta.url
 );
 
