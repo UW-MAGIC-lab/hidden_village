@@ -19,8 +19,8 @@ outro = [
   { speaker = "player", text = "You're welcome. Now what?" },
   { speaker = "equilateralTriangle", text = "You did so well, it'd be great if you could help my friends?" },
   { speaker = "player", text = "I could do that...What do I need to do?" },
-  { speaker = "equilateralTriangle", text = "Keep getting into shape by making moves and talking shapes!" }
-  { speaker = "player", text = "All right!!" },
+  { speaker = "equilateralTriangle", text = "Keep getting into shape by making moves and talking shapes!" },
+  { speaker = "player", text = "All right!!" }
 ]
 completionAnimation = [
   { id = "equilateralTriangle", moveTo = "background center", animation = "triangle_waving" }
