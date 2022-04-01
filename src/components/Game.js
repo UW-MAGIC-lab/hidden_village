@@ -7,6 +7,7 @@ import Latin from "./utilities/latin_square";
 import { useMachine, useSelector } from "@xstate/react";
 // import { useSelector } from "@xstate";
 import GameMachine from "../machines/gameMachine.js";
+import Intervention from "./Intervention.js";
 
 const reorder = (array, indices) => {
   return indices.map((idx) => array[idx - 1]);
@@ -69,10 +70,13 @@ const Game = (props) => {
           poseData={poseData}
           columnDimensions={columnDimensions}
           rowDimensions={rowDimensions}
-          onComplete={() => setPerformTutorial(false)}
+          onComplete={() => {
+            setPerformTutorial(false);
+            send("NEXT");
+          }}
         />
       )}
-      {!performTutorial && (
+      {!performTutorial && state.value === "chapter" && (
         <Chapter
           poseData={poseData}
           columnDimensions={props.columnDimensions}
@@ -83,6 +87,9 @@ const Game = (props) => {
           currentConjectureIdx={state.context.currentConjectureIdx}
           nextChapterCallback={() => send("NEXT")}
         />
+      )}
+      {!performTutorial && state.value === "intervention" && (
+        <Intervention triggerNextChapter={() => send("NEXT")} />
       )}
     </Container>
   );

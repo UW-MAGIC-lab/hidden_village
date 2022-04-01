@@ -3,9 +3,7 @@
     {
       "name":"opposite_angle_pose_1",
       "matchingConfig":[
-        // {"segment":"RIGHT_BICEP","data":"poseLandmarks"},
         {"segment":"RIGHT_FOREARM","data":"poseLandmarks"},
-        // {"segment":"LEFT_BICEP","data":"poseLandmarks"},
         {"segment":"LEFT_FOREARM","data":"poseLandmarks"}
       ],
       "landmarks": {
@@ -2770,9 +2768,7 @@
     {
       "name":"opposite_angle_pose_2",
       "matchingConfig":[
-        // {"segment":"RIGHT_BICEP","data":"poseLandmarks"},
         {"segment":"RIGHT_FOREARM","data":"poseLandmarks"},
-        // {"segment":"LEFT_BICEP","data":"poseLandmarks"},
         {"segment":"LEFT_FOREARM","data":"poseLandmarks"}
       ],
       "landmarks":{
