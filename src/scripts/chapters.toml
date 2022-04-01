@@ -8,21 +8,21 @@ scene = [
   { id = "trapezoid", distance = "midground", placement = "center", color = "pink", mood = "happy" }
 ]
 intro = [
-  { speaker= "equilateralTriangle", text = "Hi! Welcome to a world of shapes!" },
-  { speaker = "player", text = "… … … Uhm, hi? Wait... Where am I?"},
-  { speaker = "equilateralTriangle", text = "Look around - its a world of Shapes!" },
-  { speaker = "player", text = "OK... So... Now what?" },
-  { speaker = "equilateralTriangle", text = "Well, in the world of shapes, we're always talking about shapes?" },
-  { speaker = "player", text = "So... I guess you want me to talk about shapes?" },
-  { speaker = "equilateralTriangle", text = "Exactly. But first you've got to get in shape!" },
-  { speaker = "player", text = "Ok... so, what do I have to do?" },
-  { speaker = "equilateralTriangle", text = "Simply follow my movements! And then we'll talk about shapes ... Click next to get started!" }
+  { speaker= "equilateralTriangle", text = "Hi! Welcome to a world of shapes, Multi-shaper!" },
+  { speaker = "player", text = "World of shapes, where?!?... Multi-shaper - me?!?... wait... who are you?"},
+  { speaker = "equilateralTriangle", text = "I'm Equila the Triangle, you're the Multi-shaper and this is the world of Shapes!" },
+  { speaker = "player", text = "Multi-shaper?! World of Shapes?!? What are you talking about?" },
+  { speaker = "equilateralTriangle", text = "In this world, we're all different shapes... but you... you are a very rare multi-shaper!" },
+  { speaker = "player", text = "I am?... what does that mean?" },
+  { speaker = "equilateralTriangle", text = "Well, we shapes enjoy staying in shape physically and mentally..."
+  { speaker = "equilateralTriangle", text = "We love making moves and talking about shapes! Click next and I'll show you!" }
 ]
 outro = [
-  { speaker = "equilateralTriangle", text = "OOPS! You found a bug! Sorry about that. Click next to progress." },
-  { speaker = "equilateralTriangle", text = "Thanks, that was really helpful!" },
-  { speaker = "player", text = 'I guess it was! What next?' },
-  { speaker = "equilateralTriangle", text = "Hmmm, I think circle wanted to chat about something..." }
+  { speaker = "equilateralTriangle", text = "Wow. That was great... and really helpful! Thank you." },
+  { speaker = "player", text = "You're welcome. Now what?" },
+  { speaker = "equilateralTriangle", text = "You did so well, it'd be great if you could help my friends?" },
+  { speaker = "player", text = "I could do that..." },
+  { speaker = "equilateralTriangle", text = "Cool, I think Circ the Circle wanted to chat with you about something..." }
 ]
 completionAnimation = [
   { id = "equilateralTriangle", moveTo = "background center", animation = "triangle_waving" }
@@ -39,15 +39,25 @@ scene = [
 ]
 intro = [
   { speaker = "circle", text = "Wow! I can't believe its you!?" },
-  { speaker = "player", text = "Me??" },
-  { speaker = "circle", text = "Yes, sorry, I get excited to meet new shapes?"},
+  { speaker = "player", text = "Yup! It's me." },
+  { speaker = "circle", text = "Oh sorry, I just get excited to meet new shapes? My name is Circ the Circle!"},
   { speaker = "player", text = "It's nice to meet you."},
-  { speaker = "circle", text = "I've heard of multi-shapers before but never met one!"},
-  { speaker = "circle", text = "Maybe you can help us..." },
-  { speaker = "circle", text = "Triangle and I were chatting but we need some help. Click next and I'll show you what I mean!" },
+  { speaker = "circle", text = "You're the first multi-shaper I've ever met."},
+  { speaker = "circle", text = "Did Equila tell you what I need???" },
+  { speaker = "player", text = "Equila the Triangle said y'all like moving and talking about shapes!" },
+  { speaker = "circle", text = "We do!... Click next and I'll show you what to do..." },
 ]
 outro = [
-  { speaker = "equilateralTriangle", text = "OOPS! You weren't meant to see this! Sorry about that. Click next to progress." },
+  { speaker = "circle", text = "Whew... Equila said you we're good, but that was amazing!" },
+  { speaker = "player", text = "Thanks... I do what I can..." },
+  { speaker = "circle", text = "What you can?... you can do anything!... You're a multi-shaper!!" },
+  { speaker = "player", text = "Aww, you're too kind." },
+  { speaker = "circle", text = "Say, you think you could help another friend of ours, Tang the Rectangle?" },
+  { speaker = "player", text = "Sure." },
+  { speaker = "circle", text = "Ok!... Click next and let's go!" },
+]
+completionAnimation = [
+  { id = "circle", moveTo = "background center", animation = "circle_waving" }
 ]
 
 [chapter-3]
@@ -60,17 +70,23 @@ scene = [
   { id = "trapezoid", distance = "midground", placement = "center", color = "pink", mood = "happy" }
 ]
 intro = [
-  { speaker = "rectangle", text = "Hey, are you the multi-shaper all the shapes are talking about??" },
-  { speaker = "player", text = "Yep, that's me!" },
-  { speaker = "rectangle", text = "Great, I need your help!" },
-  { speaker = "player", text = "Ok. What can I do?" },
-  { speaker = "rectangle", text = "Let's get into shape ... Click next to get started!" }
+  { speaker = "circle", text = "Tang... I brought someone for you to meet!" },
+  { speaker = "rectangle", text = "Oh... is it the multi-shaper all the shapes are talking about??" },
+  { speaker = "circle", text = "Yes, it is!" },
+  { speaker = "rectangle", text = "Honored to meet you.  I'm Tang the Rectangle... Will you get in shape with me?!" },
+  { speaker = "player", text = "Sure?" },
+  { speaker = "rectangle", text = "Let's get moving ... Click next to get started!" }
 ]
 outro = [
-  { speaker = "equilateralTriangle", text = "OOPS! You weren't meant to see this! Sorry about that. Click next to progress." },
-  { speaker = "scaleneTriangle", text = "You-hoo!!" },
+  { speaker = "rectangle", text = "What talents you have!" },
+  { speaker = "player", text = "Well they call me the Multi-Shaper" },
+  { speaker = "rectangle", text = "You did such a nice job helping me... You think you could help out Alene the Scalene Triangle too?" },
+  { speaker = "player", text = "Of course." },
+  { speaker = "rectangle", text = "Perfect!... Let's head on over there!" },
 ]
-
+completionAnimation = [
+  { id = "rectangle", moveTo = "background center", animation = "rectangle_waving" }
+]
 [chapter-4]
 scene = [
   { id = "equilateralTriangle", distance = "foreground", placement = "center", color = "blue", mood = "happy" },
@@ -81,18 +97,24 @@ scene = [
   { id = "trapezoid", distance = "midground", placement = "center", color = "pink", mood = "happy" }
 ]
 intro = [
-  { speaker = "player", text = "Are you \"you-hoo'ing\" at me?" },
-  { speaker = "scaleneTriangle", text = "Well of course, who else would I be you-hoo'ing to!" },
-  { speaker = "scaleneTriangle", text = "You're the multi-shaper?" },
-  { speaker = "player", text = "I am!" },
-  { speaker = "scaleneTriangle", text = "Great, I need your help!" },
-  { speaker = "player", text = "Ok. What can I do?" },
-  { speaker = "scaleneTriangle", text = "Let's get into shape ... Click next to get started!" }
+  { speaker = "scaleneTriangle", text = "So you're the multi-shaper?" },
+  { speaker = "player", text = "That's me!" },
+  { speaker = "scaleneTriangle", text = "Great, you'll help me!" },
+  { speaker = "player", text = "I'll do what I can?" },
+  { speaker = "scaleneTriangle", text = "All right! Let's get into shape ... Click next to get started!" }
 ]
 outro = [
-  { speaker = "equilateralTriangle", text = "OOPS! You weren't meant to see this! Sorry about that. Click next to progress." },
+  { speaker = "scaleneTriangle", text = "That's excellent the way you did that!" },
+  { speaker = "player", text = "I have the power!" },
+  { speaker = "scaleneTriangle", text = "Thanks for the help... say...?" },
+  { speaker = "player", text = "Let me guess, you have a friend you'd like me to help?" },
+  { speaker = "scaleneTriangle", text = "Ohh, would you? Could you? That'd be great!" },
+  { speaker = "player", text = "What's the shape's name?" },
+  { speaker = "scaleneTriangle", text = "Esque the Square" },
 ]
-
+completionAnimation = [
+  { id = "scaleneTriangle", moveTo = "background center", animation = "scaleneTriangle_waving" }
+]
 [chapter-5]
 scene = [
   { id = "equilateralTriangle", distance = "foreground", placement = "center", color = "blue", mood = "happy" },
@@ -103,16 +125,23 @@ scene = [
   { id = "trapezoid", distance = "midground", placement = "center", color = "pink", mood = "happy" }
 ]
 intro = [
-  { speaker = "square", text = "I heard that you've been helping everyone!! Is that true?" },
-  { speaker = "player", text = "Well, I'm trying - let me guess, you need help too?" },
-  { speaker = "square", text = "If its not too much trouble!" },
-   { speaker = "player", text = "No trouble. What's up?" },
-  { speaker = "square", text = "Let's get into shape ... Click next to get started!" }
+  { speaker = "square", text = "Hi Multi-Shaper. I am Esque the Square" },
+  { speaker = "player", text = "Nice to shape your acquaintance." },
+  { speaker = "square", text = "You're willing to help me shape up?" },
+   { speaker = "player", text = "Yes... Be glad to..." },
+  { speaker = "square", text = "Great... let's get into shape ... Click next to start!" }
 ]
 outro = [
-  { speaker = "equilateralTriangle", text = "OOPS! You weren't meant to see this! Sorry about that. Click next to progress." },
+  { speaker = "square", text = "That's so hip" },
+  { speaker = "player", text = "It's hip to be square!" },
+  { speaker = "square", text = "So grateful for your help." },
+  { speaker = "player", text = "So, who is next?" },
+  { speaker = "square", text = "Trappy the Trapezoid" },
+  { speaker = "trapezoid", text = "Did someone say my name? Click next and come with me..." },
 ]
-
+completionAnimation = [
+  { id = "square", moveTo = "background center", animation = "square_waving" }
+]
 [chapter-6]
 scene = [
   { id = "equilateralTriangle", distance = "foreground", placement = "center", color = "blue", mood = "happy" },
@@ -123,17 +152,22 @@ scene = [
   { id = "trapezoid", distance = "midground", placement = "center", color = "pink", mood = "happy" }
 ]
 intro = [
-  { speaker = "trapezoid", text = "That was amazing!!" },
-  { speaker = "player", text = "You saw that?" },
-  { speaker = "trapezoid", text = "Saw it and it was fantastic!" },
-  { speaker = "player", text = "Glad you think so!" },
-  { speaker = "trapezoid", text = "You must be the multi-shaper!" },
-  { speaker = "trapezoid", text = "I've got something to show you ... Click next to get started!" },
+  { speaker = "trapezoid", text = "So excited that you're going to help me, Multi-shaper" },
+  { speaker = "player", text = "It's my pleasure" },
+  { speaker = "trapezoid", text = "Let's get in shape ... Click next to get started!" },
 ]
 outro = [
-  { speaker = "equilateralTriangle", text = "OOPS! You weren't meant to see this! Sorry about that. Click next to progress." },
+  { speaker = "trapezoid", text = "That's some great shaping up there, Multi-shaper!" },
+  { speaker = "player", text = "Glad you think so. I think I'm getting better at this." },
+  { speaker = "trapezoid", text = "If you say so. It was excellent already." },
+  { speaker = "player", text = "I appreciate that. And I appreciate getting in shape with everyone so far..." },
+  { speaker = "player", text = "...but, how do I get back to my world?" },
+  { speaker = "trapezoid", text = "You know, I'm not really sure, but maybe Circ the Circle can help bring you... Full Circle! HA!" },
+  { speaker = "player", text = "Ok, I'm gonna go find Circ..." },
 ]
-
+completionAnimation = [
+  { id = "trapezoid", moveTo = "background center", animation = "trapezoid_waving" }
+]
 [chapter-7]
 scene = [
   { id = "equilateralTriangle", distance = "foreground", placement = "center", color = "blue", mood = "happy" },
@@ -144,15 +178,24 @@ scene = [
   { id = "trapezoid", distance = "midground", placement = "center", color = "pink", mood = "happy" }
 ]
 intro = [
-  { speaker = "circle", text = "Hey, Multi-shaper!!" },
-  { speaker = "player", text = "Yes?" },
-  { speaker = "circle", text = "Need your help again!" },
-  { speaker = "player", text = "Click next and I'll show you..." },
+  { speaker = "circle", text = "Hey, Multi-shaper!! How's it been going for you here?" },
+  { speaker = "player", text = "It's been great, Circ. And I've enjoyed getting in shape, but I need to start making my way back to my world." },
+  { speaker = "circle", text = "I understand. Tell you what... help me one more time and I'll point you in the right direction." },
+  { speaker = "player", text = "Agreed. What can I do?..." },
+  { speaker = "circle", text = "Click next to follow me and lets get in shape. " },
 ]
 outro = [
-  { speaker = "equilateralTriangle", text = "OOPS! You weren't meant to see this! Sorry about that. Click next to progress." },
+  { speaker = "circle", text = "Simply Marvelous, Multi-shaper! You sure we can't get you to stay?" },
+  { speaker = "player", text = "I appreciate your world, Circ, but I really must get back" },
+  { speaker = "circle", text = "Okay, Okay. You have to stop where you started." },
+  { speaker = "player", text = "What does that mean?" },
+  { speaker = "circle", text = "All things being equal... You must go see Equila the Triangle, again... HA!" },
+  { speaker = "player", text = "HA?! Another shape?!" },
+  { speaker = "circle", text = "Yes, and I promise, this will get you back to where you belong!" },
 ]
-
+completionAnimation = [
+  { id = "circle", moveTo = "background center", animation = "circle_waving" }
+]
 [chapter-8]
 scene = [
   { id = "equilateralTriangle", distance = "foreground", placement = "center", color = "blue", mood = "happy" },
@@ -163,13 +206,22 @@ scene = [
   { id = "trapezoid", distance = "midground", placement = "center", color = "pink", mood = "happy" }
 ]
 intro = [
-  { speaker = "equilateralTriangle", text = "You've been busy!!" },
-  { speaker = "player", text = "Yeah - word spreads pretty fast!" },
-  { speaker = "equilateralTriangle", text = "You know, multi-shaper, with great shape comes great responsibility!" },
-  { speaker = "equilateralTriangle", text = "Speaking of, I have one last request of you..." },
-  { speaker = "player", text = "What is it." },
-  { speaker = "equilateralTriangle", text = "Let's get into shape ... Click next to get started!" }
+  { speaker = "equilateralTriangle", text = "Hey Multi-shaper! You've been busy!! I heard you are looking for a way home?" },
+  { speaker = "player", text = "Yeah - you heard correctly... Sooo?" },
+  { speaker = "equilateralTriangle", text = "Well then, my multishaped friend, I have one last request of you..." },
+  { speaker = "player", text = "You got it... let's do this!" },
+  { speaker = "equilateralTriangle", text = "Ok, come with me for one last shape up!" }
 ]
 outro = [
-  { speaker = "equilateralTriangle", text = "OOPS! You weren't meant to see this! Sorry about that. Click next to progress." },
+  { speaker = "equilateralTriangle", text = "I have to ask, Multi-shaper, where will you go?" },
+  { speaker = "player", text = "Back to my world where everyone is a multi-shaper!" },
+  { speaker = "equilateralTriangle", text = "Wait, what? Everyone is a multi-shaper where you come from?" },
+  { speaker = "player", text = "Yes... I thought you knew that?" },
+  { speaker = "equilateralTriangle", text = "No... (Sniffle sniffle) I didn't. We'll its been great shaping with you!" },
+  { speaker = "player", text = "Yes, it has been. And I will never forsake the shapes I'm in!!!" },
+  { speaker = "equilateralTriangle", text = "Good. And don't forget - with great shapes comes great responsibility! Take care, multi-shaper!" },
+  { speaker = "player", text = "Thanks Equila, Thanks Circ, Thanks Tang, Thanks Essque, Thanks Alene, Thanks Trappy!" }
+]
+completionAnimation = [
+  { id = "equilateralTriangle", moveTo = "background center", animation = "triangle_waving" }
 ]
