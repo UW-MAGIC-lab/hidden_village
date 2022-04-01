@@ -14,7 +14,7 @@ intro = [
   { speaker = "player", text = "Multi-shaper?! World of Shapes?!? What are you talking about?" },
   { speaker = "equilateralTriangle", text = "In this world, we're all different shapes... but you... you are a very rare multi-shaper!" },
   { speaker = "player", text = "I am?... what does that mean?" },
-  { speaker = "equilateralTriangle", text = "Well, we shapes enjoy staying in shape physically and mentally..."
+  { speaker = "equilateralTriangle", text = "Well, we shapes enjoy staying in shape physically and mentally..." },
   { speaker = "equilateralTriangle", text = "We love making moves and talking about shapes! Click next and I'll show you!" }
 ]
 outro = [
