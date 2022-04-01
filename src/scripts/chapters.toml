@@ -52,7 +52,7 @@ outro = [
   { speaker = "player", text = "Thanks... I do what I can..." },
   { speaker = "circle", text = "What you can?... you can do anything!... You're a multi-shaper!!" },
   { speaker = "player", text = "Aww, you're too kind." },
-  { speaker = "circle", text = "Say, you think you could help another friend of ours, Tang the Rectangle?" }
+  { speaker = "circle", text = "Say, you think you could help another friend of ours, Tang the Rectangle?" },
   { speaker = "player", text = "Sure." },
   { speaker = "circle", text = "Ok!... Click next and let's go!" },
 ]
@@ -81,7 +81,7 @@ intro = [
 outro = [
   { speaker = "rectangle", text = "What talents you have!" },
   { speaker = "player", text = "Well they call me the Multi-Shaper" },
-  { speaker = "rectangle", text = "You did such a nice job helping me... You think you could help out Alene the Scalene Triangle too?" }
+  { speaker = "rectangle", text = "You did such a nice job helping me... You think you could help out Alene the Scalene Triangle too?" },
   { speaker = "player", text = "Of course." },
   { speaker = "rectangle", text = "Perfect!... Let's head on over there!" },
 ]
@@ -192,7 +192,7 @@ intro = [
 outro = [
   { speaker = "circle", text = "Simply Marvelous, Multi-shaper! You sure we can't get you to stay?" },
   { speaker = "player", text = "I appreciate your world, Circ, but I really must get back" },
-  { speaker = "circle", text = "Okay, Okay. You have to stop where you started." }
+  { speaker = "circle", text = "Okay, Okay. You have to stop where you started." },
   { speaker = "player", text = "What does that mean?" },
   { speaker = "circle", text = "All things being equal... You must go see Equila the Triangle, again... HA!" },
   { speaker = "player", text = "HA?! Another shape?!" },
