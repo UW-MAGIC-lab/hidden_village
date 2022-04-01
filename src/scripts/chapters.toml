@@ -56,7 +56,6 @@ outro = [
   { speaker = "player", text = "Sure." },
   { speaker = "circle", text = "Ok!... Click next and let's go!" },
 ]
-]
 completionAnimation = [
   { id = "circle", moveTo = "background center", animation = "circle_waving" }
 ]
@@ -85,7 +84,6 @@ outro = [
   { speaker = "player", text = "Of course." },
   { speaker = "rectangle", text = "Perfect!... Let's head on over there!" },
 ]
-]
 completionAnimation = [
   { id = "rectangle", moveTo = "background center", animation = "rectangle_waving" }
 ]
@@ -108,12 +106,11 @@ intro = [
 outro = [
   { speaker = "scaleneTriangle", text = "That's excellent the way you did that!" },
   { speaker = "player", text = "I have the power!" },
-  { speaker = "scaleneTriangle", text = "Thanks for the help... say...?" }
+  { speaker = "scaleneTriangle", text = "Thanks for the help... say...?" },
   { speaker = "player", text = "Let me guess, you have a friend you'd like me to help?" },
   { speaker = "scaleneTriangle", text = "Ohh, would you? Could you? That'd be great!" },
   { speaker = "player", text = "What's the shape's name?" },
   { speaker = "scaleneTriangle", text = "Esque the Square" },
-]
 ]
 completionAnimation = [
   { id = "scaleneTriangle", moveTo = "background center", animation = "scaleneTriangle_waving" }
@@ -137,11 +134,10 @@ intro = [
 outro = [
   { speaker = "square", text = "That's so hip" },
   { speaker = "player", text = "It's hip to be square!" },
-  { speaker = "square", text = "So grateful for your help." }
+  { speaker = "square", text = "So grateful for your help." },
   { speaker = "player", text = "So, who is next?" },
   { speaker = "square", text = "Trappy the Trapezoid" },
   { speaker = "trapezoid", text = "Did someone say my name? Click next and come with me..." },
-]
 ]
 completionAnimation = [
   { id = "square", moveTo = "background center", animation = "square_waving" }
@@ -163,12 +159,11 @@ intro = [
 outro = [
   { speaker = "trapezoid", text = "That's some great shaping up there, Multi-shaper!" },
   { speaker = "player", text = "Glad you think so. I think I'm getting better at this." },
-  { speaker = "trapezoid", text = "If you say so. It was excellent already." }
+  { speaker = "trapezoid", text = "If you say so. It was excellent already." },
   { speaker = "player", text = "I appreciate that. And I appreciate getting in shape with everyone so far..." },
   { speaker = "player", text = "...but, how do I get back to my world?" },
   { speaker = "trapezoid", text = "You know, I'm not really sure, but maybe Circ the Circle can help bring you... Full Circle! HA!" },
   { speaker = "player", text = "Ok, I'm gonna go find Circ..." },
-]
 ]
 completionAnimation = [
   { id = "trapezoid", moveTo = "background center", animation = "trapezoid_waving" }
@@ -198,7 +193,6 @@ outro = [
   { speaker = "player", text = "HA?! Another shape?!" },
   { speaker = "circle", text = "Yes, and I promise, this will get you back to where you belong!" },
 ]
-]
 completionAnimation = [
   { id = "circle", moveTo = "background center", animation = "circle_waving" }
 ]
@@ -221,7 +215,7 @@ intro = [
 outro = [
   { speaker = "equilateralTriangle", text = "I have to ask, Multi-shaper, where will you go?" },
   { speaker = "player", text = "Back to my world where everyone is a multi-shaper!" },
-  { speaker = "equilateralTriangle", text = "Wait, what? Everyone is a multi-shaper where you come from?" }
+  { speaker = "equilateralTriangle", text = "Wait, what? Everyone is a multi-shaper where you come from?" },
   { speaker = "player", text = "Yes... I thought you knew that?" },
   { speaker = "equilateralTriangle", text = "No... (Sniffle sniffle) I didn't. We'll its been great shaping with you!" },
   { speaker = "player", text = "Yes, it has been. And I will never forsake the shapes I'm in!!!" },
