@@ -3,7 +3,7 @@
     {
       "name":"sum_two_sides_1",
       "matchingConfig":[
-        {"segment":"RIGHT_BICEP","data":"poseLandmarks"},
+        // {"segment":"RIGHT_BICEP","data":"poseLandmarks"},
         {"segment":"LEFT_BICEP","data":"poseLandmarks"}
       ],
       "landmarks": {
@@ -2554,7 +2554,7 @@
     {
       "name":"sum_two_sides_2",
       "matchingConfig":[
-        {"segment":"RIGHT_BICEP","data":"poseLandmarks"},
+        // {"segment":"RIGHT_BICEP","data":"poseLandmarks"},
         {"segment":"LEFT_BICEP","data":"poseLandmarks"}
       ],
       "landmarks":{

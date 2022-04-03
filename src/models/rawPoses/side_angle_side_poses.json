@@ -4,7 +4,7 @@
       "name":"side_angle_side_1",
       "matchingConfig":[
         // {"segment":"RIGHT_FOREARM","data":"poseLandmarks"},
-        {"segment":"LEFT_FOREARM","data":"poseLandmarks"}
+        {"segment":"LEFT_BICEP","data":"poseLandmarks"}
       ],
       "landmarks": {
         "leftHandLandmarks": [
