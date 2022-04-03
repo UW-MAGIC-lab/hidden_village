@@ -5,14 +5,12 @@ import CursorMachine from "../machines/cursorMachine";
 import { useMachine, useSelector } from "@xstate/react";
 
 const hitAreasIntersect = (cursorHitArea, nextButtonHitArea) => {
-  const hitAreaScalar = 0.6;
+  const hitAreaScalar = 0.7;
   return (
-    cursorHitArea.x < nextButtonHitArea.x + nextButtonHitArea.width &&
-    cursorHitArea.x + cursorHitArea.width * hitAreaScalar >
-      nextButtonHitArea.x &&
-    cursorHitArea.y <
-      nextButtonHitArea.y + nextButtonHitArea.height * hitAreaScalar &&
-    cursorHitArea.y + cursorHitArea.height > nextButtonHitArea.y
+    cursorHitArea.x < nextButtonHitArea.x + (nextButtonHitArea.width) &&
+    cursorHitArea.x + (cursorHitArea.width*hitAreaScalar) > nextButtonHitArea.x &&
+    cursorHitArea.y < nextButtonHitArea.y + (nextButtonHitArea.height*hitAreaScalar) &&
+    cursorHitArea.y + (cursorHitArea.height) > nextButtonHitArea.y
   );
 };
 const nextButtonY = (positionCounter) => {
