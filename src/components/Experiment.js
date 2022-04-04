@@ -19,7 +19,7 @@ const Experiment = (props) => {
   } = props;
   const [state, send, service] = useMachine(ExperimentMachine);
   const [experimentText, setExperimentText] = useState(
-    `Read the following aloud:\n\n${conjectureData.conjecture} \n\n TRUE or FALSE?`
+    `Read the following aloud:\n\n${conjectureData.conjecture} \n\n Answer TRUE or FALSE?`
   );
   const [conjecturePoses, setConjecturePoses] = useState("");
   useEffect(() => {
@@ -41,11 +41,11 @@ const Experiment = (props) => {
   useEffect(() => {
     if (state.value === "intuition") {
       setExperimentText(
-        `Read the following ALOUD:\n\n${conjectureData.conjecture} \n\n TRUE or FALSE?`
+        `Read the following ALOUD:\n\n${conjectureData.conjecture} \n\n Answer: TRUE or FALSE?`
       );
     } else if (state.value === "insight") {
       setExperimentText(
-        `Alright! Read the following ALOUD again:\n\n ${conjectureData.conjecture.toLowerCase()} \n\n Explain WHY is it TRUE or FALSE?`
+        `Alright! Explain WHY :\n\n ${conjectureData.conjecture.toLowerCase()} \n\n is TRUE or FALSE?`
       );
     }
   }, [state.value]);
