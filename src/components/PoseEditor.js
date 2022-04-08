@@ -48,9 +48,9 @@ const PoseEditor = () => {
   }, []);
 
   return (
-    <div className="bg-slate-100 grid grid-cols-1 gap-6 place-content-center justify-items-center w-screen h-screen"
-    >
-      <CapturePose poseData={poseData}/>
+    <div className="bg-slate-100 grid grid-cols-6 gap-6 place-content-center justify-items-center w-screen h-screen">
+        <CapturePose poseData={poseData}/>
+        {/* <CapturePose poseData={poseData}/> */}
     </div>
   );
 };

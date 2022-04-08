@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { flatten } from "xstate/lib/utils";
 import EditorCanvas from "./EditorCanvas";
+import PoseName from "./PoseName";
 
 const CapturePose = (props) => {
   const {poseData} =  props;
@@ -8,8 +8,10 @@ const CapturePose = (props) => {
   const [isCountingDown, setIsCountingDown] = useState(false);
   const [showCounter, setShowCounter] = useState(false);
   const [counter, setCounter] = useState(0);
-  const [hasCapturedPose, setHasCapturedPose] = useState(false);
+  const [hasCaptured, setHasCaptured] = useState(false);
+  const [hasSavedPose, setHasSavePose] = useState(false);
   const [capturedPose, setCapturedPose] = useState({}); // object(hash-table): key-value pair
+  const [prevPose, setPrevPose] = useState({}); // object(hash-table): key-value pair
 
   const tryCapture = (event) => {
     if (!isCountingDown) {
@@ -22,15 +24,19 @@ const CapturePose = (props) => {
       const timerId = setInterval((event) => {
         button.interactive = false;
         button.buttonMode = false;
-        console.log(countdown);
         setCounter(--countdown);
         // finish capturing
-        if (countdown < 0) {
+        if (countdown <= 0) {
           clearInterval(timerId);
           button.interactive = true;
           button.buttonMode = true;
+
+          setPrevPose(capturedPose);
           setCapturedPose(poseData);
-          setHasCapturedPose(true);
+
+          setHasSavePose(true);
+          setHasCaptured(true);
+
           setIsCountingDown(false);
           setShowCounter(false);
         }
@@ -41,7 +47,7 @@ const CapturePose = (props) => {
   return (
     <div
       className="
-        bg-white w-1/2"
+        bg-white col-start-2 col-span-2 rounded"
     >
     {/* open state */}
     {open && (
@@ -49,12 +55,15 @@ const CapturePose = (props) => {
         className="
           grid grid-cols-2 gap-3 justify-items-center place-content-center"
       >
+        <div className="col-start-1 col-span-2 font-medium text-lg">
+          <PoseName defaultName={"My Pose"}></PoseName>
+        </div>
         {/* real-time camera canvas */}
         <div
           className="
             grid grid-cols-1 gap-3 justify-items-center place-content-center"
         >
-          <EditorCanvas width={400} height={300} poseData={poseData} />
+          <EditorCanvas width={200} height={150} poseData={poseData} />
           {showCounter && <div className="text-8xl z-10">{counter}</div>}
           <button 
             className="
@@ -70,21 +79,18 @@ const CapturePose = (props) => {
           className="
             grid grid-cols-2 gap-3 justify-items-center place-content-center"
         >
-          {hasCapturedPose &&
+          {hasSavedPose &&
             <div className="col-start-1 col-span-2">
-              <EditorCanvas width={400} height={300} poseData={capturedPose} />
+              <EditorCanvas width={200} height={150} poseData={capturedPose} />
             </div>
           }
-          {/* {hasCapturedPose &&
-            (console.log(capturedPoses[0]))
-          } */}
           {/* buttons at the bottom */}
           <button 
             className="
             bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded
             justify-self-center"
             onClick={() => {
-              // TODO: save captured pose data
+              setHasCaptured(false);
               setOpen(!open);
             }}
           >
@@ -95,7 +101,9 @@ const CapturePose = (props) => {
             bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded
             justify-self-center"
             onClick={() => {
-              setHasCapturedPose(false); // don't save pose
+              if (hasCaptured)
+                setCapturedPose(prevPose); // don't save pose
+              setHasCaptured(false);
               setOpen(!open);
             }}
           >
@@ -108,16 +116,24 @@ const CapturePose = (props) => {
     {!open && (
       <div
         className="
-          flex justify-between items-center"
+        grid grid-cols-6 m-3 gap-y-5 gap-x-2"
       >
-        <div>POSE 1</div>
+        <div className="col-start-1 col-span-6 font-medium text-lg">
+          <PoseName defaultName={"My Pose"}></PoseName>
+        </div>
         <button 
           className="
-            bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded
-            justify-self-end"
+            bg-blue-500 hover:bg-blue-700 text-white font-medium p-2 rounded"
           onClick={() => setOpen(!open)}
         >
-          Edit Pose
+          Edit
+        </button>
+        <button 
+          className="
+            bg-blue-500 hover:bg-blue-700 text-white font-medium p-2 rounded"
+          onClick={() => setOpen(!open)}
+        >
+          Delete
         </button>
       </div>
     )}
