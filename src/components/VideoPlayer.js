@@ -39,7 +39,7 @@ const VideoPlayer = (props) => {
     <>
       <Graphics draw={drawModalBackground} />
       <Text
-        text={"Watch this video. \nAfter it finishes, you'll be asked to match the movements!"}
+        text={"Please watch this video"}
         x={columnDimensions(2).x + columnDimensions(2).margin}
         y={columnDimensions(2).height / 2}
         style={
