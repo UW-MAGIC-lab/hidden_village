@@ -49,12 +49,11 @@ const PoseEditor = () => {
   }, []);
 
   const deleteCapPose = (idx) => {
-    let newList =[];
-    for (i=0; i<capPoseList.length; i++) {
-      if (capPoseList[i] != idx)
-        newList.push(capPoseList[i]);
+    let newList = [];
+    for (i = 0; i < capPoseList.length; i++) {
+      if (capPoseList[i] != idx) newList.push(capPoseList[i]);
     }
-    console.log("new list:")
+    console.log("new list:");
     console.log(newList);
     setCapPoseList(newList);
   };
@@ -65,19 +64,30 @@ const PoseEditor = () => {
         <label className="flex justify-center">My Conjecture</label>
       </div>
       {/* dynamically render capturePose components */}
-      { capPoseList.map(idx => 
+      {capPoseList.map((idx) => (
         <div className="bg-white col-start-2 col-span-2 self-start rounded">
-          <CapturePose poseData={poseData} index={idx} onDelete={deleteCapPose}/>
-        </div>) }
+          <CapturePose
+            poseData={poseData}
+            index={idx}
+            onDelete={deleteCapPose}
+          />
+        </div>
+      ))}
       {/* Add capturePose */}
-      <div className="bg-slate-100 col-start-2 col-span-2 self-start rounded
+      <div
+        className="bg-slate-100 col-start-2 col-span-2 self-start rounded
         text-2xl text-slate-400 p-3 
         border-2 border-dashed border-slate-400
-        hover:border-blue-400 hover:text-blue-400">
-        <label className="flex justify-center"
+        hover:border-blue-400 hover:text-blue-400"
+      >
+        <label
+          className="flex justify-center"
           onClick={() => {
             setCapPoseList([...capPoseList, capPoseList.length]);
-        }}>+ Add a pose</label>
+          }}
+        >
+          + Add a pose
+        </label>
       </div>
     </div>
   );
