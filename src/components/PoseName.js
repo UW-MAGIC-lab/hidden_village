@@ -13,7 +13,8 @@ const PoseName = (props) => {
                 if (value !== "")
                     setPoseName(value);
                 else
-                    setInputWidth(poseName.length);
+                    setInputWidth(poseName
+                        .length);
             }
             setEditMode(!editMode);
         };
