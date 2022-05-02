@@ -227,7 +227,7 @@ const Chapter = (props) => {
           onComplete={() => {
             send("ADVANCE");
           }}
-          debugMode={false}
+          debugMode={true}
           conjectureData={currentConjecture}
         />
       )}
