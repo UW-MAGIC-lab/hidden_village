@@ -1,9 +1,10 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Camera } from "@mediapipe/camera_utils";
-import { Holistic, POSE_LANDMARKS_LEFT } from "@mediapipe/holistic";
+import { Holistic } from "@mediapipe/holistic";
 import CapturePose from "./CapturePose";
 import { enrichLandmarks } from "./Pose/landmark_utilities";
 import ConjecturePreview from "./ConjecturePreview";
+import PoseName from "./PoseName";
 
 const PoseEditor = () => {
   const [poseData, setPoseData] = useState(null);
@@ -73,21 +74,26 @@ const PoseEditor = () => {
   // onGetConjecture in ConjecturePreview
   const getSavedConjecture = () => {
     for (i = 0; i < capPoseList.length; i++) {
-      console.log(savedPoseData[capPoseList[i].toString()]);
+      let key = capPoseList[i].toString();
+      console.log("key: " + key);
+      console.log(Object.entries(savedPoseData[key]));
     }
+    console.log(savedPoseData);
     return savedPoseData;
   };
 
   return (
     <div className={(height < document.documentElement.scrollHeight)?"bg-slate-100 w-screen h-full flex flex-col gap-6":"bg-slate-100 w-screen h-screen flex flex-col gap-6"}>
-      <div className="bg-white self-start font-bold text-2xl w-screen p-3">
-        <label className="flex justify-center">My Conjecture</label>
+      <div className="bg-white self-start w-screen p-3">
+        <div className="flex justify-center font-bold text-2xl">
+          <PoseName defaultName={"My Conjecture"} index={-1}></PoseName>
+        </div>
       </div>
       <div className="grid grid-cols-2 gap-6">
         <div className="flex flex-col gap-6">
           {/* dynamically render capturePose components */}
           {capPoseList.map((idx) => (
-            <div className="bg-white self-center rounded w-3/4" key={idx} id={`cap-pose-${idx}`}>
+            <div className="bg-white self-center rounded w-4/5" key={idx} id={`cap-pose-${idx}`}>
               <CapturePose
                 poseData={poseData}
                 onDelete={deleteCapPose}
@@ -98,7 +104,7 @@ const PoseEditor = () => {
           ))}
           {/* Add capturePose */}
           <div
-            className="bg-slate-100 self-center rounded w-3/4
+            className="bg-slate-100 self-center rounded w-4/5
             text-2xl text-slate-400 p-3 
             border-2 border-dashed border-slate-400
             hover:border-blue-400 hover:text-blue-400"
@@ -115,10 +121,8 @@ const PoseEditor = () => {
           </div>
         </div>
         {/* Conjecture Preview */}
-        <div className="bg-white self-start rounded w-3/4">
-          <ConjecturePreview
-            onGetConjecture={getSavedConjecture}
-          />
+        <div className="justify-self-center self-start bg-white rounded w-5/6">
+          <ConjecturePreview onGetConjecture={getSavedConjecture}/>
         </div>
       </div>
     </div>
