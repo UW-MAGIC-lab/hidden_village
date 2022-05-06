@@ -3,7 +3,7 @@ import { Camera } from "@mediapipe/camera_utils";
 import { Holistic, POSE_LANDMARKS_LEFT } from "@mediapipe/holistic";
 import CapturePose from "./CapturePose";
 import { enrichLandmarks } from "./Pose/landmark_utilities";
-import EditorCanvas from "./EditorCanvas";
+import ConjecturePreview from "./ConjecturePreview";
 
 const PoseEditor = () => {
   const [poseData, setPoseData] = useState(null);
@@ -49,17 +49,12 @@ const PoseEditor = () => {
     };
     holistic.onResults(updatePoseResults); //eventListener (eventHandler function)
   }, []);
-
-  useEffect(() => {
-    console.log(capPoseList);
-  }, [capPoseList])
   
+  // onGetPoseData in CapturePose
   const getSavedPoseData = (index, poseData) => {
-    console.log(savedPoseData);
-    let temp = savedPoseData;
-    temp[index.toString()] = poseData;
-    setSavedPoseData(temp);
-    console.log(savedPoseData);
+    let prevSavedPoseData = savedPoseData;
+    prevSavedPoseData[index.toString()] = poseData;
+    setSavedPoseData(prevSavedPoseData);
   };
 
   const deleteCapPose = (idx) => {
@@ -71,12 +66,16 @@ const PoseEditor = () => {
       let temp = savedPoseData;
       delete temp[idx.toString()];
       setSavedPoseData(temp);
-      console.log("new savedPoseData:");
-      console.log(savedPoseData);
     }
-    console.log("new list:");
-    console.log(newList);
     setCapPoseList(newList);
+  };
+
+  // onGetConjecture in ConjecturePreview
+  const getSavedConjecture = () => {
+    for (i = 0; i < capPoseList.length; i++) {
+      console.log(savedPoseData[capPoseList[i].toString()]);
+    }
+    return savedPoseData;
   };
 
   return (
@@ -116,8 +115,10 @@ const PoseEditor = () => {
           </div>
         </div>
         {/* Conjecture Preview */}
-        <div>
-          {/* TODO */}
+        <div className="bg-white self-start rounded w-3/4">
+          <ConjecturePreview
+            onGetConjecture={getSavedConjecture}
+          />
         </div>
       </div>
     </div>
