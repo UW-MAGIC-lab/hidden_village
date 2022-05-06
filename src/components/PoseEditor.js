@@ -11,6 +11,8 @@ const PoseEditor = () => {
   const [width, setWidth] = useState(window.innerWidth);
   const [height, setHeight] = useState(window.innerHeight);
   const [capPoseList, setCapPoseList] = useState([0]);
+  const [keyCounter, setKeyCounter] = useState(0);
+  const [savedPoseData, setSavedPoseData] = useState({});
 
   // when PoseEditor get mounted, do it once:
   useEffect(() => {
@@ -48,10 +50,29 @@ const PoseEditor = () => {
     holistic.onResults(updatePoseResults); //eventListener (eventHandler function)
   }, []);
 
+  useEffect(() => {
+    console.log(capPoseList);
+  }, [capPoseList])
+  
+  const getSavedPoseData = (index, poseData) => {
+    console.log(savedPoseData);
+    let temp = savedPoseData;
+    temp[index.toString()] = poseData;
+    setSavedPoseData(temp);
+    console.log(savedPoseData);
+  };
+
   const deleteCapPose = (idx) => {
     let newList = [];
     for (i = 0; i < capPoseList.length; i++) {
       if (capPoseList[i] != idx) newList.push(capPoseList[i]);
+    }
+    if (idx in savedPoseData) {
+      let temp = savedPoseData;
+      delete temp[idx.toString()];
+      setSavedPoseData(temp);
+      console.log("new savedPoseData:");
+      console.log(savedPoseData);
     }
     console.log("new list:");
     console.log(newList);
@@ -59,35 +80,45 @@ const PoseEditor = () => {
   };
 
   return (
-    <div className="bg-slate-100 grid grid-cols-6 grid-rows-6 gap-6 w-screen h-screen">
-      <div className="bg-white col-start-1 col-span-6 self-start font-bold text-2xl w-screen p-3">
+    <div className={(height < document.documentElement.scrollHeight)?"bg-slate-100 w-screen h-full flex flex-col gap-6":"bg-slate-100 w-screen h-screen flex flex-col gap-6"}>
+      <div className="bg-white self-start font-bold text-2xl w-screen p-3">
         <label className="flex justify-center">My Conjecture</label>
       </div>
-      {/* dynamically render capturePose components */}
-      {capPoseList.map((idx) => (
-        <div className="bg-white col-start-2 col-span-2 self-start rounded">
-          <CapturePose
-            poseData={poseData}
-            index={idx}
-            onDelete={deleteCapPose}
-          />
+      <div className="grid grid-cols-2 gap-6">
+        <div className="flex flex-col gap-6">
+          {/* dynamically render capturePose components */}
+          {capPoseList.map((idx) => (
+            <div className="bg-white self-center rounded w-3/4" key={idx} id={`cap-pose-${idx}`}>
+              <CapturePose
+                poseData={poseData}
+                onDelete={deleteCapPose}
+                onGetPoseData={getSavedPoseData}
+                index={idx}
+              />
+            </div>
+          ))}
+          {/* Add capturePose */}
+          <div
+            className="bg-slate-100 self-center rounded w-3/4
+            text-2xl text-slate-400 p-3 
+            border-2 border-dashed border-slate-400
+            hover:border-blue-400 hover:text-blue-400"
+          >
+            <label
+              className="flex justify-center"
+              onClick={() => {
+                setCapPoseList([...capPoseList, keyCounter + 1]);
+                setKeyCounter(keyCounter+ 1);
+              }}
+            >
+              + Add a pose
+            </label>
+          </div>
         </div>
-      ))}
-      {/* Add capturePose */}
-      <div
-        className="bg-slate-100 col-start-2 col-span-2 self-start rounded
-        text-2xl text-slate-400 p-3 
-        border-2 border-dashed border-slate-400
-        hover:border-blue-400 hover:text-blue-400"
-      >
-        <label
-          className="flex justify-center"
-          onClick={() => {
-            setCapPoseList([...capPoseList, capPoseList.length]);
-          }}
-        >
-          + Add a pose
-        </label>
+        {/* Conjecture Preview */}
+        <div>
+          {/* TODO */}
+        </div>
       </div>
     </div>
   );
