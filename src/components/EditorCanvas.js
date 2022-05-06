@@ -430,17 +430,7 @@ const EditorCanvas = (props) => {
   }, [poseData]);
 
   return (
-    // <div onClick={() => setOpen(!open)}>
-    //   {open && (
-    //     <div className="flex justify-center">
-    //       <canvas ref={canvasRef} width={width} height={height}></canvas>
-    //     </div>
-    //   )}
-    //   {!open && (
-    //     <div>CLOSE STATE</div>
-    //   )}
-    // </div>
-    <div className="flex justify-center">
+    <div className="bg-blue-50 flex justify-center">
       <canvas ref={canvasRef} width={width} height={height}></canvas>
     </div>
   );
