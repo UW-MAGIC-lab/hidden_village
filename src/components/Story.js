@@ -91,7 +91,8 @@ const Story = () => {
 
   return (
     <>
-      {loading && <Loader />}
+      {loading && <Loader />} 
+      {/* JSX */}
       <Stage
         height={height}
         width={width}
