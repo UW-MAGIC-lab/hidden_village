@@ -11,6 +11,11 @@
   },
   "author": "Ariel Fogel",
   "license": "MIT",
+  "alias": {
+    "process": {
+      "global": "process"
+    }
+  },
   "devDependencies": {
     "@babel/preset-env": "^7.16.4",
     "@parcel/optimizer-data-url": "^2.0.1",
