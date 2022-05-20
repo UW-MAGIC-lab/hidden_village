@@ -8,6 +8,7 @@ import { useMachine, useSelector } from "@xstate/react";
 // import { useSelector } from "@xstate";
 import GameMachine from "../machines/gameMachine.js";
 import Intervention from "./Intervention.js";
+import db from "../db";
 
 const reorder = (array, indices) => {
   return indices.map((idx) => array[idx - 1]);
@@ -20,6 +21,57 @@ const context = {
     conjectureIdxToIntervention: 4,
   },
 };
+
+function downloadBlob(blob, name = "file.txt") {
+  // Convert blob into a Blob URL (a special url that points to an object in the browser's memory)
+  const blobUrl = URL.createObjectURL(blob);
+
+  // Create a link element
+  const link = document.createElement("a");
+
+  // Set link's href to point to the Blob URL
+  link.href = blobUrl;
+  link.download = name;
+
+  // Append link to the body
+  document.body.appendChild(link);
+
+  // Dispatch click event on the link
+  // This is necessary as link.click() does not work on the latest firefox
+  link.dispatchEvent(
+    new MouseEvent("click", {
+      bubbles: true,
+      cancelable: true,
+      view: window,
+    })
+  );
+
+  // ********************************
+  // Cleanup
+  // ********************************
+
+  // Remove link from body
+  document.body.removeChild(link);
+  // Revoke Blob URL
+  URL.revokeObjectURL(blobUrl);
+}
+
+const handleUserKeyPress = async (event) => {
+  const { _, keyCode } = event;
+  const progressCallback = ({ totalRows, completedRows }) => {
+    console.log(`Progress: ${completedRows} of ${totalRows} rows completed`);
+  };
+  // keyCode 68 is d
+  if (keyCode === 68) {
+    try {
+      const blob = await db.export({ prettyJson: true, progressCallback });
+      downloadBlob(blob, "thv-o-export.json");
+    } catch (error) {
+      console.error("" + error);
+    }
+  }
+};
+
 const selectCurrentConjectureIdx = (state) =>
   state.context.currentConjectureIdx;
 
@@ -55,6 +107,11 @@ const Game = (props) => {
       });
     }
     setAllConjectures(orderedConjectures);
+
+    window.addEventListener("keydown", handleUserKeyPress);
+    return () => {
+      window.removeEventListener("keydown", handleUserKeyPress);
+    };
   }, []);
 
   useEffect(() => {
