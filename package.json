@@ -14,6 +14,9 @@
   "alias": {
     "process": {
       "global": "process"
+    },
+    "buffer": {
+      "global": "buffer"
     }
   },
   "devDependencies": {

@@ -1,5 +1,5 @@
 import Dexie from "dexie";
-import "dexie-export-import";
+import "dexie-export-import.js";
 
 Dexie.delete("THV-O");
 const db = new Dexie("THV-O");
