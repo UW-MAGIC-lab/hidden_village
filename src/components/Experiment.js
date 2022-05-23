@@ -75,55 +75,18 @@ const Experiment = (props) => {
 
   useEffect(() => {
     if (state.value !== "experimentEnd") {
-      // const logPose = async (poseData, conjectureData) => {
-      //   try {
-      //     const id = await db.events.add({
-      //       event: "pose",
-      //       timestamp: Date.now(),
-      //       data: poseData,
-      //       conjectureId: conjectureData.id
-      //     });
-      //     console.log("pose write success");
-      //   } catch (error) {
-      //     console.error(error);
-      //   }
-      // }
-      // logPose(poseData, conjectureData);
-      // debugger;
       if (worker) {
         worker.postMessage({
           type: "logPose",
           payload: poseData,
           conjectureData: conjectureData,
-          // timestamp: Date.now()
-          // db: db
         });
       }
     }
   }, [poseData]);
 
   useEffect(() => {
-    // const logExperimentTransition = async (state, conjectureData) => {
-    //   try {
-    //     const id = await db.events.add({
-    //       event: "experimentTransition",
-    //       timestamp: Date.now(),
-    //       data: state.value,
-    //       conjectureId: conjectureData.id
-    //     });
-    //     console.log("transition write success");
-    //   } catch (error) {
-    //     console.error(error);
-    //   }
-    // }
-    // logExperimentTransition(state, conjectureData);
     if (worker) {
-      // worker.postMessage({
-      //   type: "logTransition",
-      //   payload: poseData,
-      //   conjectureData: conjectureData,
-      //   timestamp: Date.now(),
-      // });
       worker.postMessage({ type: "returnEvents" });
       const commitData = async (event) => {
         const { data } = event;
