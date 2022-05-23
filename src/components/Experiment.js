@@ -7,6 +7,7 @@ import PoseMatching from "./PoseMatching";
 import VideoPlayer from "./VideoPlayer";
 import ExperimentalTask from "./ExperimentalTask";
 import { getPoseData } from "../models/conjectures";
+import db from "../db";
 
 const Experiment = (props) => {
   const {
@@ -18,6 +19,8 @@ const Experiment = (props) => {
     conjectureData,
   } = props;
   const [state, send, service] = useMachine(ExperimentMachine);
+  const [worker, setWorker] = useState(null);
+
   const [experimentText, setExperimentText] = useState(
     `Read the following aloud:\n\n${conjectureData.conjecture} \n\n Answer TRUE or FALSE?`
   );
@@ -57,6 +60,49 @@ const Experiment = (props) => {
       send("NEXT");
     }
   }, []);
+
+  useEffect(() => {
+    const DBWorker = new Worker(
+      new URL("../workers/db.worker.js", import.meta.url),
+      { type: "module" }
+    );
+    setWorker(DBWorker);
+
+    return () => {
+      DBWorker.terminate();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (state.value !== "experimentEnd") {
+      if (worker) {
+        worker.postMessage({
+          type: "logPose",
+          payload: poseData,
+          conjectureData: conjectureData,
+        });
+      }
+    }
+  }, [poseData]);
+
+  useEffect(() => {
+    if (worker) {
+      worker.postMessage({ type: "returnEvents" });
+      const commitData = async (event) => {
+        const { data } = event;
+        data.push({
+          event: "experimentTransition",
+          timestamp: Date.now(),
+          data: state.value,
+          conjectureId: conjectureData.id,
+        });
+        await db.events.bulkAdd(data);
+        await db.events.toArray((e) => console.log(e));
+        console.log(event.data);
+      };
+      worker.onmessage = commitData;
+    }
+  }, [state.value]);
 
   useEffect(() => {
     window.addEventListener("keydown", handleUserKeyPress);
