@@ -11,7 +11,33 @@ window.PIXI = PIXI;
 import Sandbox from "./components/Sandbox";
 import PoseCapture from "./components/PoseCapture";
 const Story = lazy(() => import("./components/Story"));
-let { NODE_ENV } = process.env;
+let {
+  NODE_ENV,
+  apiKey,
+  authDomain,
+  databaseURL,
+  projectId,
+  storageBucket,
+  messagingSenderId,
+  appId,
+} = process.env;
+
+// Firebase Init
+import { initializeApp } from "firebase/app";
+
+// Firebase config
+const firebaseConfig = {
+  apiKey,
+  authDomain,
+  databaseURL,
+  projectId,
+  storageBucket,
+  messagingSenderId,
+  appId,
+};
+
+// Initialize Firebase
+initializeApp(firebaseConfig);
 
 const App = () => {
   return (
