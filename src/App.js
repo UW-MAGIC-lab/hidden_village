@@ -10,34 +10,26 @@ import "regenerator-runtime/runtime";
 window.PIXI = PIXI;
 import Sandbox from "./components/Sandbox";
 import PoseCapture from "./components/PoseCapture";
+import SignIn from "./components/auth/SignIn";
 const Story = lazy(() => import("./components/Story"));
-let {
-  NODE_ENV,
-  apiKey,
-  authDomain,
-  databaseURL,
-  projectId,
-  storageBucket,
-  messagingSenderId,
-  appId,
-} = process.env;
+let { NODE_ENV } = process.env;
 
 // Firebase Init
-import { initializeApp } from "firebase/app";
+import firebase from "firebase/compat/app";
 
 // Firebase config
 const firebaseConfig = {
-  apiKey,
-  authDomain,
-  databaseURL,
-  projectId,
-  storageBucket,
-  messagingSenderId,
-  appId,
+  apiKey: process.env.apiKey,
+  authDomain: process.env.authDomain,
+  databaseURL: process.env.databaseURL,
+  projectId: process.env.projectId,
+  storageBucket: process.env.storageBucket,
+  messagingSenderId: process.env.messagingSenderId,
+  appId: process.env.appId,
 };
 
 // Initialize Firebase
-initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig);
 
 const App = () => {
   return (
@@ -56,6 +48,9 @@ const App = () => {
           )}
           <Route path="/settings">
             <Settings />
+          </Route>
+          <Route path="/signin">
+            <SignIn />
           </Route>
           <Route path="/">
             <Story />
