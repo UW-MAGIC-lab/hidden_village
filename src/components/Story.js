@@ -10,6 +10,9 @@ import { Stage } from "@inlet/react-pixi";
 import { yellow } from "../utils/colors";
 import { generateRowAndColumnFunctions } from "./utilities/layoutFunction";
 import { enrichLandmarks } from "./Pose/landmark_utilities";
+import firebase from "firebase/compat";
+import "firebase/compat/auth";
+
 const [
   numRows,
   numColumns,
@@ -38,6 +41,19 @@ const Story = () => {
     columnGutter,
     rowGutter
   );
+
+  const checkIfUserIsSignedIn = () => {
+    firebase.auth().onAuthStateChanged(async (user) => {
+      if (user) {
+        // User is signed in, use the storyMachine
+        send("TOGGLE");
+      } else {
+        // User is NOT signed in
+        // Super hacky, don't tell Ariel
+        window.location.href = "/signin";
+      }
+    });
+  };
 
   useEffect(() => {
     window.addEventListener("resize", () => {
@@ -105,7 +121,7 @@ const Story = () => {
           <Home
             width={width}
             height={height}
-            startCallback={() => send("TOGGLE")}
+            startCallback={() => checkIfUserIsSignedIn()}
           />
         )}
         {state.value === "playing" && (
