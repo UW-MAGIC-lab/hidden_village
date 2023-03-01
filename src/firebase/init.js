@@ -1,5 +1,5 @@
 // Firebase Init
-import { initializeApp } from "firebase/app";
+import firebase from "firebase/compat/app";
 
 const {
   apiKey,
@@ -23,4 +23,4 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-export default initializeApp(firebaseConfig);
+export const app = firebase.initializeApp(firebaseConfig);

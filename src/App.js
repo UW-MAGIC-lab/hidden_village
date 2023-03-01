@@ -14,7 +14,7 @@ import SignIn from "./components/auth/SignIn";
 const Story = lazy(() => import("./components/Story"));
 
 // Firebase Init
-import "./firebase/init";
+import { app } from "./firebase/init";
 
 const { NODE_ENV } = process.env;
 
