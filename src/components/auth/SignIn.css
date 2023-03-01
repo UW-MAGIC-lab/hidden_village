@@ -1,0 +1,21 @@
+.login {
+  position: relative;
+}
+
+.login-inputs {
+  text-transform: uppercase;
+  position: absolute;
+  top: 30%;
+  right: 15%;
+  text-align: right;
+  text-indent: 5rem;
+}
+
+.login-inputs-label {
+  margin-right: 1rem;
+  color: white;
+}
+
+.login-inputs-input {
+  padding-left: 0.25rem;
+}
