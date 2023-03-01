@@ -12,24 +12,11 @@ import Sandbox from "./components/Sandbox";
 import PoseCapture from "./components/PoseCapture";
 import SignIn from "./components/auth/SignIn";
 const Story = lazy(() => import("./components/Story"));
-let { NODE_ENV } = process.env;
 
 // Firebase Init
-import firebase from "firebase/compat/app";
+import "./firebase/init";
 
-// Firebase config
-const firebaseConfig = {
-  apiKey: process.env.apiKey,
-  authDomain: process.env.authDomain,
-  databaseURL: process.env.databaseURL,
-  projectId: process.env.projectId,
-  storageBucket: process.env.storageBucket,
-  messagingSenderId: process.env.messagingSenderId,
-  appId: process.env.appId,
-};
-
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+const { NODE_ENV } = process.env;
 
 const App = () => {
   return (
