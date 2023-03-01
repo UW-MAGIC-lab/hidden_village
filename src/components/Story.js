@@ -42,18 +42,11 @@ const Story = () => {
     rowGutter
   );
 
-  const checkIfUserIsSignedIn = () => {
-    firebase.auth().onAuthStateChanged(async (user) => {
-      if (user) {
-        // User is signed in, use the storyMachine
-        send("TOGGLE");
-      } else {
-        // User is NOT signed in
-        // Super hacky, don't tell Ariel
-        window.location.href = "/signin";
-      }
-    });
-  };
+  firebase.auth().onAuthStateChanged(async (user) => {
+    if (!user) {
+      window.location.href = "/signin";
+    }
+  });
 
   useEffect(() => {
     window.addEventListener("resize", () => {
@@ -121,7 +114,7 @@ const Story = () => {
           <Home
             width={width}
             height={height}
-            startCallback={() => checkIfUserIsSignedIn()}
+            startCallback={() => send("TOGGLE")}
           />
         )}
         {state.value === "playing" && (
