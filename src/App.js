@@ -36,9 +36,9 @@ const App = () => {
           <Route path="/settings">
             <Settings />
           </Route>
-          {/* <Route path="/signin">
+          <Route path="/signin">
             <SignIn />
-          </Route> */}
+          </Route>
           <Route path="/">
             <Story />
           </Route>
