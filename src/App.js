@@ -37,7 +37,7 @@ const App = () => {
             <Settings />
           </Route>
           <Route path="/signin">
-            <SignIn />
+            <SignIn firebaseApp={app} />
           </Route>
           <Route path="/">
             <Story />
