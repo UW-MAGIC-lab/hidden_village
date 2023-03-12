@@ -33,6 +33,31 @@ import { conjectures } from "./models/conjectures.js";
 
 // writeUserData(Experimental_Data);
 
+// writeUserData(Experimental_Data);
+// import { getDatabase, ref, set } from "firebase/database";
+
+// function cwriteUserData(id, UserId, poseData, ConjuctureData, timestamp) {
+//   const db = getDatabase();
+//   set(ref(db, 'Experimental_Data/'), {
+    
+//   });
+// }
+
+function writeUserData(UId, poseData, ConjuctureData, timestamp) {
+  var myRef = firebase.database().ref().child('Experimental_Data').push();
+  var key = myRef.key();
+
+  var newData = {
+    id: key,
+    uid: UId,
+    poseData: poseData,
+    ConjuctureId: ConjuctureData.id,
+    timestamp: timestamp,
+  };
+
+  myRef.push(newData);
+}
+// writeUserData();
 const { NODE_ENV } = process.env;
 
 const App = () => {
