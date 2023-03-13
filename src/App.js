@@ -14,11 +14,13 @@ import SignIn from "./components/auth/SignIn";
 const Story = lazy(() => import("./components/Story"));
 
 // Firebase Init
-import { app } from "./firebase/init";
-
+import "./firebase/init";
 import { writeUserData } from "./firebase/database";
-import { conjectures } from "./models/conjectures.js";
+// import { conjectures } from "./models/conjectures.js";
 
+console.log("Pre call");
+writeUserData("testing");
+console.log("Post call");
 // const Experimental_Data = [];
 
 // Experimental_Data.push({
@@ -39,24 +41,24 @@ import { conjectures } from "./models/conjectures.js";
 // function cwriteUserData(id, UserId, poseData, ConjuctureData, timestamp) {
 //   const db = getDatabase();
 //   set(ref(db, 'Experimental_Data/'), {
-    
+
 //   });
 // }
 
-function writeUserData(UId, poseData, ConjuctureData, timestamp) {
-  var myRef = firebase.database().ref().child('Experimental_Data').push();
-  var key = myRef.key();
+// function writeUserData(UId, poseData, ConjuctureData, timestamp) {
+//   var myRef = firebase.database().ref().child('Experimental_Data').push();
+//   var key = myRef.key();
 
-  var newData = {
-    id: key,
-    uid: UId,
-    poseData: poseData,
-    ConjuctureId: ConjuctureData.id,
-    timestamp: timestamp,
-  };
+//   var newData = {
+//     id: key,
+//     uid: UId,
+//     poseData: poseData,
+//     ConjuctureId: ConjuctureData.id,
+//     timestamp: timestamp,
+//   };
 
-  myRef.push(newData);
-}
+//   myRef.push(newData);
+// }
 // writeUserData();
 const { NODE_ENV } = process.env;
 
