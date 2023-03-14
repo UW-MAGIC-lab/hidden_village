@@ -12,6 +12,7 @@ import { generateRowAndColumnFunctions } from "./utilities/layoutFunction";
 import { enrichLandmarks } from "./Pose/landmark_utilities";
 import firebase from "firebase/compat";
 import "firebase/compat/auth";
+import { writeUserData } from "../firebase/database.js";
 
 const [
   numRows,
@@ -94,6 +95,7 @@ const Story = () => {
     camera.start();
     const updatePoseResults = (newResults) => {
       setPoseData(enrichLandmarks(newResults));
+      // writeUserData(poseData);
     };
     holistic.onResults(updatePoseResults);
   }, []);

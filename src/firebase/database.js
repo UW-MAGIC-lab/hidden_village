@@ -1,12 +1,16 @@
 // Firebase Init
-import { getDatabase, ref, set } from "firebase/database";
+import { getDatabase, ref, set, push } from "firebase/database";
 
 export const db = getDatabase();
 
 export function writeUserData(poseData) {
   console.log("In call");
-  set(ref(db, "experimentalData"), {
-    Pose_Data: poseData,
-  });
+  push(ref(db, "/Experimental_Data"), { ...poseData })
+    .then((response) => {
+      console.log("Success");
+    })
+    .catch((error) => {
+      console.log("Error");
+    });
   console.log("end of function call");
 }
