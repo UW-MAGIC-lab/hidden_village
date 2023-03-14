@@ -95,7 +95,8 @@ const Story = () => {
     camera.start();
     const updatePoseResults = (newResults) => {
       setPoseData(enrichLandmarks(newResults));
-      // writeUserData(poseData);
+      writeUserData(poseData);
+      // console.log(poseData);
     };
     holistic.onResults(updatePoseResults);
   }, []);

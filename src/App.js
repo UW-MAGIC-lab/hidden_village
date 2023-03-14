@@ -18,10 +18,6 @@ import "./firebase/init";
 import { writeUserData } from "./firebase/database";
 // import { conjectures } from "./models/conjectures.js";
 
-// console.log("Pre call");
-// writeUserData("testing");
-// console.log("Post call");
-
 let data = {
   documentId: "random letters assigned by Firebase",
   id: "username based on the UID of the user",
@@ -34,32 +30,6 @@ let data = {
 };
 
 writeUserData(data);
-
-// writeUserData(Experimental_Data);
-// import { getDatabase, ref, set } from "firebase/database";
-
-// function cwriteUserData(id, UserId, poseData, ConjuctureData, timestamp) {
-//   const db = getDatabase();
-//   set(ref(db, 'Experimental_Data/'), {
-
-//   });
-// }
-
-// function HwriteUserData(UId, poseData, ConjuctureData, timestamp) {
-//   var myRef = firebase.database().ref().child("Experimental_Data").push();
-//   var key = myRef.key();
-
-//   var newData = {
-//     id: key,
-//     uid: UId,
-//     poseData: poseData,
-//     ConjuctureId: ConjuctureData.id,
-//     timestamp: timestamp,
-//   };
-
-//   myRef.push(newData);
-// }
-// HwriteUserData("");
 
 const { NODE_ENV } = process.env;
 
