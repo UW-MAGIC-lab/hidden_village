@@ -1,5 +1,6 @@
 // Firebase Init
 import firebase from "firebase/compat/app";
+import { getDatabase } from "firebase/database";
 
 const {
   apiKey,
@@ -24,3 +25,4 @@ const firebaseConfig = {
 
 // Initialize Firebase
 export const app = firebase.initializeApp(firebaseConfig);
+export const db = getDatabase();

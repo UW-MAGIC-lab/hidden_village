@@ -219,6 +219,7 @@ const PoseCapture = () => {
     });
     camera.start();
     const updatePoseResults = (newResults) => {
+      // console.log(newResults);
       setPoseData(enrichLandmarks(newResults));
     };
     holistic.onResults(updatePoseResults);
