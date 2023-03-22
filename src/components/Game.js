@@ -8,7 +8,11 @@ import { useMachine, useSelector } from "@xstate/react";
 // import { useSelector } from "@xstate";
 import GameMachine from "../machines/gameMachine.js";
 import Intervention from "./Intervention.js";
-import { writeToDatabase, framerate } from "../firebase/database.js";
+import {
+  writeToDatabase,
+  framerate,
+  timesCalled,
+} from "../firebase/database.js";
 
 const reorder = (array, indices) => {
   return indices.map((idx) => array[idx - 1]);
@@ -34,9 +38,6 @@ const Game = (props) => {
   const [state, send, service] = useMachine(GameMachine, context);
   const currentConjectureIdx = useSelector(service, selectCurrentConjectureIdx);
 
-  console.log(currentConjectureIdx);
-  console.log(poseData);
-  writeToDatabase(poseData, currentConjectureIdx);
   setTimeout(() => {
     writeToDatabase(poseData, currentConjectureIdx);
   }, 1000 / framerate);

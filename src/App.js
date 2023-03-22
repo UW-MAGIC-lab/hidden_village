@@ -15,9 +15,6 @@ const Story = lazy(() => import("./components/Story"));
 
 // Firebase Init
 import "./firebase/init";
-import { writeUserData } from "./firebase/database";
-import { selectCurrentConjectureIdx } from "./components/Game.js";
-// import { conjectures } from "./models/conjectures.js";
 
 // const uid = "";
 // if (firebase.auth().currentUser !== null)
@@ -25,41 +22,6 @@ import { selectCurrentConjectureIdx } from "./components/Game.js";
 
 // if (app.auth().currentUser !== null)
 //   console.log("user id: " + firebase.auth().currentUser.uid);
-
-let currentdate = new Date();
-
-let data = {
-  documentId: "random letters assigned by Firebase",
-  id: "username based on the UID of the user",
-  // userId: getAuth(),
-  poseData: "current pose data based on the frame rate limitation given",
-  conjectureId:
-    "add the conjecture id to determine the current point of the story",
-  timestamp:
-    currentdate.getDate() +
-    "/" +
-    (currentdate.getMonth() + 1) +
-    "/" +
-    currentdate.getFullYear() +
-    " - " +
-    currentdate.getHours() +
-    ":" +
-    currentdate.getMinutes() +
-    ":" +
-    currentdate.getSeconds() +
-    ":" +
-    currentdate.getMilliseconds(),
-};
-
-// writeUserData(data);
-// writeUserData(
-//   "did",
-//   "id",
-//   "uid",
-//   selectCurrentConjectureIdx,
-//   "posedata",
-//   "timestamps"
-// );
 
 const { NODE_ENV } = process.env;
 
