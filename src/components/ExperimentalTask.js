@@ -25,7 +25,7 @@ const ExperimentalTask = (props) => {
     g.drawRect(col3.x, col3.y, col3.width, col3.height);
     g.endFill();
   });
-
+  
   useEffect(() => {
     const timeout = setTimeout(
       () => {
