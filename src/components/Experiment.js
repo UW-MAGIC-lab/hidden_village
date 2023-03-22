@@ -16,6 +16,7 @@ const Experiment = (props) => {
     onComplete,
     debugMode,
     conjectureData,
+    currentConjectureIdx
   } = props;
   const [state, send, service] = useMachine(ExperimentMachine);
   const [experimentText, setExperimentText] = useState(
@@ -107,6 +108,7 @@ const Experiment = (props) => {
           rowDimensions={rowDimensions}
           onComplete={onComplete}
           cursorTimer={debugMode ? 1_000 : 30_000}
+          currentConjectureIdx = {currentConjectureIdx}
         />
       )}
     </>

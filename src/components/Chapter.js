@@ -229,6 +229,7 @@ const Chapter = (props) => {
           }}
           debugMode={false}
           conjectureData={currentConjecture}
+          currentConjectureIdx = {currentConjectureIdx}
         />
       )}
     </>

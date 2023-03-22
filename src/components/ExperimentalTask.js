@@ -12,6 +12,7 @@ const ExperimentalTask = (props) => {
     onComplete,
     rowDimensions,
     cursorTimer,
+    currentConjectureIdx
   } = props;
   const [showCursor, setShowCursor] = useState(false);
 
