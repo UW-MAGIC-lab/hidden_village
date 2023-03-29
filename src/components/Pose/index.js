@@ -216,6 +216,23 @@ const drawFace = (poseData, g, width, height, similarityScores) => {
     return coordinates;
   });
   connectLandmarks(faceOvalCoords, g, width, height, similarityScores);
+
+  let fillColor = yellow;
+  let strokeColor = blue;
+  g.beginFill(fillColor);
+  g.lineStyle(4, strokeColor, 1);
+
+  poseData.faceLandmarks.forEach((landmark) => {
+    let x = landmark.x;
+    let y = landmark.y;
+    x *= width;
+    y *= height;
+    if (x <= width || y <= height) {
+      g.drawCircle(x, y, 0.01);
+    }
+  });
+
+  g.endFill();
 };
 
 // create a drawThighs function that mimics the drawBiceps function
