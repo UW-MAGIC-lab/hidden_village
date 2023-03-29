@@ -76,6 +76,7 @@ const Story = () => {
       minDetectionConfidence: 0.5,
       minTrackingConfidence: 0.5,
       selfieMode: true,
+      refineFaceLandmarks: true,
     });
     async function poseDetectionFrame() {
       await holistic.send({ image: videoElement });
