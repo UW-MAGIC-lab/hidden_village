@@ -11,6 +11,7 @@ const SignInScreen = ({firebaseApp}) => {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [loginError, setLoginError] = useState(false)
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value)
@@ -18,6 +19,20 @@ const SignInScreen = ({firebaseApp}) => {
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value)
+  }
+
+  const ErrorMessage = ({error,message}) => {
+    if (error) {
+      return (
+        <div className="error-output">
+          <span>{message}</span>
+          <br></br>
+          <span>Please try again.</span>
+        </div>
+      )
+    } else {
+      return <></>
+    }
   }
 
   const handleSubmit = (e) => {
@@ -29,15 +44,9 @@ const SignInScreen = ({firebaseApp}) => {
       console.log("success!");
     })
     .catch((error) => {
-      // Todo: add UI change on wrong password,
-      // error code 400
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(error.message);
+      setLoginError(true);
     });
   }
-
-  
 
   return (
     <div>
@@ -61,6 +70,7 @@ const SignInScreen = ({firebaseApp}) => {
               />
               <div></div>
               <input className="login-input-submit" type="submit" />
+              <ErrorMessage error={loginError} message={"Email or password is incorrect."}></ErrorMessage>
             </div>
             <img src={circle_sprite} className="sprite circle-sprite" />
             <img
@@ -73,7 +83,5 @@ const SignInScreen = ({firebaseApp}) => {
     </div>
   );
 };
-
-
 
 export default SignInScreen;
