@@ -1,27 +1,26 @@
 import "./SignIn.css";
 import circle_sprite from "../../assets/circle_sprite.png";
 import scaleneTriangle_sprite from "../../assets/scaleneTriangle_sprite.png";
-import {getAuth, signInWithEmailAndPassword} from "firebase/auth";
-import {useState} from "react"
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { useState } from "react";
 
-
-const SignInScreen = ({firebaseApp}) => {
+const SignInScreen = ({ firebaseApp }) => {
   // takes the entered email and password and logs in the user
   const auth = getAuth(firebaseApp);
 
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [loginError, setLoginError] = useState(false)
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loginError, setLoginError] = useState(false);
 
   const handleEmailChange = (e) => {
-    setEmail(e.target.value)
-  }
+    setEmail(e.target.value);
+  };
 
   const handlePasswordChange = (e) => {
-    setPassword(e.target.value)
-  }
+    setPassword(e.target.value);
+  };
 
-  const ErrorMessage = ({error,message}) => {
+  const ErrorMessage = ({ error, message }) => {
     if (error) {
       return (
         <div className="error-output">
@@ -29,24 +28,23 @@ const SignInScreen = ({firebaseApp}) => {
           <br></br>
           <span>Please try again.</span>
         </div>
-      )
-    } else {
-      return <></>
+      );
     }
-  }
+    return <></>;
+  };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      const user = userCredential.user;
-      window.location.href = "/";
-      console.log("success!");
-    })
-    .catch((error) => {
-      setLoginError(true);
-    });
-  }
+      .then((userCredential) => {
+        const user = userCredential.user;
+        window.location.href = "/";
+        console.log("success!");
+      })
+      .catch((error) => {
+        setLoginError(true);
+      });
+  };
 
   return (
     <div>
@@ -57,7 +55,13 @@ const SignInScreen = ({firebaseApp}) => {
               <label htmlFor="email" className="login-input-label">
                 Login
               </label>
-              <input value={email} onChange={handleEmailChange} id="email" className="login-input-input" type="text" />
+              <input
+                value={email}
+                onChange={handleEmailChange}
+                id="email"
+                className="login-input-input"
+                type="text"
+              />
               <label htmlFor="password" className="login-input-label">
                 Password
               </label>
@@ -70,7 +74,10 @@ const SignInScreen = ({firebaseApp}) => {
               />
               <div></div>
               <input className="login-input-submit" type="submit" />
-              <ErrorMessage error={loginError} message={"Email or password is incorrect."}></ErrorMessage>
+              <ErrorMessage
+                error={loginError}
+                message={"Email or password is incorrect."}
+              ></ErrorMessage>
             </div>
             <img src={circle_sprite} className="sprite circle-sprite" />
             <img
