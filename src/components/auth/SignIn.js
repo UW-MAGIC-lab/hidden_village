@@ -37,12 +37,11 @@ const SignInScreen = ({ firebaseApp }) => {
     e.preventDefault();
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        const user = userCredential.user;
         window.location.href = "/";
-        console.log("success!");
       })
       .catch((error) => {
         setLoginError(true);
+        console.error(error);
       });
   };
 
