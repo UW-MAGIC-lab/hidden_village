@@ -8,11 +8,7 @@ import { useMachine, useSelector } from "@xstate/react";
 // import { useSelector } from "@xstate";
 import GameMachine from "../machines/gameMachine.js";
 import Intervention from "./Intervention.js";
-import {
-  writeToDatabase,
-  framerate,
-  timesCalled,
-} from "../firebase/database.js";
+import { writeToDatabase, promiseChecker } from "../firebase/database.js";
 
 const reorder = (array, indices) => {
   return indices.map((idx) => array[idx - 1]);
@@ -38,9 +34,21 @@ const Game = (props) => {
   const [state, send, service] = useMachine(GameMachine, context);
   const currentConjectureIdx = useSelector(service, selectCurrentConjectureIdx);
 
-  setTimeout(() => {
-    writeToDatabase(poseData, currentConjectureIdx);
-  }, 1000 / framerate);
+  useEffect(() => {
+    let promises = [];
+    const frameRate = 30;
+    const intervalId = setInterval(() => {
+      promises.push(writeToDatabase(poseData, currentConjectureIdx));
+      promiseChecker(frameRate, promises);
+      // Need to clear the promise before it causes memory/storage problem for the user
+      console.log("Promise Length: " + promises.length);
+    }, 1000 / frameRate);
+
+    return async () => {
+      clearInterval(intervalId);
+      await Promise.allSettled(promises);
+    };
+  }, []);
 
   useEffect(() => {
     const numConjectures = conjectures.length;

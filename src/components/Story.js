@@ -43,12 +43,6 @@ const Story = () => {
     rowGutter
   );
 
-  // firebase.auth().onAuthStateChanged(async (user) => {
-  //   if (!user) {
-  //     window.location.href = "/signin";
-  //   }
-  // });
-
   useEffect(() => {
     window.addEventListener("resize", () => {
       setHeight(window.innerHeight);

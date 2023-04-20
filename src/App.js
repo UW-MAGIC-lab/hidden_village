@@ -16,13 +16,6 @@ const Story = lazy(() => import("./components/Story"));
 // Firebase Init
 import "./firebase/init";
 
-// const uid = "";
-// if (firebase.auth().currentUser !== null)
-//   const uid = firebase.auth().currentUser.uid;
-
-// if (app.auth().currentUser !== null)
-//   console.log("user id: " + firebase.auth().currentUser.uid);
-
 const { NODE_ENV } = process.env;
 
 const App = () => {
@@ -43,9 +36,6 @@ const App = () => {
           <Route path="/settings">
             <Settings />
           </Route>
-          {/* <Route path="/signin">
-            <SignIn />
-          </Route> */}
           <Route path="/">
             <Story />
           </Route>

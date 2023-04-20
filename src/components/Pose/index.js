@@ -402,7 +402,7 @@ const drawHands = (poseData, g, width, height, similarityScores) => {
 
 const Pose = forwardRef((props, ref) => {
   const [armWidth, setArmWidth] = useState(0);
-  const { colAttr, similarityScores, modelBodySegments, poseData } = props;
+  const { colAttr, similarityScores, modelBodySegments } = props;
   const { width, height } = colAttr;
   const draw = useCallback(
     (g) => {
