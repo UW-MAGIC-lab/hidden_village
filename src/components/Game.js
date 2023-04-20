@@ -34,21 +34,35 @@ const Game = (props) => {
   const [state, send, service] = useMachine(GameMachine, context);
   const currentConjectureIdx = useSelector(service, selectCurrentConjectureIdx);
 
-  useEffect(() => {
-    let promises = [];
-    const frameRate = 30;
-    const intervalId = setInterval(() => {
-      promises.push(writeToDatabase(poseData, currentConjectureIdx));
-      promiseChecker(frameRate, promises);
-      // Need to clear the promise before it causes memory/storage problem for the user
-      console.log("Promise Length: " + promises.length);
-    }, 1000 / frameRate);
+  // Optional URL parameters for whether motion data recording is enabled
+  // and what the fps is for recording.
+  // Defaults are false and 30.
+  const queryParameters = new URLSearchParams(window.location.search);
+  // const queryParameters = useSearchParams();
+  const recordingUrlParam = queryParameters.get("recording") || "false";
+  const fpsUrlParam = parseInt(queryParameters.get("fps")) || 30;
 
-    return async () => {
-      clearInterval(intervalId);
-      await Promise.allSettled(promises);
-    };
-  }, []);
+  console.log(recordingUrlParam);
+  if (recordingUrlParam.toLowerCase() === "true") {
+    useEffect(() => {
+      let promises = [];
+      // This is done so it can be easier to refactor
+      // if something other than url params are ever used
+      const frameRate = fpsUrlParam;
+      console.log(frameRate);
+      const intervalId = setInterval(() => {
+        promises.push(writeToDatabase(poseData, currentConjectureIdx));
+        promiseChecker(frameRate, promises);
+        // Need to clear the promise before it causes memory/storage problem for the user
+        console.log("Promise Length: " + promises.length);
+      }, 1000 / frameRate);
+
+      return async () => {
+        clearInterval(intervalId);
+        await Promise.allSettled(promises);
+      };
+    }, []);
+  }
 
   useEffect(() => {
     const numConjectures = conjectures.length;
