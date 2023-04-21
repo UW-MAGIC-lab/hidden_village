@@ -3,7 +3,7 @@ import { Graphics, Text, useApp } from "@inlet/react-pixi";
 import CursorMode from "./CursorMode.js";
 import Pose from "./Pose/index";
 import { white, darkGray, yellow } from "../utils/colors";
-import { writeToDatabase, promiseChecker } from "../firebase/database.js";
+import { writeToDatabase } from "../firebase/database.js";
 
 const ExperimentalTask = (props) => {
   const {
