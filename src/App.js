@@ -10,7 +10,6 @@ import "regenerator-runtime/runtime";
 window.PIXI = PIXI;
 import Sandbox from "./components/Sandbox";
 import PoseCapture from "./components/PoseCapture";
-import SignIn from "./components/auth/SignIn";
 const Story = lazy(() => import("./components/Story"));
 
 // Firebase Init

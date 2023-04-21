@@ -8,7 +8,6 @@ import { useMachine, useSelector } from "@xstate/react";
 // import { useSelector } from "@xstate";
 import GameMachine from "../machines/gameMachine.js";
 import Intervention from "./Intervention.js";
-import { writeToDatabase, promiseChecker } from "../firebase/database.js";
 
 const reorder = (array, indices) => {
   return indices.map((idx) => array[idx - 1]);
@@ -33,36 +32,6 @@ const Game = (props) => {
   const [allConjectures, setAllConjectures] = useState([]);
   const [state, send, service] = useMachine(GameMachine, context);
   const currentConjectureIdx = useSelector(service, selectCurrentConjectureIdx);
-
-  // Optional URL parameters for whether motion data recording is enabled
-  // and what the fps is for recording.
-  // Defaults are false and 30.
-  const queryParameters = new URLSearchParams(window.location.search);
-  // const queryParameters = useSearchParams();
-  const recordingUrlParam = queryParameters.get("recording") || "false";
-  const fpsUrlParam = parseInt(queryParameters.get("fps")) || 30;
-
-  console.log(recordingUrlParam);
-  if (recordingUrlParam.toLowerCase() === "true") {
-    useEffect(() => {
-      let promises = [];
-      // This is done so it can be easier to refactor
-      // if something other than url params are ever used
-      const frameRate = fpsUrlParam;
-      console.log(frameRate);
-      const intervalId = setInterval(() => {
-        promises.push(writeToDatabase(poseData, currentConjectureIdx));
-        promiseChecker(frameRate, promises);
-        // Need to clear the promise before it causes memory/storage problem for the user
-        console.log("Promise Length: " + promises.length);
-      }, 1000 / frameRate);
-
-      return async () => {
-        clearInterval(intervalId);
-        await Promise.allSettled(promises);
-      };
-    }, []);
-  }
 
   useEffect(() => {
     const numConjectures = conjectures.length;
