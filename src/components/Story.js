@@ -10,8 +10,6 @@ import { Stage } from "@inlet/react-pixi";
 import { yellow } from "../utils/colors";
 import { generateRowAndColumnFunctions } from "./utilities/layoutFunction";
 import { enrichLandmarks } from "./Pose/landmark_utilities";
-import firebase from "firebase/compat";
-import "firebase/compat/auth";
 
 const [
   numRows,
@@ -41,12 +39,6 @@ const Story = () => {
     columnGutter,
     rowGutter
   );
-
-  firebase.auth().onAuthStateChanged(async (user) => {
-    if (!user) {
-      window.location.href = "/signin";
-    }
-  });
 
   useEffect(() => {
     window.addEventListener("resize", () => {
