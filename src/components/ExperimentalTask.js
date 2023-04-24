@@ -3,6 +3,7 @@ import { Graphics, Text, useApp } from "@inlet/react-pixi";
 import CursorMode from "./CursorMode.js";
 import Pose from "./Pose/index";
 import { white, darkGray, yellow } from "../utils/colors";
+import { promiseChecker, writeToDatabase } from "../firebase/database.js";
 
 const ExperimentalTask = (props) => {
   const {
@@ -12,6 +13,7 @@ const ExperimentalTask = (props) => {
     onComplete,
     rowDimensions,
     cursorTimer,
+    currentConjectureIdx,
   } = props;
   const [showCursor, setShowCursor] = useState(false);
 
@@ -24,6 +26,52 @@ const ExperimentalTask = (props) => {
     g.drawRect(col3.x, col3.y, col3.width, col3.height);
     g.endFill();
   });
+
+  // Database Write Functionality
+  // This code runs when the user is participating in a conjecture and recording is enabled.
+
+  // The following code runs once when the component mounts.
+  useEffect(() => {
+    // Optional URL parameters for whether motion data recording is enabled
+    // and what the fps is for recording.
+    // Defaults are false and 30.
+    const queryParameters = new URLSearchParams(window.location.search);
+
+    // Get the recording parameter from the URL. If it's not set, default to false.
+    const recordingUrlParam = queryParameters.get("recording") || "false";
+
+    // If the recording param is set to true, begin writing data to the database.
+    if (recordingUrlParam.toLowerCase() === "true") {
+      // Get the fps parameter from the URL. If it's not set, default to 30.
+      const fpsUrlParam = parseInt(queryParameters.get("fps")) || 30;
+
+      // Empty array to hold the promise objects.
+      // This is important so we can assure that all the promises get settled on component unmount.
+      let promises = [];
+
+      // This creates an interval for the writing to the database every n times a second,
+      // where n is a variable framerate.
+      const intervalId = setInterval(() => {
+        // Call the writeToDatabase function with the current poseData, conjecture index,
+        // and fps parameter. Push the resulting promise object to the promises array.
+        promises.push(
+          writeToDatabase(poseData, currentConjectureIdx, fpsUrlParam)
+        );
+        // Call the promiseChecker function to detect any data loss in the promises array
+        // and trigger an alert if necessary.
+        promiseChecker(fpsUrlParam, promises);
+      }, 1000 / fpsUrlParam);
+
+      // The code below runs when the component unmounts.
+      return async () => {
+        // Stop the interval when the component unmounts.
+        clearInterval(intervalId);
+
+        // Wait until all promises are settled so we don't lose data.
+        await Promise.allSettled(promises);
+      };
+    }
+  }, []);
 
   useEffect(() => {
     const timeout = setTimeout(
