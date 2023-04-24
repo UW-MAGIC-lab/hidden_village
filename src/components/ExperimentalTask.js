@@ -3,7 +3,7 @@ import { Graphics, Text, useApp } from "@inlet/react-pixi";
 import CursorMode from "./CursorMode.js";
 import Pose from "./Pose/index";
 import { white, darkGray, yellow } from "../utils/colors";
-import { writeToDatabase } from "../firebase/database.js";
+import { promiseChecker, writeToDatabase } from "../firebase/database.js";
 
 const ExperimentalTask = (props) => {
   const {
@@ -57,6 +57,9 @@ const ExperimentalTask = (props) => {
         promises.push(
           writeToDatabase(poseData, currentConjectureIdx, fpsUrlParam)
         );
+        // Call the promiseChecker function to detect any data loss in the promises array
+        // and trigger an alert if necessary.
+        promiseChecker(fpsUrlParam, promises);
       }, 1000 / fpsUrlParam);
 
       // The code below runs when the component unmounts.
