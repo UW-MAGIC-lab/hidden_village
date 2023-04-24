@@ -10,8 +10,13 @@ import "regenerator-runtime/runtime";
 window.PIXI = PIXI;
 import Sandbox from "./components/Sandbox";
 import PoseCapture from "./components/PoseCapture";
+import SignIn from "./components/auth/SignIn";
 const Story = lazy(() => import("./components/Story"));
-let { NODE_ENV } = process.env;
+
+// Firebase Init
+import { app } from "./firebase/init";
+
+const { NODE_ENV } = process.env;
 
 const App = () => {
   return (
@@ -30,6 +35,9 @@ const App = () => {
           )}
           <Route path="/settings">
             <Settings />
+          </Route>
+          <Route path="/signin">
+            <SignIn firebaseApp={app} />
           </Route>
           <Route path="/">
             <Story />
