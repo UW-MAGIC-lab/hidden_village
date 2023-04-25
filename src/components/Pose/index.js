@@ -421,7 +421,6 @@ const Pose = forwardRef((props, ref) => {
   const [armWidth, setArmWidth] = useState(0);
   const { colAttr, similarityScores, modelBodySegments } = props;
   const { width, height } = colAttr;
-
   const draw = useCallback(
     (g) => {
       g.clear();

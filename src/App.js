@@ -11,7 +11,11 @@ window.PIXI = PIXI;
 import Sandbox from "./components/Sandbox";
 import PoseCapture from "./components/PoseCapture";
 const Story = lazy(() => import("./components/Story"));
-let { NODE_ENV } = process.env;
+
+// Firebase Init
+import "./firebase/init";
+
+const { NODE_ENV } = process.env;
 
 const App = () => {
   return (
