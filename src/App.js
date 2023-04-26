@@ -10,6 +10,7 @@ import "regenerator-runtime/runtime";
 window.PIXI = PIXI;
 import Sandbox from "./components/Sandbox";
 import PoseCapture from "./components/PoseCapture";
+import PoseEditor from "./components/PoseEditor.js";
 const Story = lazy(() => import("./components/Story"));
 let { NODE_ENV } = process.env;
 
@@ -28,6 +29,9 @@ const App = () => {
               <PoseCapture />
             </Route>
           )}
+          <Route path="/pose-editor">
+            <PoseEditor />
+          </Route>
           <Route path="/settings">
             <Settings />
           </Route>

@@ -20,11 +20,17 @@ const landmarkToCoordinates = (data, width, height) => {
 };
 
 export { objMap, landmarkToCoordinates };
+/**
+ * @typedef
+ * @type {Point} 
+ * @property {number} y  y-coordinate
+ * @property {number} x  x-coordinate
+ */
 
 /** @internal
- * @param {Object} firstPoint
- * @param {Object} secondPoint
- * @param {Object} thirdPoint
+ * @param {Point} firstPoint
+ * @param {Point} midPoint
+ * @param {Point} lastPoint
  * @returns {number} angle in radians
  */
 const getAngle = (firstPoint, midPoint, lastPoint) => {
