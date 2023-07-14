@@ -2712,6 +2712,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@pixi/math@npm:^7.2.4":
+  version: 7.2.4
+  resolution: "@pixi/math@npm:7.2.4"
+  checksum: 6e6304a091a25df0326b69e8664d6ba89b1f66cadba830957fc734b368243d89827b1220c1163c9162655b40d0c5bccf51526c9d8373af0c830c758e18456ef0
+  languageName: node
+  linkType: hard
+
 "@pixi/mesh-extras@npm:6.5.10":
   version: 6.5.10
   resolution: "@pixi/mesh-extras@npm:6.5.10"
@@ -2926,6 +2933,19 @@ __metadata:
     "@pixi/text": 6.5.10
     "@pixi/utils": 6.5.10
   checksum: b9a92df0a03cd3301c79812a71808b009daefb1cb7cdd06cd76e3c763f9e17fbaa4383227e766bcb0c88a691827ab84495897b61fc9fda1cae5f958cfa63b543
+  languageName: node
+  linkType: hard
+
+"@pixi/text-bitmap@npm:^7.2.4":
+  version: 7.2.4
+  resolution: "@pixi/text-bitmap@npm:7.2.4"
+  peerDependencies:
+    "@pixi/assets": 7.2.4
+    "@pixi/core": 7.2.4
+    "@pixi/display": 7.2.4
+    "@pixi/mesh": 7.2.4
+    "@pixi/text": 7.2.4
+  checksum: 6189bb8e2c37f908face17a85701f40d662dd364043b05eb0fb378e0723bbe48b5cc0478231113e6a40c575bc7ffc2975c1c4540e7faf43e84786591247b88b3
   languageName: node
   linkType: hard
 
@@ -10624,8 +10644,10 @@ __metadata:
     "@pixi/constants": ^7.2.4
     "@pixi/display": ^7.2.4
     "@pixi/graphics": ^7.2.4
+    "@pixi/math": ^7.2.4
     "@pixi/react": ^7.1.0
     "@pixi/text": ^6.1.3
+    "@pixi/text-bitmap": ^7.2.4
     "@swc/helpers": ^0.2.14
     "@xstate/react": ^1.6.2
     autoprefixer: ^10.3.6
