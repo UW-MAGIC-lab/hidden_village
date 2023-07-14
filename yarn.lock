@@ -2571,6 +2571,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@pixi/display@npm:^7.2.4":
+  version: 7.2.4
+  resolution: "@pixi/display@npm:7.2.4"
+  peerDependencies:
+    "@pixi/core": 7.2.4
+  checksum: 3e46d41242bba54fa0125cedcbf5b88b37e82062e9747a02a4bbaa5f2e41548d265814d6328edde47517271fe7a53aaf661071aac0dd226dd20814b67d782db1
+  languageName: node
+  linkType: hard
+
 "@pixi/extensions@npm:6.5.10":
   version: 6.5.10
   resolution: "@pixi/extensions@npm:6.5.10"
@@ -10613,6 +10622,7 @@ __metadata:
     "@parcel/transformer-inline-string": ^2.0.1
     "@parcel/transformer-toml": ^2.2.1
     "@pixi/constants": ^7.2.4
+    "@pixi/display": ^7.2.4
     "@pixi/graphics": ^7.2.4
     "@pixi/react": ^7.1.0
     "@pixi/text": ^6.1.3
