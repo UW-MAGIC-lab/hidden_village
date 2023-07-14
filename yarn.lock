@@ -2654,6 +2654,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@pixi/graphics@npm:^7.2.4":
+  version: 7.2.4
+  resolution: "@pixi/graphics@npm:7.2.4"
+  peerDependencies:
+    "@pixi/core": 7.2.4
+    "@pixi/display": 7.2.4
+    "@pixi/sprite": 7.2.4
+  checksum: e8580595d92fc6a6dddd5aacc3f815d39791bcd8262b8c71ea905d419957c5a3d363ee6f39490646aee187476008fa1d561fda23d4318c8f0e5a72147207b5bc
+  languageName: node
+  linkType: hard
+
 "@pixi/interaction@npm:6.5.10":
   version: 6.5.10
   resolution: "@pixi/interaction@npm:6.5.10"
@@ -10594,6 +10605,7 @@ __metadata:
     "@parcel/reporter-bundle-analyzer": ^2.0.1
     "@parcel/transformer-inline-string": ^2.0.1
     "@parcel/transformer-toml": ^2.2.1
+    "@pixi/graphics": ^7.2.4
     "@pixi/react": ^7.1.0
     "@pixi/text": ^6.1.3
     "@swc/helpers": ^0.2.14
