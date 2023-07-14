@@ -33,6 +33,7 @@
     "tailwindcss": "^2.2.16"
   },
   "dependencies": {
+    "@babel/core": "^7.22.9",
     "@mediapipe/camera_utils": "^0.3.1632432234",
     "@mediapipe/holistic": "^0.4.1632785079",
     "@parcel/config-default": "^2.9.3",
