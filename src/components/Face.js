@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { Container, Graphics } from "@inlet/react-pixi";
+import { Container, Graphics } from "@pixi/react";
 import { white } from "../utils/colors";
 
 /**

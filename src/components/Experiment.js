@@ -1,6 +1,6 @@
 import { useMachine } from "@xstate/react";
 import ExperimentMachine from "../machines/experimentMachine";
-import { Graphics } from "@inlet/react-pixi";
+import { Graphics } from "@pixi/react";
 import { useCallback, useState, useEffect } from "react";
 import { darkGray, yellow } from "../utils/colors";
 import PoseMatching from "./PoseMatching";

@@ -7,7 +7,7 @@ import {
   useApp,
   Text,
   Stage,
-} from "@inlet/react-pixi";
+} from "@pixi/react";
 import { Camera } from "@mediapipe/camera_utils";
 import { Holistic } from "@mediapipe/holistic/holistic";
 import { enrichLandmarks } from "./Pose/landmark_utilities";

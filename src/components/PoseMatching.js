@@ -6,7 +6,7 @@ import { enrichLandmarks } from "./Pose/landmark_utilities";
 import ErrorBoundary from "./utilities/ErrorBoundary.js";
 import Pose from "./Pose/index.js";
 import { useState, useEffect, useMemo } from "react";
-import { Text, Container } from "@inlet/react-pixi";
+import { Text, Container } from "@pixi/react";
 import { white } from "../utils/colors";
 
 const PoseMatching = (props) => {

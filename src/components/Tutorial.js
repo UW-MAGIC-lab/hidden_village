@@ -3,7 +3,7 @@ import Pose from "./Pose/index.js";
 import { useState, useEffect } from "react";
 import { useMachine } from "@xstate/react";
 import TutorialMachine from "../machines/tutorialMachine";
-import { Text, Container } from "@inlet/react-pixi";
+import { Text, Container } from "@pixi/react";
 import { blue } from "../utils/colors";
 import { TextStyle } from "@pixi/text";
 import cursorPoseData from "../models/rawPoses/cursorPose.json";

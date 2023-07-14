@@ -1,6 +1,6 @@
 import Background from "./Background";
 import Button from "./Button";
-import { Text } from "@inlet/react-pixi";
+import { Text } from "@pixi/react";
 import { TextStyle } from "@pixi/text";
 import { yellow, blue } from "../utils/colors";
 

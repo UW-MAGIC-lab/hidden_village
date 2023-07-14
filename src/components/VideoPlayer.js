@@ -1,5 +1,5 @@
-import { PixiComponent } from "@inlet/react-pixi";
-import { Graphics, Text } from "@inlet/react-pixi";
+import { PixiComponent } from "@pixi/react";
+import { Graphics, Text } from "@pixi/react";
 import { useCallback } from "react";
 import { white, darkGray, yellow } from "../utils/colors";
 import { getVideoFromPath } from "../models/conjectures";

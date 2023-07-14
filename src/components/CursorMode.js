@@ -1,5 +1,5 @@
 import { Rectangle } from "@pixi/math";
-import { Container, Sprite } from "@inlet/react-pixi";
+import { Container, Sprite } from "@pixi/react";
 import { useState, useEffect, useRef } from "react";
 import CursorMachine from "../machines/cursorMachine";
 import { useMachine, useSelector } from "@xstate/react";

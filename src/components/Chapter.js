@@ -6,7 +6,7 @@ import Pose from "./Pose/index.js";
 import { useEffect, useState } from "react";
 import { useMachine, useSelector, assign } from "@xstate/react";
 import ChapterMachine from "../machines/chapterMachine.js";
-import { Sprite } from "@inlet/react-pixi";
+import { Sprite } from "@pixi/react";
 import Experiment from "./Experiment.js";
 import script from "../scripts/chapters.toml";
 

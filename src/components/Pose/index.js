@@ -1,5 +1,5 @@
 import { useCallback, useState, forwardRef } from "react";
-import { Graphics, Container } from "@inlet/react-pixi";
+import { Graphics, Container } from "@pixi/react";
 import { Graphics as PIXIGraphics } from "@pixi/graphics";
 import {
   FACEMESH_FACE_OVAL,

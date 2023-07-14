@@ -6,7 +6,7 @@ import Game from "./Game.js";
 import Home from "./Home.js";
 import { useMachine } from "@xstate/react";
 import { StoryMachine } from "../machines/storyMachine.js";
-import { Stage } from "@inlet/react-pixi";
+import { Stage } from "@pixi/react";
 import { yellow } from "../utils/colors";
 import { generateRowAndColumnFunctions } from "./utilities/layoutFunction";
 import { enrichLandmarks } from "./Pose/landmark_utilities";
