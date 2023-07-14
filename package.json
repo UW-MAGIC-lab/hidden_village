@@ -36,6 +36,7 @@
     "@mediapipe/camera_utils": "^0.3.1632432234",
     "@mediapipe/holistic": "^0.4.1632785079",
     "@parcel/config-default": "^2.9.3",
+    "@parcel/core": "^2.9.3",
     "@pixi/react": "^7.1.0",
     "@pixi/text": "^6.1.3",
     "@swc/helpers": "^0.2.14",
