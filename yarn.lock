@@ -2535,6 +2535,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@pixi/constants@npm:^7.2.4":
+  version: 7.2.4
+  resolution: "@pixi/constants@npm:7.2.4"
+  checksum: 5c88d1d8ad17e04f6b52926d5dc867a8d22b85bee708c2ddfe46bbc1e2104d7534a4c81180e4e8d8d50214f33172c02ec2de3c4848a65943145ad9c1b331e0a2
+  languageName: node
+  linkType: hard
+
 "@pixi/core@npm:6.5.10":
   version: 6.5.10
   resolution: "@pixi/core@npm:6.5.10"
@@ -10605,6 +10612,7 @@ __metadata:
     "@parcel/reporter-bundle-analyzer": ^2.0.1
     "@parcel/transformer-inline-string": ^2.0.1
     "@parcel/transformer-toml": ^2.2.1
+    "@pixi/constants": ^7.2.4
     "@pixi/graphics": ^7.2.4
     "@pixi/react": ^7.1.0
     "@pixi/text": ^6.1.3

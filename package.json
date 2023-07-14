@@ -38,6 +38,7 @@
     "@mediapipe/holistic": "^0.4.1632785079",
     "@parcel/config-default": "^2.9.3",
     "@parcel/core": "^2.9.3",
+    "@pixi/constants": "^7.2.4",
     "@pixi/graphics": "^7.2.4",
     "@pixi/react": "^7.1.0",
     "@pixi/text": "^6.1.3",
