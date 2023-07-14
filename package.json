@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "browserslist": "> 0.5%, last 2 versions, not dead",
-  "packageManager": "yarn@1.22.17",
+  "packageManager": "yarn@3.6.1",
   "scripts": {
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
     "lint": "eslint \"src/**/*.{js,jsx}\" --quiet",
