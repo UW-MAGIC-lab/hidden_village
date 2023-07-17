@@ -37,6 +37,7 @@
     "@mediapipe/camera_utils": "^0.3.1632432234",
     "@mediapipe/holistic": "^0.4.1632785079",
     "@pixi/app": "^7.2.4",
+    "@pixi/assets": "^7.2.4",
     "@pixi/constants": "^7.2.4",
     "@pixi/core": "^7.2.4",
     "@pixi/display": "^7.2.4",
