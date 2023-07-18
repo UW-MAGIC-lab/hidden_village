@@ -1,7 +1,6 @@
 node_modules
 dist
 .parcel-cache
-yarn.lock
 yarn-error.log
 static
 .yarn

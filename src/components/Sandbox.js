@@ -1,4 +1,4 @@
-import { Stage } from "@inlet/react-pixi";
+import { Stage } from "@pixi/react";
 import Background from "./Background";
 import { useState, useEffect } from "react";
 import { Camera } from "@mediapipe/camera_utils";

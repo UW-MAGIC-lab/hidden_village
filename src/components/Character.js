@@ -1,4 +1,4 @@
-import { Graphics, Container, Sprite, useApp } from "@inlet/react-pixi";
+import { Graphics, Container, Sprite, useApp } from "@pixi/react";
 import { useCallback, useEffect, useState, useRef } from "react";
 import Face from "./Face";
 import { SCALE_MODES } from "@pixi/constants";

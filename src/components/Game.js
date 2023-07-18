@@ -1,5 +1,5 @@
 import Tutorial from "./Tutorial.js";
-import { Container } from "@inlet/react-pixi";
+import { Container } from "@pixi/react";
 import Chapter from "./Chapter.js";
 import { useState, useEffect } from "react";
 import { conjectures } from "../models/conjectures.js";

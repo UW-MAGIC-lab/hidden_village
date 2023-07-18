@@ -1,6 +1,7 @@
 import { StrictMode, lazy, Suspense } from "react";
-import { render } from "react-dom";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {createRoot} from "react-dom/client";
+
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Loader from "./components/utilities/Loader.js";
 import Settings from "./components/Settings.js";
 import * as PIXI from "pixi.js";
@@ -17,32 +18,26 @@ const App = () => {
   return (
     <Suspense fallback={<Loader />}>
       <Router>
-        <Switch>
+        <Routes>
           {NODE_ENV !== "production" && (
-            <Route path="/sandbox">
-              <Sandbox />
-            </Route>
+            <Route path="/sandbox" element={<Sandbox />} />
           )}
           {NODE_ENV !== "production" && (
-            <Route path="/posecapture">
-              <PoseCapture />
-            </Route>
+            <Route path="/posecapture" element={<PoseCapture />}/>
           )}
-          <Route path="/settings">
-            <Settings />
-          </Route>
-          <Route path="/">
-            <Story />
-          </Route>
-        </Switch>
+          <Route path="/settings" element={<Settings />}/>
+          <Route path="/" element={<Story />}/>
+        </Routes>
       </Router>
     </Suspense>
   );
 };
 
-render(
+const container = document.getElementById("root")
+const root = createRoot(container)
+root.render(
   <StrictMode>
     <App />
-  </StrictMode>,
-  document.getElementById("root")
+  </StrictMode>
 );
+// root.unmount();

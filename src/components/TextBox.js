@@ -1,4 +1,4 @@
-import { Container, Graphics, Text } from "@inlet/react-pixi";
+import { Container, Graphics, Text } from "@pixi/react";
 import { useCallback, useEffect, useState } from "react";
 import { white, darkGray } from "../utils/colors";
 import { TextStyle } from "@pixi/text";

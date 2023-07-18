@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { Text } from "@inlet/react-pixi";
+import { Text } from "@pixi/react";
 
 class ErrorBoundary extends Component {
   constructor(props) {

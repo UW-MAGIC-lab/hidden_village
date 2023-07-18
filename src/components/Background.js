@@ -1,4 +1,4 @@
-import { Container, Graphics } from "@inlet/react-pixi";
+import { Container, Graphics } from "@pixi/react";
 import { useCallback } from "react";
 import { blue } from "../utils/colors";
 

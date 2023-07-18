@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from "react";
-import { Graphics, Text, useApp } from "@inlet/react-pixi";
+import { Graphics, Text, useApp } from "@pixi/react";
 import CursorMode from "./CursorMode.js";
 import Pose from "./Pose/index";
 import { white, darkGray, yellow } from "../utils/colors";
