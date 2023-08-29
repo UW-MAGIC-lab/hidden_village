@@ -48,48 +48,56 @@ const conjectures = [
     conjecture:
       "The opposite angles of two lines that cross are always the same",
     poseDataFileName: "oppositeAnglePoses.json",
-    videoPath: "../assets/animations/opposite_angle.webm",
+    // videoPath: "../assets/animations/opposite_angle.webm",
+    videoPath: "https://webmshare.com/play/LbMaN",
   },
   {
     conjecture:
       "The area of a parallelogram is the same as the area of a rectangle with the same base and height",
     poseDataFileName: "area_parallelogram.json",
-    videoPath: "../assets/animations/area_parallelogram_trimmed.webm",
+    // videoPath: "../assets/animations/area_parallelogram_trimmed.webm",
+    videoPath: "https://webmshare.com/play/rEMg8",
   },
   {
     conjecture:
       "If you double the length and the width of a rectangle, then the area is exactly doubled",
     poseDataFileName: "area_doubled.json",
-    videoPath: "../assets/animations/area_doubled_trimmed.webm",
+    // videoPath: "../assets/animations/area_doubled_trimmed.webm",
+    videoPath: "https://s1.webmshare.com/PbLa0.webm",
   },
   {
     conjecture:
       "Given that you know the measure of all three angles of a triangle, there is only one unique size of the triangle that can be formed with these three angle measurements",
     poseDataFileName: "angleAngleAnglePoses.json",
-    videoPath: "../assets/animations/angle_angle_angle_trimmed.webm",
+    // videoPath: "../assets/animations/angle_angle_angle_trimmed.webm",
+    videoPath: "https://s1.webmshare.com/5Kyon.webm",
   },
   {
     conjecture: "The diagonals of a rectangle always have the same length",
     poseDataFileName: "diagonals_rectangle.json",
-    videoPath: "../assets/animations/diagonals_rectangle.webm",
+    // videoPath: "../assets/animations/diagonals_rectangle.webm",
+    videoPath: "https://s1.webmshare.com/vyL9z.webm",
   },
   {
     conjecture:
       "If one angle of a triangle is larger than a second angle, then the side opposite the first angle is longer than the side opposite the second angle",
     poseDataFileName: "side_angle_side_poses.json",
-    videoPath: "../assets/animations/side_angle_side_trimmed.webm",
+    // videoPath: "../assets/animations/side_angle_side_trimmed.webm",
+    videoPath: "https://s1.webmshare.com/XmBxL.webm",
   },
   {
     conjecture:
       "The sum of the lengths of two sides of a triangle is always greater than the length of the third side",
     poseDataFileName: "sum_two_sides_poses.json",
-    videoPath: "../assets/animations/sum_two_sides_trimmed.webm",
+    // videoPath: "../assets/animations/sum_two_sides_trimmed.webm",
+    videoPath: "https://s1.webmshare.com/47n3n.webm",
   },
   {
     conjecture:
       "Reflecting any point over the x-axis is the same as rotating the point 90 degrees clockwise about the origin",
     poseDataFileName: "reflection_over_axis_poses.json",
-    videoPath: "../assets/animations/reflection_over_axis_trimmed.webm",
+    // videoPath: "../assets/animations/reflection_over_axis_trimmed.webm",
+    videoPath: "https://s1.webmshare.com/bxj6b.webm",
   },
 ];
 
